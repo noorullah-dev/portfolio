@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Noor Ullah — Résumé</title>
+  <meta name="description" content="Résumé — Noor Ullah, Full Stack Ruby on Rails Developer.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpolygon points='12,2 22,9 12,22 2,9' fill='%23B3122E'/%3E%3Cpolygon points='12,2 22,9 12,13 8,9' fill='%23E8394F'/%3E%3C/svg%3E">
+  <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#1C1815',
+            ruby: '#8E0F26',
+            ruby2: '#B3122E',
+            parchment: '#FBF8F2',
+            paper: '#F3ECE1',
+            bone: '#6B6157',
+            line: 'rgba(28,24,21,0.14)',
+          },
+          fontFamily: {
+            display: ['Fraunces', 'serif'],
+            body: ['Inter', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    body { background: #E7E0D3; color: #1C1815; font-family: 'Inter', sans-serif; }
+    .sheet { background: #FBF8F2; }
+
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid #8E0F26;
+      outline-offset: 3px;
+    }
+
+    @media print {
+      body { background: #FFF; }
+      .no-print { display: none !important; }
+      main { padding: 0 !important; }
+      .sheet {
+        box-shadow: none !important; margin: 0 !important; border-radius: 0 !important;
+        width: 100% !important; max-width: 100% !important; padding: 0 !important;
+      }
+      header { margin-bottom: 22px !important; padding-bottom: 16px !important; }
+      section { margin-bottom: 20px !important; }
+      h1 { font-size: 30px !important; }
+      p, li { font-size: 13px !important; }
+      @page { margin: 12mm; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- toolbar (screen only) -->
+  <div class="no-print sticky top-0 z-50 bg-ink text-parchment">
+    <div class="max-w-3xl mx-auto px-6 h-14 flex items-center justify-between font-mono text-sm">
+      <a href="index.html" class="hover:text-ruby2 transition-colors">← back to portfolio</a>
+      <a href="resume.pdf" download class="bg-ruby2 hover:bg-ruby transition-colors px-4 py-2 rounded-md font-semibold">
+        Download PDF
+      </a>
+    </div>
+  </div>
+
+  <main class="py-10 md:py-14 px-4">
+    <article class="sheet max-w-3xl mx-auto rounded-2xl shadow-xl shadow-black/10 p-10 md:p-14">
+
+      <!-- header -->
+      <header class="mb-10 border-b border-line pb-8">
+        <h1 class="font-display font-semibold text-4xl md:text-5xl text-ink mb-1">Noor Ullah</h1>
+        <p class="font-display italic text-xl text-ruby2 mb-4">Full Stack Ruby on Rails Developer</p>
+        <p class="font-mono text-xs md:text-[13px] text-bone leading-relaxed">
+          <span class="text-ink">noor102bs@gmail.com</span> ·
+          <span class="text-ink">+92 310 9508764</span> ·
+          <span class="text-ink">Islamabad, Pakistan</span> ·
+          <span class="text-ink">[linkedin.com/in/your-handle]</span> ·
+          <span class="text-ink">github.com/noorullah-dev</span>
+        </p>
+        <p class="font-mono text-xs text-ruby2 mt-3">available for freelance &amp; contract work</p>
+      </header>
+
+      <!-- summary -->
+      <section class="mb-9">
+        <h2 class="font-mono text-xs uppercase tracking-widest text-ruby2 mb-3">Summary</h2>
+        <p class="text-[15px] leading-relaxed text-ink">
+          Ruby on Rails full stack developer with 3+ years of experience building enterprise web applications, Hotwire Native mobile apps, workforce‑management systems, and booking platforms. Comfortable across the stack — from database schema and REST APIs to responsive, production‑ready frontends.
+        </p>
+      </section>
+
+      <!-- experience -->
+      <section class="mb-9">
+        <h2 class="font-mono text-xs uppercase tracking-widest text-ruby2 mb-4">Experience</h2>
+
+        <div class="mb-2 flex items-baseline justify-between flex-wrap gap-1">
+          <h3 class="font-display font-semibold text-lg text-ink">Freelance / Contract — Full Stack Rails Developer</h3>
+          <span class="font-mono text-xs text-bone">[add start date] — Present</span>
+        </div>
+        <ul class="list-disc pl-5 space-y-2 text-[15px] leading-relaxed text-ink marker:text-ruby2">
+          <li><span class="font-medium">RiskTrack</span> — enterprise workforce‑management platform with guard tracking, scheduling, dashboards, and reporting. <span class="font-mono text-xs text-bone">(risktrack.co)</span></li>
+          <li><span class="font-medium">Chore Hustler</span> — marketplace connecting customers with service providers, with booking and responsive UI. <span class="font-mono text-xs text-bone">(chorehustler.com)</span></li>
+          <li><span class="font-medium">ShiftTrack</span> — employee scheduling and shift‑management system with role‑based access and reporting. <span class="font-mono text-xs text-bone">(shifttrack.co.uk)</span></li>
+          <li><span class="font-medium">Misr Bazaar</span> — e‑commerce marketplace with product management on a scalable Postgres‑backed backend. <span class="font-mono text-xs text-bone">(misrbazaar.com)</span></li>
+          <li>Delivered Hotwire Native mobile apps for Android and iOS on top of existing Rails applications, without a separate client codebase.</li>
+        </ul>
+      </section>
+
+      <!-- skills -->
+      <section class="mb-9">
+        <h2 class="font-mono text-xs uppercase tracking-widest text-ruby2 mb-4">Skills</h2>
+        <div class="grid sm:grid-cols-2 gap-4 text-[14px] leading-relaxed">
+          <div>
+            <p class="font-semibold text-ink mb-1">Languages &amp; frameworks</p>
+            <p class="text-bone">Ruby, Ruby on Rails, JavaScript, Stimulus JS, Hotwire, Hotwire Native, Turbo</p>
+          </div>
+          <div>
+            <p class="font-semibold text-ink mb-1">Frontend</p>
+            <p class="text-bone">Tailwind CSS, Bootstrap, responsive UI/UX</p>
+          </div>
+          <div>
+            <p class="font-semibold text-ink mb-1">Backend &amp; data</p>
+            <p class="text-bone">PostgreSQL, MySQL, REST APIs, database optimisation, real‑time features</p>
+          </div>
+          <div>
+            <p class="font-semibold text-ink mb-1">Tools</p>
+            <p class="text-bone">Git <span class="text-ink/50">[add deployment / CI tools you use]</span></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- education -->
+      <section>
+        <h2 class="font-mono text-xs uppercase tracking-widest text-ruby2 mb-4">Education</h2>
+        <p class="text-[15px] text-ink">
+          <span class="text-bone">[Add degree, institution, and years — e.g. "B.Sc. Computer Science, Your University, 2019 – 2023"]</span>
+        </p>
+      </section>
+
+    </article>
+
+    <p class="no-print max-w-3xl mx-auto px-4 mt-6 font-mono text-xs text-ink/50">
+      Bracketed fields are placeholders — edit resume.html directly, then regenerate resume.pdf.
+    </p>
+  </main>
+
+</body>
+</html>

@@ -3,119 +3,209 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Noor Ullah | Ruby on Rails Developer</title>
+  <title>Noor Ullah — Full Stack Ruby on Rails Developer</title>
+  <meta name="description" content="Noor Ullah — Ruby on Rails full stack developer building enterprise apps, Hotwire Native mobile apps, and booking platforms.">
+  <meta name="theme-color" content="#0B0A09">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpolygon points='12,2 22,9 12,22 2,9' fill='%23B3122E'/%3E%3Cpolygon points='12,2 22,9 12,13 8,9' fill='%23E8394F'/%3E%3C/svg%3E">
+  <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+  <!-- Open Graph / social preview — set og:url once this is live on a domain -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Noor Ullah — Full Stack Ruby on Rails Developer">
+  <meta property="og:description" content="Ruby on Rails full stack developer building enterprise apps, Hotwire Native mobile apps, and booking platforms.">
+  <meta property="og:image" content="apple-touch-icon.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Noor Ullah — Full Stack Ruby on Rails Developer">
+  <meta name="twitter:description" content="Ruby on Rails full stack developer building enterprise apps, Hotwire Native mobile apps, and booking platforms.">
+  <meta name="twitter:image" content="apple-touch-icon.png">
+
+  <!-- Structured data — add sameAs (LinkedIn/GitHub) and url once those are real -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Noor Ullah",
+    "jobTitle": "Full Stack Ruby on Rails Developer",
+    "description": "Ruby on Rails full stack developer with 3+ years of experience building enterprise apps, Hotwire Native mobile apps, and booking platforms.",
+    "knowsAbout": ["Ruby on Rails", "Hotwire", "Stimulus", "Hotwire Native", "PostgreSQL", "MySQL", "Tailwind CSS", "JavaScript", "REST APIs"],
+    "email": "mailto:noor102bs@gmail.com",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Islamabad",
+      "addressCountry": "Pakistan"
+    },
+    "sameAs": ["https://github.com/noorullah-dev"]
+  }
+  </script>
+
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;0,700;0,900;1,500;1,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#0B0A09',
+            ink2: '#151210',
+            ruby: '#B3122E',
+            ruby2: '#E8394F',
+            parchment: '#F3ECE1',
+            bone: '#C9C2B8',
+            line: 'rgba(243,236,225,0.10)',
+          },
+          fontFamily: {
+            display: ['Fraunces', 'serif'],
+            body: ['Inter', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+        },
+      },
+    };
+  </script>
 
   <style>
-    * {
-      font-family: 'Inter', sans-serif;
-    }
-
+    html { scroll-behavior: smooth; }
     body {
-      background: #000;
+      background: #0B0A09;
+      color: #F3ECE1;
+      font-family: 'Inter', sans-serif;
       overflow-x: hidden;
     }
 
-    .glass {
-      background: rgba(24, 24, 27, 0.7);
-      backdrop-filter: blur(12px);
+    .bg-grid {
+      background-image:
+        linear-gradient(rgba(243,236,225,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(243,236,225,0.05) 1px, transparent 1px);
+      background-size: 42px 42px;
     }
 
-    .gradient-text {
-      background: linear-gradient(to right, #ef4444, #f87171);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    .eyebrow::before { content: '// '; color: #B3122E; }
+
+    .caret {
+      display: inline-block;
+      width: 0.55ch;
+      background: #E8394F;
+      margin-left: 2px;
+      animation: blink 1s steps(1) infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+    .project-card { transition: transform 0.25s ease, border-color 0.25s ease; }
+    .project-card:hover { transform: translateY(-6px); border-color: rgba(179,18,46,0.5); }
+
+    a, button { -webkit-tap-highlight-color: transparent; }
+    a:focus-visible, button:focus-visible, summary:focus-visible {
+      outline: 2px solid #E8394F;
+      outline-offset: 3px;
+      border-radius: 4px;
     }
 
-    .project-card:hover {
-      transform: translateY(-8px);
+    #mobile-menu { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+    #mobile-menu.open { max-height: 320px; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .caret { animation: none; opacity: 1; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .project-card:hover { transform: none; }
     }
   </style>
+  <noscript><style>.reveal { opacity: 1 !important; transform: none !important; }</style></noscript>
 </head>
 
-<body class="text-white">
+<body class="font-body">
 
-  <!-- HERO SECTION -->
-  <section class="relative min-h-screen flex items-center overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-to-br from-red-700/20 via-black to-black"></div>
+  <!-- NAV -->
+  <header class="sticky top-0 z-50 border-b border-line bg-ink/85 backdrop-blur">
+    <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="#top" class="font-mono font-semibold tracking-tight text-parchment">
+        NU<span class="caret">_</span>
+      </a>
 
-    <div class="max-w-7xl mx-auto px-6 py-20 relative z-10 w-full">
-      <div class="grid lg:grid-cols-2 gap-16 items-center">
+      <div class="hidden md:flex items-center gap-7 font-mono text-sm text-bone">
+        <a href="#work" class="hover:text-parchment transition-colors">work</a>
+        <a href="#process" class="hover:text-parchment transition-colors">process</a>
+        <a href="#about" class="hover:text-parchment transition-colors">about</a>
+        <a href="#faq" class="hover:text-parchment transition-colors">faq</a>
+        <a href="#contact" class="hover:text-parchment transition-colors">contact</a>
+        <a href="resume.html" class="border border-line rounded-full px-4 py-1.5 text-parchment hover:border-ruby hover:text-ruby2 transition-colors">résumé</a>
+      </div>
+
+      <button id="menu-btn" aria-expanded="false" aria-controls="mobile-menu" class="md:hidden font-mono text-sm text-bone border border-line rounded-md px-3 py-1.5">
+        menu
+      </button>
+    </nav>
+
+    <div id="mobile-menu" class="md:hidden border-t border-line">
+      <div class="px-6 py-4 flex flex-col gap-4 font-mono text-sm text-bone">
+        <a href="#work" class="hover:text-parchment">work</a>
+        <a href="#process" class="hover:text-parchment">process</a>
+        <a href="#about" class="hover:text-parchment">about</a>
+        <a href="#faq" class="hover:text-parchment">faq</a>
+        <a href="#contact" class="hover:text-parchment">contact</a>
+        <a href="resume.html" class="text-ruby2">résumé →</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section id="top" class="relative bg-grid">
+    <div class="absolute inset-0 bg-gradient-to-b from-ink via-ink/95 to-ink pointer-events-none"></div>
+
+    <div class="max-w-6xl mx-auto px-6 py-20 md:py-28 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-[1.1fr_1fr] gap-14 items-start">
 
         <div>
-          <div class="inline-flex items-center gap-3 border border-red-500/20 bg-red-500/10 rounded-full px-5 py-2 mb-8">
-            <div class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
-            <span class="text-red-300 text-sm tracking-wide">
-              Ruby on Rails Full Stack Developer
-            </span>
+          <div class="inline-flex items-center gap-2 border border-line rounded-full pl-3 pr-4 py-1.5 mb-8 font-mono text-xs text-bone">
+            <span class="w-1.5 h-1.5 rounded-full bg-ruby2 animate-pulse"></span>
+            available_for_hire: <span class="text-parchment">true</span>
           </div>
 
-          <h1 class="text-5xl md:text-7xl font-black leading-tight mb-6">
+          <h1 class="font-display font-semibold text-6xl md:text-7xl leading-[1.05] text-parchment">
             Noor Ullah
-            <span class="block gradient-text mt-2">
-              Full Stack Developer
-            </span>
           </h1>
-
-          <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-2xl">
-            Professional Ruby on Rails Full Stack Developer with 3+ years of experience building enterprise web applications, Hotwire Native mobile apps, workforce management systems, booking platforms, and scalable business solutions.
+          <p class="font-display italic text-2xl md:text-3xl text-ruby2 mt-3 mb-8">
+            Full‑stack Ruby on Rails developer
           </p>
 
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
-            <div class="glass border border-white/10 rounded-2xl p-5 text-center">
-              <h3 class="text-3xl font-bold text-red-500">10+</h3>
-              <p class="text-gray-400 text-sm mt-1">Projects</p>
-            </div>
+          <p class="text-lg text-bone leading-relaxed max-w-xl mb-6">
+            I build enterprise Rails applications, Hotwire Native mobile apps, workforce‑management systems, and booking platforms — from database schema to the pixels on screen.
+          </p>
 
-            <div class="glass border border-white/10 rounded-2xl p-5 text-center">
-              <h3 class="text-3xl font-bold text-red-500">3+</h3>
-              <p class="text-gray-400 text-sm mt-1">Years</p>
-            </div>
-
-            <div class="glass border border-white/10 rounded-2xl p-5 text-center">
-              <h3 class="text-3xl font-bold text-red-500">Full</h3>
-              <p class="text-gray-400 text-sm mt-1">Stack</p>
-            </div>
-
-            <div class="glass border border-white/10 rounded-2xl p-5 text-center">
-              <h3 class="text-3xl font-bold text-red-500">24/7</h3>
-              <p class="text-gray-400 text-sm mt-1">Support</p>
-            </div>
-          </div>
+          <p class="font-mono text-sm text-bone/80 mb-10">
+            3+ years&nbsp;·&nbsp;10+ shipped&nbsp;·&nbsp;Hotwire Native mobile
+          </p>
 
           <div class="flex flex-wrap gap-4">
-            <a href="#projects" class="bg-red-600 hover:bg-red-700 transition-all px-8 py-4 rounded-2xl font-semibold shadow-2xl shadow-red-500/30">
-              View Projects
+            <a href="#work" class="bg-ruby hover:bg-ruby2 transition-colors px-7 py-3.5 rounded-lg font-semibold text-parchment">
+              View work
             </a>
-
-            <a href="#contact" class="border border-white/20 hover:border-red-500 hover:bg-red-500/10 transition-all px-8 py-4 rounded-2xl font-semibold">
-              Hire Me
+            <a href="resume.pdf" download class="border border-line hover:border-ruby hover:text-ruby2 transition-colors px-7 py-3.5 rounded-lg font-semibold text-parchment">
+              Download résumé
             </a>
           </div>
         </div>
 
-        <div class="flex justify-center lg:justify-end">
-          <div class="relative">
-            <div class="absolute inset-0 bg-red-500/20 blur-[120px] rounded-full"></div>
-
-            <div class="relative glass border border-white/10 rounded-[40px] overflow-hidden shadow-2xl w-[420px]">
-              <img
-                src="ChatGPT Image May 20, 2026, 08_04_04 PM.png"
-                alt="Noor Ullah"
-                class="w-full h-[520px] object-cover"
-              >
-
-              <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/80 to-transparent p-8">
-                <h3 class="text-3xl font-bold mb-2">Noor Ullah</h3>
-                <p class="text-red-400 text-lg">
-                  Ruby on Rails Full Stack Developer
-                </p>
-              </div>
-            </div>
+        <!-- SIGNATURE: rails console -->
+        <div class="rounded-xl border border-line bg-ink2 overflow-hidden shadow-2xl shadow-black/60">
+          <div class="flex items-center gap-2 px-4 py-3 border-b border-line bg-black/30">
+            <span class="w-3 h-3 rounded-full bg-[#5f5750]"></span>
+            <span class="w-3 h-3 rounded-full bg-[#5f5750]"></span>
+            <span class="w-3 h-3 rounded-full bg-[#5f5750]"></span>
+            <span class="font-mono text-xs text-bone/60 ml-2">rails console</span>
           </div>
+          <pre id="console-output" class="font-mono text-[13px] md:text-sm leading-relaxed text-bone p-5 min-h-[280px] whitespace-pre-wrap"></pre>
         </div>
 
       </div>
@@ -123,113 +213,205 @@
   </section>
 
   <!-- ABOUT -->
-  <section class="max-w-7xl mx-auto px-6 py-24">
-    <div class="grid lg:grid-cols-2 gap-16 items-start">
+  <section id="about" class="max-w-6xl mx-auto px-6 py-24">
+    <div class="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-16 items-start">
 
-      <div>
-        <h2 class="text-5xl font-bold mb-8">About Me</h2>
+      <div class="reveal">
+        <p class="font-mono text-sm eyebrow text-bone mb-4">about.rb</p>
+        <h2 class="font-display font-semibold text-4xl md:text-5xl text-parchment mb-8">About me</h2>
 
-        <p class="text-gray-300 text-lg leading-relaxed mb-6">
-          I specialize in Ruby on Rails development, Hotwire, Stimulus JS, Hotwire Native mobile applications, responsive UI/UX design, and scalable backend systems.
+        <p class="text-bone text-lg leading-relaxed mb-6">
+          I specialise in Ruby on Rails, Hotwire, Stimulus, and Hotwire Native — shipping mobile‑ready Rails apps that feel native on iOS and Android without a separate client codebase.
         </p>
-
-        <p class="text-gray-300 text-lg leading-relaxed mb-6">
-          I have developed workforce management platforms, booking systems, enterprise dashboards, security management systems, e-commerce marketplaces, and responsive corporate websites.
+        <p class="text-bone text-lg leading-relaxed mb-6">
+          I've built workforce‑management platforms, booking systems, enterprise dashboards, security‑management tools, and marketplaces for teams that needed something reliable, not just a demo.
         </p>
-
-        <p class="text-gray-300 text-lg leading-relaxed">
-          My expertise includes backend APIs, real-time applications, database optimization, frontend responsiveness, and mobile-ready Rails applications.
+        <p class="text-bone text-lg leading-relaxed">
+          Day to day that means backend APIs, real‑time features, database tuning, and a frontend that holds up on a phone in the field, not just on a designer's monitor.
         </p>
       </div>
 
-      <div class="grid grid-cols-2 gap-4">
-        <div class="glass border border-white/10 rounded-2xl p-5 text-center">Ruby on Rails</div>
-        <div class="glass border border-white/10 rounded-2xl p-5 text-center">Hotwire</div>
-        <div class="glass border border-white/10 rounded-2xl p-5 text-center">Stimulus JS</div>
-        <div class="glass border border-white/10 rounded-2xl p-5 text-center">Hotwire Native</div>
-        <div class="glass border border-white/10 rounded-2xl p-5 text-center">Tailwind CSS</div>
-        <div class="glass border border-white/10 rounded-2xl p-5 text-center">JavaScript</div>
-        <div class="glass border border-white/10 rounded-2xl p-5 text-center">PostgreSQL</div>
-        <div class="glass border border-white/10 rounded-2xl p-5 text-center">REST APIs</div>
+      <div class="flex flex-col gap-6 reveal">
+
+        <!-- ID badge -->
+        <div class="rounded-xl border border-line bg-ink2 p-5 rotate-1">
+          <div class="flex items-center gap-4">
+            <img src="ChatGPT Image May 20, 2026, 08_04_04 PM.png" alt="Noor Ullah" class="w-16 h-16 rounded-lg object-cover border border-line">
+            <div>
+              <p class="font-mono text-sm tracking-wide text-parchment">NOOR ULLAH</p>
+              <p class="font-mono text-xs text-bone/70">Full Stack Rails Dev</p>
+            </div>
+            <span class="ml-auto w-3 h-3 rounded-full border-2 border-bone/40"></span>
+          </div>
+          <div class="flex gap-[3px] items-end mt-4 h-6">
+            <div class="w-[3px] h-full bg-bone/40"></div><div class="w-[2px] h-2/3 bg-bone/40"></div><div class="w-[3px] h-full bg-bone/40"></div><div class="w-[2px] h-1/2 bg-bone/40"></div><div class="w-[3px] h-full bg-bone/40"></div><div class="w-[2px] h-3/4 bg-bone/40"></div><div class="w-[3px] h-1/2 bg-bone/40"></div><div class="w-[2px] h-full bg-bone/40"></div>
+            <span class="ml-auto font-mono text-[10px] text-bone/50">RB‑DEV·01</span>
+          </div>
+        </div>
+
+        <!-- Gemfile -->
+        <div class="rounded-xl border border-line bg-ink2 overflow-hidden">
+          <div class="px-5 py-3 border-b border-line font-mono text-xs text-bone/60"># Gemfile</div>
+          <pre class="font-mono text-[13px] leading-relaxed p-5 text-bone whitespace-pre-wrap"><span class="text-ruby2">gem</span> "rails", "~&gt; 7.1"
+<span class="text-ruby2">gem</span> "hotwire-rails"
+<span class="text-ruby2">gem</span> "turbo-rails"
+<span class="text-ruby2">gem</span> "stimulus-rails"
+<span class="text-ruby2">gem</span> "hotwire-native"    <span class="text-bone/40"># iOS + Android</span>
+<span class="text-ruby2">gem</span> "tailwindcss-rails"
+<span class="text-ruby2">gem</span> "pg"                <span class="text-bone/40"># PostgreSQL</span>
+<span class="text-ruby2">gem</span> "mysql2"
+
+<span class="text-parchment">group</span> :frontend <span class="text-parchment">do</span>
+  <span class="text-ruby2">gem</span> "javascript"
+  <span class="text-ruby2">gem</span> "rest-apis"
+<span class="text-parchment">end</span></pre>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="process" class="border-y border-line bg-ink2/40 py-24">
+    <div class="max-w-6xl mx-auto px-6">
+
+      <div class="mb-16 reveal">
+        <p class="font-mono text-sm eyebrow text-bone mb-4">process.rb</p>
+        <h2 class="font-display font-semibold text-4xl md:text-5xl text-parchment">How I work</h2>
       </div>
 
+      <div class="relative reveal">
+        <div class="hidden md:block absolute top-5 left-0 right-0 h-px bg-line"></div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
+
+          <div class="relative">
+            <div class="w-10 h-10 rounded-full border border-ruby2/50 bg-ink flex items-center justify-center font-mono text-sm text-ruby2 mb-5">01</div>
+            <h3 class="font-display font-semibold text-lg text-parchment mb-2">Scope</h3>
+            <p class="text-bone leading-relaxed text-[15px]">
+              Define the problem, the users, and the constraints before a line of code gets written.
+            </p>
+          </div>
+
+          <div class="relative">
+            <div class="w-10 h-10 rounded-full border border-ruby2/50 bg-ink flex items-center justify-center font-mono text-sm text-ruby2 mb-5">02</div>
+            <h3 class="font-display font-semibold text-lg text-parchment mb-2">Build</h3>
+            <p class="text-bone leading-relaxed text-[15px]">
+              Ship in small, reviewable increments, on Rails conventions rather than around them.
+            </p>
+          </div>
+
+          <div class="relative">
+            <div class="w-10 h-10 rounded-full border border-ruby2/50 bg-ink flex items-center justify-center font-mono text-sm text-ruby2 mb-5">03</div>
+            <h3 class="font-display font-semibold text-lg text-parchment mb-2">Ship</h3>
+            <p class="text-bone leading-relaxed text-[15px]">
+              Get to production early, then iterate against real usage instead of guesses.
+            </p>
+          </div>
+
+          <div class="relative">
+            <div class="w-10 h-10 rounded-full border border-ruby2/50 bg-ink flex items-center justify-center font-mono text-sm text-ruby2 mb-5">04</div>
+            <h3 class="font-display font-semibold text-lg text-parchment mb-2">Support</h3>
+            <p class="text-bone leading-relaxed text-[15px]">
+              Stay on for fixes, tuning, and new features after launch — handoff isn't the finish line.
+            </p>
+          </div>
+
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- PROJECTS -->
-  <section id="projects" class="bg-zinc-950 py-24">
-    <div class="max-w-7xl mx-auto px-6">
+  <section id="work" class="border-y border-line bg-ink2/40 py-24">
+    <div class="max-w-6xl mx-auto px-6">
 
-      <div class="text-center mb-16">
-        <h2 class="text-5xl font-bold mb-6">Featured Projects</h2>
-        <p class="text-gray-400 text-lg max-w-3xl mx-auto">
-          Professional Ruby on Rails and Full Stack applications developed for international businesses and startups.
+      <div class="mb-16 reveal">
+        <p class="font-mono text-sm eyebrow text-bone mb-4">app/projects</p>
+        <h2 class="font-display font-semibold text-4xl md:text-5xl text-parchment mb-4">Featured work</h2>
+        <p class="text-bone text-lg max-w-2xl">
+          Rails and full‑stack applications shipped for real businesses — live, in production, in use.
         </p>
       </div>
 
-      <div class="grid md:grid-cols-2 gap-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-        <div class="project-card bg-black border border-white/10 rounded-[32px] p-8 transition-all duration-300">
-          <span class="text-red-400 text-sm">Security Workforce Management</span>
-          <h3 class="text-3xl font-bold mt-3 mb-4">RiskTrack</h3>
-          <p class="text-gray-400 leading-relaxed mb-6">
-            Enterprise workforce management platform with guard tracking, scheduling, dashboards, and reporting systems.
+        <div class="project-card reveal bg-ink border border-line rounded-2xl p-8">
+          <p class="font-mono text-xs tracking-wide text-ruby2 uppercase mb-3">Security · Workforce Management</p>
+          <h3 class="font-display font-semibold text-2xl text-parchment mb-3">RiskTrack</h3>
+          <p class="font-display italic text-bone/70 text-[15px] mb-3">
+            The problem: guard shifts and site checks tracked across spreadsheets and phone calls.
           </p>
-          <div class="flex flex-wrap gap-3 mb-6">
-            <span class="bg-zinc-900 px-4 py-2 rounded-full text-sm">Rails</span>
-            <span class="bg-zinc-900 px-4 py-2 rounded-full text-sm">Hotwire</span>
-            <span class="bg-zinc-900 px-4 py-2 rounded-full text-sm">Stimulus</span>
+          <p class="text-bone leading-relaxed mb-6">
+            Built an enterprise workforce‑management platform with guard tracking, scheduling, dashboards, and reporting.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-6 font-mono text-xs text-bone">
+            <span class="border border-ruby2/40 text-ruby2/90 rounded-full px-3 py-1">solo build</span>
+            <span class="border border-line rounded-full px-3 py-1">rails</span>
+            <span class="border border-line rounded-full px-3 py-1">hotwire</span>
+            <span class="border border-line rounded-full px-3 py-1">stimulus</span>
           </div>
-          <a href="https://www.risktrack.co/" target="_blank" class="text-red-400 hover:text-red-300">
-            Visit Website →
+          <a href="https://www.risktrack.co/" target="_blank" rel="noopener" class="font-mono text-sm text-ruby2 hover:text-ruby transition-colors">
+            risktrack.co →
           </a>
         </div>
 
-        <div class="project-card bg-black border border-white/10 rounded-[32px] p-8 transition-all duration-300">
-          <span class="text-red-400 text-sm">Marketplace Platform</span>
-          <h3 class="text-3xl font-bold mt-3 mb-4">Chore Hustler</h3>
-          <p class="text-gray-400 leading-relaxed mb-6">
-            Modern marketplace platform connecting customers with service providers using responsive UI and booking systems.
+        <div class="project-card reveal bg-ink border border-line rounded-2xl p-8">
+          <p class="font-mono text-xs tracking-wide text-ruby2 uppercase mb-3">Marketplace Platform</p>
+          <h3 class="font-display font-semibold text-2xl text-parchment mb-3">Chore Hustler</h3>
+          <p class="font-display italic text-bone/70 text-[15px] mb-3">
+            The problem: local service providers had no simple way to get found and booked online.
           </p>
-          <div class="flex flex-wrap gap-3 mb-6">
-            <span class="bg-zinc-900 px-4 py-2 rounded-full text-sm">Ruby on Rails</span>
-            <span class="bg-zinc-900 px-4 py-2 rounded-full text-sm">Tailwind</span>
-            <span class="bg-zinc-900 px-4 py-2 rounded-full text-sm">JavaScript</span>
+          <p class="text-bone leading-relaxed mb-6">
+            Built a marketplace connecting customers with service providers, with responsive UI and built‑in booking.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-6 font-mono text-xs text-bone">
+            <span class="border border-ruby2/40 text-ruby2/90 rounded-full px-3 py-1">solo build</span>
+            <span class="border border-line rounded-full px-3 py-1">rails</span>
+            <span class="border border-line rounded-full px-3 py-1">tailwind</span>
+            <span class="border border-line rounded-full px-3 py-1">javascript</span>
           </div>
-          <a href="https://www.chorehustler.com/" target="_blank" class="text-red-400 hover:text-red-300">
-            Visit Website →
+          <a href="https://www.chorehustler.com/" target="_blank" rel="noopener" class="font-mono text-sm text-ruby2 hover:text-ruby transition-colors">
+            chorehustler.com →
           </a>
         </div>
 
-        <div class="project-card bg-black border border-white/10 rounded-[32px] p-8 transition-all duration-300">
-          <span class="text-red-400 text-sm">Shift Management</span>
-          <h3 class="text-3xl font-bold mt-3 mb-4">ShiftTrack</h3>
-          <p class="text-gray-400 leading-relaxed mb-6">
-            Complete employee scheduling and shift management system with reporting and role-based access.
+        <div class="project-card reveal bg-ink border border-line rounded-2xl p-8">
+          <p class="font-mono text-xs tracking-wide text-ruby2 uppercase mb-3">Shift Management</p>
+          <h3 class="font-display font-semibold text-2xl text-parchment mb-3">ShiftTrack</h3>
+          <p class="font-display italic text-bone/70 text-[15px] mb-3">
+            The problem: manual rotas made shift coverage and accountability hard to track.
           </p>
-          <div class="flex flex-wrap gap-3 mb-6">
-            <span class="bg-zinc-900 px-4 py-2 rounded-full text-sm">Rails</span>
-            <span class="bg-zinc-900 px-4 py-2 rounded-full text-sm">Hotwire</span>
-            <span class="bg-zinc-900 px-4 py-2 rounded-full text-sm">MySQL</span>
+          <p class="text-bone leading-relaxed mb-6">
+            Built an employee scheduling and shift‑management system with reporting and role‑based access.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-6 font-mono text-xs text-bone">
+            <span class="border border-ruby2/40 text-ruby2/90 rounded-full px-3 py-1">solo build</span>
+            <span class="border border-line rounded-full px-3 py-1">rails</span>
+            <span class="border border-line rounded-full px-3 py-1">hotwire</span>
+            <span class="border border-line rounded-full px-3 py-1">mysql</span>
           </div>
-          <a href="https://www.shifttrack.co.uk/" target="_blank" class="text-red-400 hover:text-red-300">
-            Visit Website →
+          <a href="https://www.shifttrack.co.uk/" target="_blank" rel="noopener" class="font-mono text-sm text-ruby2 hover:text-ruby transition-colors">
+            shifttrack.co.uk →
           </a>
         </div>
 
-        <div class="project-card bg-black border border-white/10 rounded-[32px] p-8 transition-all duration-300">
-          <span class="text-red-400 text-sm">E-Commerce Marketplace</span>
-          <h3 class="text-3xl font-bold mt-3 mb-4">Misr Bazaar</h3>
-          <p class="text-gray-400 leading-relaxed mb-6">
-            Modern e-commerce marketplace with product management, responsive UI, and scalable backend systems.
+        <div class="project-card reveal bg-ink border border-line rounded-2xl p-8">
+          <p class="font-mono text-xs tracking-wide text-ruby2 uppercase mb-3">E‑Commerce Marketplace</p>
+          <h3 class="font-display font-semibold text-2xl text-parchment mb-3">Misr Bazaar</h3>
+          <p class="font-display italic text-bone/70 text-[15px] mb-3">
+            The problem: independent sellers needed a marketplace built for their market, not a generic template.
           </p>
-          <div class="flex flex-wrap gap-3 mb-6">
-            <span class="bg-zinc-900 px-4 py-2 rounded-full text-sm">Rails</span>
-            <span class="bg-zinc-900 px-4 py-2 rounded-full text-sm">Tailwind</span>
-            <span class="bg-zinc-900 px-4 py-2 rounded-full text-sm">PostgreSQL</span>
+          <p class="text-bone leading-relaxed mb-6">
+            Built an e‑commerce marketplace with product management, responsive UI, and a scalable backend.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-6 font-mono text-xs text-bone">
+            <span class="border border-ruby2/40 text-ruby2/90 rounded-full px-3 py-1">solo build</span>
+            <span class="border border-line rounded-full px-3 py-1">rails</span>
+            <span class="border border-line rounded-full px-3 py-1">tailwind</span>
+            <span class="border border-line rounded-full px-3 py-1">postgresql</span>
           </div>
-          <a href="https://misrbazaar.com/" target="_blank" class="text-red-400 hover:text-red-300">
-            Visit Website →
+          <a href="https://misrbazaar.com/" target="_blank" rel="noopener" class="font-mono text-sm text-ruby2 hover:text-ruby transition-colors">
+            misrbazaar.com →
           </a>
         </div>
 
@@ -238,71 +420,221 @@
   </section>
 
   <!-- SERVICES -->
-  <section class="max-w-7xl mx-auto px-6 py-24">
-
-    <div class="text-center mb-16">
-      <h2 class="text-5xl font-bold mb-6">What I Build</h2>
+  <section id="stack" class="max-w-6xl mx-auto px-6 py-24">
+    <div class="mb-16 reveal">
+      <p class="font-mono text-sm eyebrow text-bone mb-4">services.rb</p>
+      <h2 class="font-display font-semibold text-4xl md:text-5xl text-parchment">What I build</h2>
     </div>
 
-    <div class="grid md:grid-cols-3 gap-8">
-
-      <div class="glass border border-white/10 rounded-3xl p-8">
-        <h3 class="text-2xl font-bold mb-4 text-red-400">
-          Enterprise Rails Apps
-        </h3>
-
-        <p class="text-gray-400 leading-relaxed">
-          Scalable Ruby on Rails applications with optimized backend architecture and modern frontend systems.
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="reveal border border-line rounded-2xl p-8 hover:border-ruby/50 transition-colors">
+        <h3 class="font-display font-semibold text-xl text-ruby2 mb-3">Enterprise Rails apps</h3>
+        <p class="text-bone leading-relaxed">
+          Scalable Rails applications with clean backend architecture and a frontend that stays fast under real usage.
         </p>
       </div>
-
-      <div class="glass border border-white/10 rounded-3xl p-8">
-        <h3 class="text-2xl font-bold mb-4 text-red-400">
-          Mobile Apps
-        </h3>
-
-        <p class="text-gray-400 leading-relaxed">
-          Android and iOS mobile applications using Hotwire Native and Rails technologies.
+      <div class="reveal border border-line rounded-2xl p-8 hover:border-ruby/50 transition-colors">
+        <h3 class="font-display font-semibold text-xl text-ruby2 mb-3">Mobile apps</h3>
+        <p class="text-bone leading-relaxed">
+          Android and iOS apps built with Hotwire Native on top of your existing Rails app — one codebase, real native shells.
         </p>
       </div>
-
-      <div class="glass border border-white/10 rounded-3xl p-8">
-        <h3 class="text-2xl font-bold mb-4 text-red-400">
-          Responsive UI/UX
-        </h3>
-
-        <p class="text-gray-400 leading-relaxed">
-          Professional responsive frontend interfaces using Tailwind CSS, Bootstrap, and JavaScript.
+      <div class="reveal border border-line rounded-2xl p-8 hover:border-ruby/50 transition-colors">
+        <h3 class="font-display font-semibold text-xl text-ruby2 mb-3">Responsive UI/UX</h3>
+        <p class="text-bone leading-relaxed">
+          Interfaces built with Tailwind, Bootstrap, and JavaScript that hold up from a warehouse tablet to a phone in the field.
         </p>
       </div>
+    </div>
+  </section>
 
+  <!-- FAQ -->
+  <section id="faq" class="border-t border-line bg-ink2/40 py-24">
+    <div class="max-w-4xl mx-auto px-6">
+
+      <div class="mb-12 reveal">
+        <p class="font-mono text-sm eyebrow text-bone mb-4">faq.rb</p>
+        <h2 class="font-display font-semibold text-4xl md:text-5xl text-parchment">Common questions</h2>
+      </div>
+
+      <div class="flex flex-col gap-3 reveal">
+
+        <details class="group border border-line rounded-xl px-6 py-5 bg-ink open:bg-ink2/60">
+          <summary class="flex items-center justify-between cursor-pointer list-none font-display font-semibold text-lg text-parchment">
+            Do you work with an existing codebase, or only greenfield builds?
+            <span class="font-mono text-ruby2 ml-4 group-open:rotate-45 transition-transform">+</span>
+          </summary>
+          <p class="text-bone leading-relaxed mt-4 text-[15px]">
+            Both. Most of my work has been extending and rescuing existing Rails apps — new features, performance fixes, Hotwire migrations — as well as building new products from scratch.
+          </p>
+        </details>
+
+        <details class="group border border-line rounded-xl px-6 py-5 bg-ink open:bg-ink2/60">
+          <summary class="flex items-center justify-between cursor-pointer list-none font-display font-semibold text-lg text-parchment">
+            What's your engagement model?
+            <span class="font-mono text-ruby2 ml-4 group-open:rotate-45 transition-transform">+</span>
+          </summary>
+          <p class="text-bone leading-relaxed mt-4 text-[15px]">
+            Fixed‑price for well‑scoped projects, or hourly/retainer for ongoing work and support. <span class="text-bone/50">[confirm your current rates/terms]</span>
+          </p>
+        </details>
+
+        <details class="group border border-line rounded-xl px-6 py-5 bg-ink open:bg-ink2/60">
+          <summary class="flex items-center justify-between cursor-pointer list-none font-display font-semibold text-lg text-parchment">
+            Can you build the mobile app alongside the web app?
+            <span class="font-mono text-ruby2 ml-4 group-open:rotate-45 transition-transform">+</span>
+          </summary>
+          <p class="text-bone leading-relaxed mt-4 text-[15px]">
+            Yes — with Hotwire Native, the Android and iOS apps share the same Rails codebase as the web app, so there's no separate mobile team or client to keep in sync.
+          </p>
+        </details>
+
+        <details class="group border border-line rounded-xl px-6 py-5 bg-ink open:bg-ink2/60">
+          <summary class="flex items-center justify-between cursor-pointer list-none font-display font-semibold text-lg text-parchment">
+            What timezone do you work in, and how fast do you respond?
+            <span class="font-mono text-ruby2 ml-4 group-open:rotate-45 transition-transform">+</span>
+          </summary>
+          <p class="text-bone leading-relaxed mt-4 text-[15px]">
+            <span class="text-bone/50">[add your timezone and typical response time here]</span>
+          </p>
+        </details>
+
+        <details class="group border border-line rounded-xl px-6 py-5 bg-ink open:bg-ink2/60">
+          <summary class="flex items-center justify-between cursor-pointer list-none font-display font-semibold text-lg text-parchment">
+            How do we get started?
+            <span class="font-mono text-ruby2 ml-4 group-open:rotate-45 transition-transform">+</span>
+          </summary>
+          <p class="text-bone leading-relaxed mt-4 text-[15px]">
+            Send a short brief through email — what you're building, roughly where you are today, and any timeline. I'll reply with questions and a rough scope before anything's billable.
+          </p>
+        </details>
+
+      </div>
     </div>
   </section>
 
   <!-- CONTACT -->
-  <section id="contact" class="bg-zinc-950 py-24">
-    <div class="max-w-5xl mx-auto px-6 text-center">
+  <section id="contact" class="border-t border-line bg-ink2/40 py-24">
+    <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-14 items-center">
 
-      <h2 class="text-6xl font-black mb-6">
-        Let’s Work Together
-      </h2>
+      <div class="reveal">
+        <p class="font-mono text-sm eyebrow text-bone mb-4">contact.rb</p>
+        <h2 class="font-display font-semibold text-4xl md:text-5xl text-parchment mb-6">
+          Let's work together
+        </h2>
+        <p class="text-lg text-bone leading-relaxed max-w-xl mb-8">
+          Available for freelance Rails development, Hotwire Native mobile apps, backend APIs, and enterprise systems that need to ship.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href="mailto:noor102bs@gmail.com" class="bg-ruby hover:bg-ruby2 transition-colors px-7 py-3.5 rounded-lg font-semibold text-parchment">
+            Email me
+          </a>
+          <a href="resume.pdf" download class="border border-line hover:border-ruby hover:text-ruby2 transition-colors px-7 py-3.5 rounded-lg font-semibold text-parchment">
+            Download résumé
+          </a>
+        </div>
+      </div>
 
-      <p class="text-xl text-gray-400 leading-relaxed max-w-3xl mx-auto mb-10">
-        Available for freelance projects, Ruby on Rails development, Hotwire Native mobile apps, frontend redesigns, backend APIs, and scalable enterprise systems.
-      </p>
-
-      <div class="flex flex-wrap justify-center gap-5">
-        <a href="#" class="bg-red-600 hover:bg-red-700 transition-all px-10 py-5 rounded-2xl font-semibold text-lg shadow-2xl shadow-red-500/20">
-          Hire Me
-        </a>
-
-        <a href="#" class="border border-white/20 hover:border-red-500 hover:bg-red-500/10 transition-all px-10 py-5 rounded-2xl font-semibold text-lg">
-          Download Resume
-        </a>
+      <div class="reveal rounded-xl border border-line bg-ink p-6 font-mono text-sm">
+        <p class="text-bone mb-2">email:&nbsp; <a href="mailto:noor102bs@gmail.com" class="text-parchment hover:text-ruby2 transition-colors">noor102bs@gmail.com</a></p>
+        <p class="text-bone mb-2">phone:&nbsp; <a href="tel:+923109508764" class="text-parchment hover:text-ruby2 transition-colors">+92 310 9508764</a></p>
+        <p class="text-bone mb-2">based:&nbsp; <span class="text-parchment">Islamabad, Pakistan</span></p>
+        <p class="text-bone mb-2">github:&nbsp; <a href="https://github.com/noorullah-dev" target="_blank" rel="noopener" class="text-parchment hover:text-ruby2 transition-colors">github.com/noorullah-dev</a></p>
+        <p class="text-bone">linkedin:&nbsp; <span class="text-parchment">[linkedin.com/in/your-handle]</span></p>
       </div>
 
     </div>
   </section>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-line">
+    <div class="max-w-6xl mx-auto px-6 py-10 flex flex-col md:flex-row justify-between items-center gap-6">
+      <p class="font-mono text-sm text-bone/60">© 2026 Noor Ullah — built with Rails, Hotwire &amp; Tailwind.</p>
+      <div class="flex flex-wrap justify-center gap-6 font-mono text-sm text-bone">
+        <a href="#work" class="hover:text-parchment transition-colors">work</a>
+        <a href="#process" class="hover:text-parchment transition-colors">process</a>
+        <a href="#about" class="hover:text-parchment transition-colors">about</a>
+        <a href="#stack" class="hover:text-parchment transition-colors">stack</a>
+        <a href="#faq" class="hover:text-parchment transition-colors">faq</a>
+        <a href="#contact" class="hover:text-parchment transition-colors">contact</a>
+        <a href="resume.html" class="hover:text-ruby2 transition-colors">résumé</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // mobile menu
+    const menuBtn = document.getElementById('menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    menuBtn.addEventListener('click', () => {
+      const isOpen = menu.classList.toggle('open');
+      menuBtn.setAttribute('aria-expanded', String(isOpen));
+    });
+    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      menu.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded', 'false');
+    }));
+
+    // scroll reveal
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduceMotion) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('is-visible'); });
+      }, { threshold: 0.15 });
+      document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    } else {
+      document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
+    }
+
+    // rails console typing effect
+    const lines = [
+      { t: 'irb(main):001:0&gt; dev = Developer.new(', cls: '' },
+      { t: '  name: "Noor Ullah",', cls: '' },
+      { t: '  role: "Full Stack Rails Developer",', cls: '' },
+      { t: '  experience: "3+ years",', cls: '' },
+      { t: '  shipped: 10,', cls: '' },
+      { t: '  stack: %w[Rails Hotwire Stimulus Postgres]', cls: '' },
+      { t: ')', cls: '' },
+      { t: '=&gt; #&lt;Developer name="Noor Ullah" available=true&gt;', cls: 'text-ruby2' },
+      { t: '', cls: '' },
+      { t: 'irb(main):002:0&gt; dev.available?', cls: '' },
+      { t: '=&gt; true', cls: 'text-ruby2' },
+    ];
+    const out = document.getElementById('console-output');
+
+    function renderStatic() {
+      out.innerHTML = lines.map(l => l.cls ? `<span class="${l.cls}">${l.t}</span>` : l.t).join('\n');
+    }
+
+    if (reduceMotion) {
+      renderStatic();
+    } else {
+      let li = 0, ci = 0;
+      let html = '';
+      function tick() {
+        if (li >= lines.length) {
+          out.innerHTML = html + '<span class="caret">&nbsp;</span>';
+          return;
+        }
+        const line = lines[li];
+        if (ci === 0 && line.cls) html_open();
+        ci++;
+        const partial = line.t.slice(0, ci);
+        const openTag = line.cls ? `<span class="${line.cls}">` : '';
+        const closeTag = line.cls ? '</span>' : '';
+        out.innerHTML = html + openTag + partial + closeTag + '<span class="caret">&nbsp;</span>';
+        if (ci < line.t.length) {
+          setTimeout(tick, 14);
+        } else {
+          html += (line.cls ? `<span class="${line.cls}">${line.t}</span>` : line.t) + '\n';
+          li++; ci = 0;
+          setTimeout(tick, line.t === '' ? 60 : 90);
+        }
+      }
+      function html_open() {}
+      tick();
+    }
+  </script>
 
 </body>
 </html>
