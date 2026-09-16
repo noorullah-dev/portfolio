@@ -1,0 +1,1150 @@
+[
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/favicon.png",
+    "contentType": "image/png",
+    "category": "images",
+    "localFile": "assets/images/favicon_f4d887c70791.png",
+    "size": 1054
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/css/fonts.css",
+    "contentType": "text/css",
+    "category": "css",
+    "localFile": "assets/css/fonts_9205705fda25.css",
+    "size": 5440
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/css/bootstrap.min.css",
+    "contentType": "text/css",
+    "category": "css",
+    "localFile": "assets/css/bootstrap.min_ee625f739ee7.css",
+    "size": 232757
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/css/slicknav.min.css",
+    "contentType": "text/css",
+    "category": "css",
+    "localFile": "assets/css/slicknav.min_a3b0bf61ea4f.css",
+    "size": 2505
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/css/swiper-bundle.min.css",
+    "contentType": "text/css",
+    "category": "css",
+    "localFile": "assets/css/swiper-bundle.min_62d207169d2b.css",
+    "size": 18429
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/css/all.min.css",
+    "contentType": "text/css",
+    "category": "css",
+    "localFile": "assets/css/all.min_270b5ba67201.css",
+    "size": 75736
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/css/animate.css",
+    "contentType": "text/css",
+    "category": "css",
+    "localFile": "assets/css/animate_11e4677b32e3.css",
+    "size": 73589
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/css/magnific-popup.css",
+    "contentType": "text/css",
+    "category": "css",
+    "localFile": "assets/css/magnific-popup_7870b576e273.css",
+    "size": 6951
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/css/mousecursor.css",
+    "contentType": "text/css",
+    "category": "css",
+    "localFile": "assets/css/mousecursor_0ed98ee00196.css",
+    "size": 6892
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/css/custom.css",
+    "contentType": "text/css",
+    "category": "css",
+    "localFile": "assets/css/custom_6b2f4bee655f.css",
+    "size": 189801
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/loader.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/loader_35f948d2d377.svg",
+    "size": 1829
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/logo.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/logo_e895685751b8.svg",
+    "size": 7042
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/author-1.jpg",
+    "contentType": "image/jpeg",
+    "category": "images",
+    "localFile": "assets/images/author-1_755a8c0ad909.jpg",
+    "size": 7009
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/author-2.jpg",
+    "contentType": "image/jpeg",
+    "category": "images",
+    "localFile": "assets/images/author-2_cf5079c252f4.jpg",
+    "size": 6249
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/author-3.jpg",
+    "contentType": "image/jpeg",
+    "category": "images",
+    "localFile": "assets/images/author-3_0e09fa88ed07.jpg",
+    "size": 5884
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-hero-experience-box.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-hero-experience-box_7275aa90e268.svg",
+    "size": 5967
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/hero-image-royal.png",
+    "contentType": "image/png",
+    "category": "images",
+    "localFile": "assets/images/hero-image-royal_a0ce00e91dc4.png",
+    "size": 82878
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/about-us-image-1-royal.jpg",
+    "contentType": "image/jpeg",
+    "category": "images",
+    "localFile": "assets/images/about-us-image-1-royal_547151e79b5a.jpg",
+    "size": 80225
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/years-experience-circle-accent.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/years-experience-circle-accent_2707562502fd.svg",
+    "size": 24264
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/about-us-image-2-royal.jpg",
+    "contentType": "image/jpeg",
+    "category": "images",
+    "localFile": "assets/images/about-us-image-2-royal_697ae9f9225f.jpg",
+    "size": 174753
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-mail-white.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-mail-white_23d2f810fbc5.svg",
+    "size": 830
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-service-item-1-royal.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-service-item-1-royal_0315c102a264.svg",
+    "size": 5963
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-service-item-2-royal.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-service-item-2-royal_b47112dae0f4.svg",
+    "size": 6399
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-service-item-3-royal.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-service-item-3-royal_62bf07b269b7.svg",
+    "size": 3102
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-phone-white.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-phone-white_d614eece3438.svg",
+    "size": 4152
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-tools-item-1.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-tools-item-1_4c372006158c.svg",
+    "size": 1064
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-tools-item-2.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-tools-item-2_0152065f4ab5.svg",
+    "size": 3384
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-tools-item-3.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-tools-item-3_6a6d30bf276b.svg",
+    "size": 1322
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/fun-fact-body-image-royal.jpg",
+    "contentType": "image/jpeg",
+    "category": "images",
+    "localFile": "assets/images/fun-fact-body-image-royal_2ed816eed8a5.jpg",
+    "size": 63795
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/fun-fact-image-royal.jpg",
+    "contentType": "image/jpeg",
+    "category": "images",
+    "localFile": "assets/images/fun-fact-image-royal_47cb2874838f.jpg",
+    "size": 115590
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/project-1.jpg",
+    "contentType": "image/jpeg",
+    "category": "images",
+    "localFile": "assets/images/project-1_16cb9e33bc3d.jpg",
+    "size": 98460
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/arrow-white.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/arrow-white_b3a08c8125a1.svg",
+    "size": 2810
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/project-2.jpg",
+    "contentType": "image/jpeg",
+    "category": "images",
+    "localFile": "assets/images/project-2_848eb4a551ec.jpg",
+    "size": 100646
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/project-3.jpg",
+    "contentType": "image/jpeg",
+    "category": "images",
+    "localFile": "assets/images/project-3_b711e4b94fc2.jpg",
+    "size": 103471
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/what-we-item-1-royal.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/what-we-item-1-royal_8bf13f0db8b7.svg",
+    "size": 5963
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/what-we-item-2-royal.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/what-we-item-2-royal_774af0646abe.svg",
+    "size": 3102
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/what-we-image-royal.jpg",
+    "contentType": "image/jpeg",
+    "category": "images",
+    "localFile": "assets/images/what-we-image-royal_114594dc5fa5.jpg",
+    "size": 44690
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-pricing-item-1-royal.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-pricing-item-1-royal_1693444a0a21.svg",
+    "size": 6644
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-pricing-item-2-royal.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-pricing-item-2-royal_8524752470cf.svg",
+    "size": 2904
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-pricing-item-3-royal.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-pricing-item-3-royal_6a9e918afcd5.svg",
+    "size": 6408
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-pricing-benefit-1.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-pricing-benefit-1_d49dec641083.svg",
+    "size": 1408
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-pricing-benefit-2.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-pricing-benefit-2_f5064911f173.svg",
+    "size": 3889
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-pricing-benefit-3.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-pricing-benefit-3_e0c36ba2b763.svg",
+    "size": 918
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/experience-logo-1-royal.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/experience-logo-1-royal_5e6d38b82f10.svg",
+    "size": 5401
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/arrow-experience.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/arrow-experience_115ba4644544.svg",
+    "size": 706
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/experience-logo-2-royal.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/experience-logo-2-royal_9249ba025bb0.svg",
+    "size": 4602
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/experience-logo-3-royal.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/experience-logo-3-royal_7301695025d8.svg",
+    "size": 4920
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/experience-logo-4-royal.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/experience-logo-4-royal_32310b87a3c2.svg",
+    "size": 8406
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/google-logo-royal.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/google-logo-royal_8bdb10af97f8.svg",
+    "size": 1430
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/testimonial-logo-1-royal.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/testimonial-logo-1-royal_ee4e5851ba46.svg",
+    "size": 5395
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/company-supports-logo-1.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/company-supports-logo-1_462537b539af.svg",
+    "size": 1713
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/company-supports-logo-2.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/company-supports-logo-2_5bf7e0797236.svg",
+    "size": 5325
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/company-supports-logo-3.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/company-supports-logo-3_63d65f61b00c.svg",
+    "size": 5045
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/company-supports-logo-4.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/company-supports-logo-4_0a7890e9f087.svg",
+    "size": 2544
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/company-supports-logo-5.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/company-supports-logo-5_6bd241e2dd24.svg",
+    "size": 1679
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/company-supports-logo-6.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/company-supports-logo-6_467d2102347b.svg",
+    "size": 8494
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-location-white.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-location-white_01dc89cffd4f.svg",
+    "size": 796
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/post-1.jpg",
+    "contentType": "image/jpeg",
+    "category": "images",
+    "localFile": "assets/images/post-1_51ea08ad1c5e.jpg",
+    "size": 110936
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/post-2.jpg",
+    "contentType": "image/jpeg",
+    "category": "images",
+    "localFile": "assets/images/post-2_d5fbd6e76208.jpg",
+    "size": 123049
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/post-3.jpg",
+    "contentType": "image/jpeg",
+    "category": "images",
+    "localFile": "assets/images/post-3_842a9f6b0ebf.jpg",
+    "size": 118703
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/js/jquery-3.7.1.min.js",
+    "contentType": "application/javascript",
+    "category": "js",
+    "localFile": "assets/js/jquery-3.7.1.min_244c6f8ba711.js",
+    "size": 87532
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/js/bootstrap.min.js",
+    "contentType": "application/javascript",
+    "category": "js",
+    "localFile": "assets/js/bootstrap.min_47133473eaa0.js",
+    "size": 60593
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/js/validator.min.js",
+    "contentType": "application/javascript",
+    "category": "js",
+    "localFile": "assets/js/validator.min_2382a32cfd3c.js",
+    "size": 7729
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/js/jquery.slicknav.js",
+    "contentType": "application/javascript",
+    "category": "js",
+    "localFile": "assets/js/jquery.slicknav_93b8016a1df3.js",
+    "size": 21205
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/js/swiper-bundle.min.js",
+    "contentType": "application/javascript",
+    "category": "js",
+    "localFile": "assets/js/swiper-bundle.min_5e4b84c0edf1.js",
+    "size": 148425
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/js/jquery.waypoints.min.js",
+    "contentType": "application/javascript",
+    "category": "js",
+    "localFile": "assets/js/jquery.waypoints.min_04f7209c837a.js",
+    "size": 9028
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/js/jquery.counterup.min.js",
+    "contentType": "application/javascript",
+    "category": "js",
+    "localFile": "assets/js/jquery.counterup.min_67d6a9cb336d.js",
+    "size": 1057
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/js/jquery.magnific-popup.min.js",
+    "contentType": "application/javascript",
+    "category": "js",
+    "localFile": "assets/js/jquery.magnific-popup.min_a14a4a5e61e1.js",
+    "size": 20735
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/js/SmoothScroll.js",
+    "contentType": "application/javascript",
+    "category": "js",
+    "localFile": "assets/js/SmoothScroll_8962ef847001.js",
+    "size": 24489
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/js/parallaxie.js",
+    "contentType": "application/javascript",
+    "category": "js",
+    "localFile": "assets/js/parallaxie_e9e495fb2aeb.js",
+    "size": 2033
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/js/gsap.min.js",
+    "contentType": "application/javascript",
+    "category": "js",
+    "localFile": "assets/js/gsap.min_96c9bd4463cd.js",
+    "size": 72435
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/js/magiccursor.js",
+    "contentType": "application/javascript",
+    "category": "js",
+    "localFile": "assets/js/magiccursor_0e71ef64ced6.js",
+    "size": 3720
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/js/SplitText.min.js",
+    "contentType": "application/javascript",
+    "category": "js",
+    "localFile": "assets/js/SplitText.min_562494cd4582.js",
+    "size": 7247
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/js/ScrollTrigger.min.js",
+    "contentType": "application/javascript",
+    "category": "js",
+    "localFile": "assets/js/ScrollTrigger.min_1891cf10d6f6.js",
+    "size": 43380
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/js/jquery.mb.YTPlayer.min.js",
+    "contentType": "application/javascript",
+    "category": "js",
+    "localFile": "assets/js/jquery.mb.YTPlayer.min_b0ff4d640c42.js",
+    "size": 64021
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/js/wow.min.js",
+    "contentType": "application/javascript",
+    "category": "js",
+    "localFile": "assets/js/wow.min_3cc40a2744c8.js",
+    "size": 8155
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/js/function.js",
+    "contentType": "application/javascript",
+    "category": "js",
+    "localFile": "assets/js/function_c59ab91a3c50.js",
+    "size": 11303
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/hero-info-image.jpg",
+    "contentType": "image/jpeg",
+    "category": "images",
+    "localFile": "assets/images/hero-info-image_b8cfc66c8516.jpg",
+    "size": 44593
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/about-us-image.png",
+    "contentType": "image/png",
+    "category": "images",
+    "localFile": "assets/images/about-us-image_b6760af57f0c.png",
+    "size": 113332
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-about-body-item.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-about-body-item_2dcbdd88acb0.svg",
+    "size": 11094
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-service-item-1.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-service-item-1_7d1d4f61eb73.svg",
+    "size": 5976
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-service-item-2.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-service-item-2_b6f98d0c8179.svg",
+    "size": 6380
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-service-item-3.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-service-item-3_b412acaa0b65.svg",
+    "size": 3102
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-service-item-4.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-service-item-4_37ea9c917142.svg",
+    "size": 8352
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-service-item-5.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-service-item-5_1f41ac5d0b7c.svg",
+    "size": 12049
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-fun-fact-item-1.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-fun-fact-item-1_8d84b530a7aa.svg",
+    "size": 8288
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-fun-fact-item-2.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-fun-fact-item-2_277be9f2ac72.svg",
+    "size": 12049
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/fun-fact-image.png",
+    "contentType": "image/png",
+    "category": "images",
+    "localFile": "assets/images/fun-fact-image_34c3d556d0ad.png",
+    "size": 98942
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-fun-fact-item-3.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-fun-fact-item-3_fbd7311aed6b.svg",
+    "size": 2758
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-fun-fact-item-4.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-fun-fact-item-4_3439069333ea.svg",
+    "size": 6319
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-experience-item-1.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-experience-item-1_ef4c38849b2b.svg",
+    "size": 1095
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-experience-item-2.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-experience-item-2_78d85cdb8a00.svg",
+    "size": 1511
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-experience-item-3.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-experience-item-3_fbd88b7a6d5f.svg",
+    "size": 2222
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-pricing-item-1.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-pricing-item-1_5896975919dc.svg",
+    "size": 6635
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-pricing-item-2.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-pricing-item-2_998959cfc613.svg",
+    "size": 2764
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-pricing-item-3.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-pricing-item-3_85d44cdb0339.svg",
+    "size": 6328
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/our-achievements-image-1.png",
+    "contentType": "image/png",
+    "category": "images",
+    "localFile": "assets/images/our-achievements-image-1_d0ef09ad2d69.png",
+    "size": 4363
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/our-achievements-image-2.png",
+    "contentType": "image/png",
+    "category": "images",
+    "localFile": "assets/images/our-achievements-image-2_1a73ff44a4eb.png",
+    "size": 4307
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/our-achievements-image-3.png",
+    "contentType": "image/png",
+    "category": "images",
+    "localFile": "assets/images/our-achievements-image-3_1fec4dfa3687.png",
+    "size": 4355
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/our-achievements-image-4.png",
+    "contentType": "image/png",
+    "category": "images",
+    "localFile": "assets/images/our-achievements-image-4_863a95da25d2.png",
+    "size": 4310
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/our-achievements-image-5.png",
+    "contentType": "image/png",
+    "category": "images",
+    "localFile": "assets/images/our-achievements-image-5_14280ed71d3e.png",
+    "size": 4360
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-asterisk-white.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-asterisk-white_746ff476fc53.svg",
+    "size": 1350
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/testimonial-review-img-1.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/testimonial-review-img-1_31d62d5aa955.svg",
+    "size": 2192
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/testimonial-review-img-2.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/testimonial-review-img-2_e6d72582a4f7.svg",
+    "size": 1644
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/testimonial-quote.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/testimonial-quote_2ec4569a6f6f.svg",
+    "size": 2047
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/hero-image-elite.png",
+    "contentType": "image/png",
+    "category": "images",
+    "localFile": "assets/images/hero-image-elite_8903cb9bfba1.png",
+    "size": 123316
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/years-experience-circle-transparent.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/years-experience-circle-transparent_ebc8593393d4.svg",
+    "size": 24661
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/about-us-image-elite.jpg",
+    "contentType": "image/jpeg",
+    "category": "images",
+    "localFile": "assets/images/about-us-image-elite_e0543221c572.jpg",
+    "size": 77525
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-user-white.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-user-white_5a60170842d2.svg",
+    "size": 566
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-position.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-position_4ed6fc926a58.svg",
+    "size": 502
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-service-item-1-elite.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-service-item-1-elite_2af5949a39b3.svg",
+    "size": 5967
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-service-item-2-elite.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-service-item-2-elite_8ef75e4aaf54.svg",
+    "size": 6317
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-service-item-3-elite.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-service-item-3-elite_efdf5a732e11.svg",
+    "size": 3114
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-why-choose-1-elite.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-why-choose-1-elite_ccc2a33941e1.svg",
+    "size": 6274
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-why-choose-2-elite.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-why-choose-2-elite_dad7befa6fd8.svg",
+    "size": 6628
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/why-choose-image-elite.png",
+    "contentType": "image/png",
+    "category": "images",
+    "localFile": "assets/images/why-choose-image-elite_ada663f445a8.png",
+    "size": 86533
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-core-skills-1-elite.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-core-skills-1-elite_31794225fbb2.svg",
+    "size": 6319
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-core-skills-2-elite.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-core-skills-2-elite_be8552158d5d.svg",
+    "size": 8288
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-core-skills-3-elite.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-core-skills-3-elite_2e3a7070955a.svg",
+    "size": 12049
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/our-works-slider-image-1-elite.jpg",
+    "contentType": "image/jpeg",
+    "category": "images",
+    "localFile": "assets/images/our-works-slider-image-1-elite_062ad4df43fc.jpg",
+    "size": 123596
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-network.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-network_158af10613d0.svg",
+    "size": 968
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-headphone-white.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-headphone-white_29ae68cff35d.svg",
+    "size": 2731
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/testimonial-quote-elite.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/testimonial-quote-elite_7b83e63659fd.svg",
+    "size": 2026
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-mail-accent.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-mail-accent_748f51b01acd.svg",
+    "size": 643
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-phone-accent.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-phone-accent_fa1eb6d7be87.svg",
+    "size": 1172
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-location-accent.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-location-accent_dac968cb555e.svg",
+    "size": 800
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/our-approach-item-image-1.png",
+    "contentType": "image/png",
+    "category": "images",
+    "localFile": "assets/images/our-approach-item-image-1_c3c65427a48a.png",
+    "size": 1073
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/our-approach-item-image-2.png",
+    "contentType": "image/png",
+    "category": "images",
+    "localFile": "assets/images/our-approach-item-image-2_81ab6ee71337.png",
+    "size": 958
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/our-approach-image.jpg",
+    "contentType": "image/jpeg",
+    "category": "images",
+    "localFile": "assets/images/our-approach-image_848032a2dcf7.jpg",
+    "size": 136708
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-how-it-work-1.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-how-it-work-1_686a927fd7ae.svg",
+    "size": 8288
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-how-it-work-2.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-how-it-work-2_9d20d072205b.svg",
+    "size": 2758
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-how-it-work-3.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-how-it-work-3_f1656c7d8de6.svg",
+    "size": 12051
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-what-we-1.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-what-we-1_a86923dfbf1d.svg",
+    "size": 8288
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-what-we-2.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-what-we-2_39687a598be0.svg",
+    "size": 6326
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-what-we-3.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-what-we-3_3c5ff4001542.svg",
+    "size": 5967
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-what-we-4.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-what-we-4_024f12a73222.svg",
+    "size": 12053
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/post-4.jpg",
+    "contentType": "image/jpeg",
+    "category": "images",
+    "localFile": "assets/images/post-4_8e38103f6aa6.jpg",
+    "size": 110167
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/post-5.jpg",
+    "contentType": "image/jpeg",
+    "category": "images",
+    "localFile": "assets/images/post-5_10e60e845127.jpg",
+    "size": 371784
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/post-6.jpg",
+    "contentType": "image/jpeg",
+    "category": "images",
+    "localFile": "assets/images/post-6_7333017e5fd0.jpg",
+    "size": 152500
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/service-single-image.jpg",
+    "contentType": "image/jpeg",
+    "category": "images",
+    "localFile": "assets/images/service-single-image_51cabe000272.jpg",
+    "size": 88039
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/service-why-choose-image.jpg",
+    "contentType": "image/jpeg",
+    "category": "images",
+    "localFile": "assets/images/service-why-choose-image_1e1e361c0040.jpg",
+    "size": 71387
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-service-why-choose-1.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-service-why-choose-1_fadaa99bf990.svg",
+    "size": 5987
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-service-why-choose-2.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-service-why-choose-2_f747adcb79e5.svg",
+    "size": 6289
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-service-why-choose-3.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-service-why-choose-3_2ce385515866.svg",
+    "size": 8291
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/service-why-choose-author-image.jpg",
+    "contentType": "image/jpeg",
+    "category": "images",
+    "localFile": "assets/images/service-why-choose-author-image_2d3c101bebfb.jpg",
+    "size": 13453
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/service-why-choose-author-quote.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/service-why-choose-author-quote_bab84f149e3b.svg",
+    "size": 2237
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-service-impact-1.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-service-impact-1_8b0062096907.svg",
+    "size": 6319
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-service-impact-2.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-service-impact-2_d20722bea8d9.svg",
+    "size": 8288
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/project-4.jpg",
+    "contentType": "image/jpeg",
+    "category": "images",
+    "localFile": "assets/images/project-4_177a8a96fc58.jpg",
+    "size": 109357
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/project-5.jpg",
+    "contentType": "image/jpeg",
+    "category": "images",
+    "localFile": "assets/images/project-5_3ac0fc5f1195.jpg",
+    "size": 95050
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/project-6.jpg",
+    "contentType": "image/jpeg",
+    "category": "images",
+    "localFile": "assets/images/project-6_aee9c032bf9f.jpg",
+    "size": 151146
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-project-category-item-1.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-project-category-item-1_3ed654d3a108.svg",
+    "size": 1085
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-project-category-item-2.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-project-category-item-2_0d2a28f41aef.svg",
+    "size": 1453
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-project-category-item-3.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-project-category-item-3_a7dd87907b8c.svg",
+    "size": 1135
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-project-category-item-4.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-project-category-item-4_48dae210a599.svg",
+    "size": 1230
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/icon-project-category-item-5.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/icon-project-category-item-5_717f28ebafe1.svg",
+    "size": 1711
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/project-process-item-bg-1.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/project-process-item-bg-1_053e438372a3.svg",
+    "size": 5996
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/project-process-item-bg-2.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/project-process-item-bg-2_354ce64f832e.svg",
+    "size": 6413
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/project-process-item-bg-3.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/project-process-item-bg-3_76d3c6916b48.svg",
+    "size": 8366
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/project-process-item-bg-4.svg",
+    "contentType": "image/svg+xml",
+    "category": "images",
+    "localFile": "assets/images/project-process-item-bg-4_7f06521b5241.svg",
+    "size": 12093
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/author-4.jpg",
+    "contentType": "image/jpeg",
+    "category": "images",
+    "localFile": "assets/images/author-4_5e02d2494016.jpg",
+    "size": 6729
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/author-5.jpg",
+    "contentType": "image/jpeg",
+    "category": "images",
+    "localFile": "assets/images/author-5_05eee75b4d0c.jpg",
+    "size": 6808
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/author-6.jpg",
+    "contentType": "image/jpeg",
+    "category": "images",
+    "localFile": "assets/images/author-6_f55ef9cea975.jpg",
+    "size": 5034
+  },
+  {
+    "url": "https://html.awaikenthemes.com/weblance/images/404-error-img.png",
+    "contentType": "image/png",
+    "category": "images",
+    "localFile": "assets/images/404-error-img_3180d40acb99.png",
+    "size": 73546
+  }
+]
