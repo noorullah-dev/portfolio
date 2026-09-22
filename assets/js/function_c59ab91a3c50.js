@@ -443,14 +443,14 @@
 		/* Ajax call to submit form */
 		$.ajax({
 			type: "POST",
-			url: "form-process.php",
+			url: "https://formsubmit.co/ajax/noor102bs@gmail.com",
 			data: $contactform.serialize(),
-			success : function(text){
-				if (text === "success"){
-					formSuccess();
-				} else {
-					submitMSG(false,text);
-				}
+			dataType: "json",
+			success : function(){
+				formSuccess();
+			},
+			error : function(){
+				submitMSG(false, "Oops! Something went wrong. Please email me directly instead.");
 			}
 		});
 	}
@@ -469,6 +469,28 @@
 		$("#msgSubmit").removeClass().addClass(msgClasses).text(msg);
 	}
 	/* Contact form validation end */
+
+	/* Newsletter form submission */
+	var $newsletterform = $("#newslettersForm");
+	$newsletterform.on("submit", function(event){
+		event.preventDefault();
+		var $form = $(this);
+		$form.next(".newsletter-msg").remove();
+		$.ajax({
+			type: "POST",
+			url: "https://formsubmit.co/ajax/noor102bs@gmail.com",
+			data: $form.serialize(),
+			dataType: "json",
+			success : function(){
+				$form[0].reset();
+				$form.after('<p class="newsletter-msg h6 text-success" style="margin-top:10px;">Subscribed! Thank you.</p>');
+			},
+			error : function(){
+				$form.after('<p class="newsletter-msg h6 text-danger" style="margin-top:10px;">Oops! Something went wrong. Please try again.</p>');
+			}
+		});
+	});
+	/* Newsletter form submission end */
 
 	/* Animated Wow Js */	
 	new WOW().init();
