@@ -242,7 +242,7 @@ a:focus{
     transform: translateY(-50%);
 	background-color: var(--primary-color);
 	border-radius: 10px;
-    background-image: url('./images/arrow-black.svg');
+    background-image: url('../images/arrow-black.svg');
     background-repeat: no-repeat;
     background-position: center center;
     background-size: 20px auto;
@@ -251,7 +251,7 @@ a:focus{
 
 .btn-default:hover::before{
 	background-color: var(--accent-color);
-    background-image: url('./images/arrow-white_b3a08c8125a1.svg');
+    background-image: url('../images/arrow-white_b3a08c8125a1.svg');
 }
 
 .btn-default::after{
@@ -292,7 +292,7 @@ a:focus{
     width: 30px;
     height: 30px;
 	background-color: var(--accent-color);
-    background-image: url('./images/arrow-white_b3a08c8125a1.svg');
+    background-image: url('../images/arrow-white_b3a08c8125a1.svg');
     background-repeat: no-repeat;
     background-position: center center;
     background-size: 18px auto;
@@ -365,7 +365,7 @@ a:focus{
 .bg-section{
 	width: 100%;
     max-width: 1820px;
-	background-image: url('./images/section-bg-shape.png');
+	background-image: url('../images/section-bg-shape.png');
 	background-repeat: no-repeat;
 	background-position: top center;
 	background-size: cover;
@@ -440,7 +440,7 @@ a:focus{
     top: 50%;
     left: 16px;
     transform: translateY(-50%);
-	background-image: url('./images/icon-asterisk.svg');
+	background-image: url('../images/icon-asterisk.svg');
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-size: cover;
@@ -1011,7 +1011,7 @@ header.main-header .header-sticky.active{
 
 .about-us-image{
 	position: relative;
-	background-image: url('./images/about-us-bg-image.png');
+	background-image: url('../images/about-us-bg-image.png');
 	background-repeat: no-repeat;
 	background-position: center left 58px;
 	background-size: auto;
@@ -1565,7 +1565,7 @@ header.main-header .header-sticky.active{
 	transform: translateX(-50%);
 	width: 610px;
 	height: 610px;
-	background-image: url('./images/fun-fact-image-bg.png');
+	background-image: url('../images/fun-fact-image-bg.png');
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-size: cover;
@@ -1754,7 +1754,7 @@ header.main-header .header-sticky.active{
 	width: 76px;
     height: 40px;
     --bs-form-check-bg: var(--accent-color);
-	--bs-form-switch-bg: url('./images/pricing-swich-circle.svg');
+	--bs-form-switch-bg: url('../images/pricing-swich-circle.svg');
 	background-size: 30px auto;
 	background-position: left 5px center;
 	border-radius: 100px;
@@ -1836,7 +1836,7 @@ header.main-header .header-sticky.active{
     position: absolute;
     top: 6px;
     left: 0;
-	background-image: url('./images/icon-asterisk.svg');
+	background-image: url('../images/icon-asterisk.svg');
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-size: cover;
@@ -2261,7 +2261,7 @@ header.main-header .header-sticky.active{
 	width: 30px;
 	height: 30px;
 	background-color: var(--accent-color);
-	background-image: url('./images/arrow-white_b3a08c8125a1.svg');
+	background-image: url('../images/arrow-white_b3a08c8125a1.svg');
 	background-repeat: no-repeat;
 	background-position: center center;	
 	background-size: 16px auto;
@@ -2628,7 +2628,7 @@ header.main-header .header-sticky.active{
 /************************************/
 
 .page-header{
-	background-image: url('./images/page-header-bg.jpg');
+	background-image: url('../images/page-header-bg.jpg');
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-size: cover;
@@ -2750,7 +2750,7 @@ header.main-header .header-sticky.active{
 	top: 50%;
 	left: 16px;
 	transform: translateY(-50%);
-	background-image: url('./images/icon-asterisk.svg');
+	background-image: url('../images/icon-asterisk.svg');
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center center;
@@ -3140,7 +3140,7 @@ header.main-header .header-sticky.active{
 	position: absolute;
 	top: 5px;
 	left: 0;
-	background-image: url('./images/icon-asterisk.svg');
+	background-image: url('../images/icon-asterisk.svg');
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center center;
@@ -3271,7 +3271,7 @@ header.main-header .header-sticky.active{
     top: 50%;
 	transform: translateY(-50%);
     right: 0;
-	background: url('./images/arrow-accent.svg') no-repeat;
+	background: url('../images/arrow-accent.svg') no-repeat;
 	background-position: center center;
 	background-size: cover;
     width: 18px;
@@ -3736,7 +3736,7 @@ header.main-header .header-sticky.active{
 }
 
 .post-entry blockquote{
-	background: var(--secondary-color) url('./images/icon-blockquote.svg');
+	background: var(--secondary-color) url('../images/icon-blockquote.svg');
 	background-repeat: no-repeat;
 	background-position: 30px 30px;
     background-size: 45px;
@@ -6432,7 +6432,7 @@ header.main-header.main-header-elite .navbar{
 }
 
 .hero-elite{
-	background-image: url('./images/hero-bg-image-elite.png');
+	background-image: url('../images/hero-bg-image-elite.png');
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-size: cover;
@@ -7094,7 +7094,7 @@ header.main-header.main-header-elite .navbar{
     top: 50%;
     left: 16px;
     transform: translateY(-50%);
-	background-image: url('./images/icon-asterisk.svg');
+	background-image: url('../images/icon-asterisk.svg');
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-size: cover;
@@ -7418,7 +7418,7 @@ header.main-header.main-header-elite .navbar{
 	width: 30px;
 	height: 30px;
 	background-color: var(--accent-color);
-	background-image: url('./images/arrow-white_b3a08c8125a1.svg');
+	background-image: url('../images/arrow-white_b3a08c8125a1.svg');
 	background-repeat: no-repeat;
 	background-position: center center;	
 	background-size: 16px auto;
@@ -8539,7 +8539,7 @@ header.main-header.main-header-elite .navbar{
 /************************************/
 
 .hero-royal{
-    background-image: url('./images/section-bg-shape.png');
+    background-image: url('../images/section-bg-shape.png');
     background-repeat: no-repeat;
     background-position: top center;
     background-size: cover;
@@ -8713,7 +8713,7 @@ header.main-header.main-header-elite .navbar{
     bottom: 0;
     left: 50%;
     transform: translate(-50%, -22%);
-    background: url(./images/hero-image-bg-royal.png) no-repeat;
+    background: url(../images/hero-image-bg-royal.png) no-repeat;
     background-position: center center;
     background-size: cover;
     width: 935px;
@@ -9272,8 +9272,8 @@ header.main-header.main-header-elite .navbar{
 
 .fun-fact-image-royal figure{
 	display: block;
-    background-image: url('./images/fun-fact-image-shape-royal.svg');
-	mask-image: url('./images/fun-fact-image-shape-royal.svg');
+    background-image: url('../images/fun-fact-image-shape-royal.svg');
+	mask-image: url('../images/fun-fact-image-shape-royal.svg');
     mask-size: cover;
     mask-position: center center;
     mask-repeat: no-repeat;
