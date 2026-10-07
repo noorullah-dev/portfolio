@@ -1,0 +1,69 @@
+<%= page_header @voucher.voucher_no,
+              subtitle: "#{@voucher.kind.humanize} voucher · #{qm_date(@voucher.voucher_date)}",
+              icon: @voucher.receipt? ? "bi-arrow-down-circle" : "bi-arrow-up-circle" do %>
+  <%= permitted_link_to "Back to vouchers", vouchers_path, class: "btn btn-light" %>
+<% end %>
+
+<div class="row g-3">
+  <div class="col-lg-5">
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="text-muted small">Amount</div>
+        <div class="fs-3 fw-semibold <%= @voucher.receipt? ? 'text-success' : 'text-danger' %>"><%= money(@voucher.amount) %></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header bg-white fw-semibold">Details</div>
+      <div class="card-body">
+        <dl class="row mb-0">
+          <dt class="col-5 text-secondary small">Type</dt><dd class="col-7"><%= @voucher.kind.humanize %></dd>
+          <dt class="col-5 text-secondary small">Party</dt><dd class="col-7"><%= @voucher.party_name.presence || "—" %></dd>
+          <dt class="col-5 text-secondary small">Party type</dt><dd class="col-7"><%= @voucher.party_type.presence || "—" %></dd>
+          <dt class="col-5 text-secondary small">Mode</dt><dd class="col-7"><%= @voucher.payment_mode&.name || "—" %></dd>
+          <dt class="col-5 text-secondary small">Ledger account</dt><dd class="col-7"><%= @voucher.account&.to_s || "Default" %></dd>
+          <dt class="col-5 text-secondary small">Reference</dt><dd class="col-7"><%= @voucher.reference.presence || "—" %></dd>
+          <dt class="col-5 text-secondary small">Recorded by</dt><dd class="col-7"><%= @voucher.created_by&.full_name || "—" %></dd>
+          <dt class="col-5 text-secondary small">Remarks</dt><dd class="col-7"><%= @voucher.remarks.presence || "—" %></dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-7">
+    <div class="card">
+      <div class="card-header bg-white fw-semibold">Ledger entries</div>
+      <div class="table-responsive">
+        <table class="table table-sm align-middle mb-0">
+          <thead class="table-light"><tr><th>Account</th><th class="text-end">Debit</th><th class="text-end">Credit</th></tr></thead>
+          <tbody>
+            <% @ledger_entries.each do |entry| %>
+              <tr>
+                <td><%= entry.account&.to_s %><div class="small text-muted"><%= entry.particulars %></div></td>
+                <td class="text-end"><%= entry.debit.to_d.positive? ? money(entry.debit) : "—" %></td>
+                <td class="text-end"><%= entry.credit.to_d.positive? ? money(entry.credit) : "—" %></td>
+              </tr>
+            <% end %>
+          </tbody>
+          <tfoot class="table-light">
+            <tr>
+              <th>Total</th>
+              <th class="text-end"><%= money(@ledger_entries.sum(:debit)) %></th>
+              <th class="text-end"><%= money(@ledger_entries.sum(:credit)) %></th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+
+    <% if @cash_entry %>
+      <div class="card mt-3">
+        <div class="card-header bg-white fw-semibold">Cash book</div>
+        <div class="card-body">
+          <span class="badge bg-<%= @cash_entry.direction == 'in' ? 'success' : 'danger' %>"><%= @cash_entry.direction.humanize %></span>
+          <%= money(@cash_entry.amount) %> on <%= qm_date(@cash_entry.entry_date) %>
+          <span class="text-muted">— <%= @cash_entry.particulars %></span>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

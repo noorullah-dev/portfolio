@@ -1,0 +1,134 @@
+<%= page_header @voucher.persisted? ? "Edit Journal #{@voucher.voucher_no}" : "New Journal Voucher",
+              subtitle: "Debit and credit totals must match", icon: "bi-journal-plus" do %>
+  <%= permitted_link_to "Back", journal_vouchers_path, class: "btn btn-light" %>
+<% end %>
+
+<%= permitted_form_with model: @voucher,
+              url: (@voucher.persisted? ? journal_voucher_path(@voucher) : journal_vouchers_path),
+              method: (@voucher.persisted? ? :patch : :post), local: true do |f| %>
+  <% if @voucher.errors.any? %>
+    <div class="alert alert-danger">
+      <ul class="mb-0"><% @voucher.errors.full_messages.each do |m| %><li><%= m %></li><% end %></ul>
+    </div>
+  <% end %>
+
+  <div class="card mb-3">
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-3">
+          <label class="form-label">Date *</label>
+          <%= f.date_field :voucher_date, class: "form-control" %>
+        </div>
+        <div class="col-md-7">
+          <label class="form-label">Description</label>
+          <%= f.text_field :description, class: "form-control" %>
+        </div>
+        <div class="col-md-2">
+          <label class="form-label">Reference</label>
+          <%= f.text_field :reference, class: "form-control" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+      <span class="fw-semibold">Lines</span>
+      <span class="small text-muted" id="journal_totals">
+        Debit <span id="journal_debit">0</span> · Credit <span id="journal_credit">0</span>
+      </span>
+    </div>
+    <div class="card-body">
+      <div id="journal_lines">
+        <%= f.fields_for :lines do |line| %>
+          <div class="row g-2 align-items-end mb-2 journal-line">
+            <div class="col-md-5">
+              <label class="form-label small">Account</label>
+              <%= line.select :account_id, options_for_select(@accounts, line.object.account_id), { include_blank: "Select account" }, class: "form-select form-select-sm" %>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label small">Debit</label>
+              <%= line.number_field :debit, step: "0.01", min: 0, class: "form-control form-control-sm line-debit" %>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label small">Credit</label>
+              <%= line.number_field :credit, step: "0.01", min: 0, class: "form-control form-control-sm line-credit" %>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label small">Particulars</label>
+              <%= line.text_field :remarks, class: "form-control form-control-sm" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <button type="button" class="btn btn-sm btn-outline-secondary" id="add_journal_line">
+        <i class="bi bi-plus-lg me-1"></i>Add line
+      </button>
+    </div>
+    <div class="card-footer bg-white d-flex justify-content-between align-items-center">
+      <%= permitted_link_to "Cancel", journal_vouchers_path, class: "btn btn-light" %>
+      <div>
+        <button class="btn btn-outline-primary" type="submit" name="commit" value="Save draft">Save draft</button>
+        <% if can?("journal.post") %>
+        <button class="btn btn-primary" type="submit" name="commit" value="Save and post">Save and post</button>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script type="text/template" id="journal_line_template">
+  <div class="row g-2 align-items-end mb-2 journal-line">
+    <div class="col-md-5">
+      <label class="form-label small">Account</label>
+      <select class="form-select form-select-sm" name="journal_voucher[lines_attributes][__INDEX__][account_id]">
+        <option value="">Select account</option>
+      </select>
+    </div>
+    <div class="col-md-2"><label class="form-label small">Debit</label>
+      <input class="form-control form-control-sm line-debit" type="number" step="0.01" min="0" name="journal_voucher[lines_attributes][__INDEX__][debit]"></div>
+    <div class="col-md-2"><label class="form-label small">Credit</label>
+      <input class="form-control form-control-sm line-credit" type="number" step="0.01" min="0" name="journal_voucher[lines_attributes][__INDEX__][credit]"></div>
+    <div class="col-md-3"><label class="form-label small">Particulars</label>
+      <input class="form-control form-control-sm" type="text" name="journal_voucher[lines_attributes][__INDEX__][remarks]"></div>
+  </div>
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var container = document.getElementById("journal_lines");
+    var accounts = <%= raw @accounts.to_json %>;
+
+    function fill(select) {
+      accounts.forEach(function (row) {
+        var option = document.createElement("option");
+        option.value = row[1];
+        option.textContent = row[0];
+        select.appendChild(option);
+      });
+    }
+
+    document.querySelectorAll("#journal_lines select").forEach(fill);
+
+    function recalc() {
+      var debit = 0, credit = 0;
+      document.querySelectorAll("#journal_lines .journal-line").forEach(function (line) {
+        debit += parseFloat(line.querySelector(".line-debit").value) || 0;
+        credit += parseFloat(line.querySelector(".line-credit").value) || 0;
+      });
+      document.getElementById("journal_debit").textContent = debit.toFixed(2);
+      document.getElementById("journal_credit").textContent = credit.toFixed(2);
+    }
+
+    document.getElementById("journal_lines").addEventListener("input", recalc);
+
+    document.getElementById("add_journal_line").addEventListener("click", function () {
+      var html = document.getElementById("journal_line_template").innerHTML.replace(/__INDEX__/g, Date.now());
+      container.insertAdjacentHTML("beforeend", html);
+      fill(container.lastElementChild.querySelector("select"));
+      recalc();
+    });
+
+    recalc();
+  });
+</script>

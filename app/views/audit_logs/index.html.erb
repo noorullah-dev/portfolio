@@ -1,0 +1,41 @@
+<% content_for :title, "Activity Log" %>
+<div class="qm-page">
+  <h1 class="h4 mb-1">Activity log</h1>
+  <p class="text-muted mb-4">Latest 300 actions in your company: logins, sales, collections, settings and access denials.</p>
+
+  <div class="card">
+    <div class="card-header bg-transparent">
+      <%= permitted_form_with url: audit_logs_path, method: :get, local: true, class: "row g-2" do %>
+        <div class="col-md-4"><input class="form-control" type="text" name="q" value="params[:q]" placeholder="Filter by action (e.g. sale.create)"></div>
+        <div class="col-md-3">
+          <select class="form-select" name="record_type">
+            <option value="">All record types</option>
+            <% AuditLog.where.not(record_type: nil).distinct.pluck(:record_type).sort.each do |type| %>
+              <option value="<%= type %>" <%= "selected" if params[:record_type] == type %>><%= type %></option>
+            <% end %>
+          </select>
+        </div>
+        <div class="col-md-2"><button class="btn btn-primary w-100" type="submit">Filter</button></div>
+        <div class="col-md-3 text-md-end"><%= permitted_link_to "Reset", audit_logs_path, class: "btn btn-link" %></div>
+      <% end %>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-sm table-hover align-middle mb-0">
+        <thead><tr><th>When</th><th>User</th><th>Role</th><th>Action</th><th>Summary</th><th>Record</th></tr></thead>
+        <tbody>
+          <% @logs.each do |log| %>
+            <tr>
+              <td class="text-nowrap"><%= log.created_at.strftime("%d %b %Y %H:%M") %></td>
+              <td><%= log.user&.username || "system" %></td>
+              <td class="text-muted small"><%= log.role || "—" %></td>
+              <td><%= permitted_link_to log.action, audit_log_path(log) %></td>
+              <td class="small"><%= log.summary %></td>
+              <td class="text-muted small"><%= log.record_type %> #<%= log.record_id %></td>
+            </tr>
+          <% end %>
+          <% if @logs.empty? %><tr><td colspan="6" class="text-muted">Nothing logged yet.</td></tr><% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

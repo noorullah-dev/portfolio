@@ -1,0 +1,97 @@
+<%= page_header "Cash Book", subtitle: "Every rupee in and out of the till and bank", icon: "bi-wallet2" do %>
+  <%= permitted_link_to "New expense", new_expense_path, class: "btn btn-outline-primary" %>
+<% end %>
+
+<div class="row g-3 mb-3">
+  <% [
+    ["Opening", money(@opening), "bi-calendar"],
+    ["Received", money(@totals[:in]), "bi-arrow-down-circle"],
+    ["Paid", money(@totals[:out]), "bi-arrow-up-circle"],
+    ["Closing", money(@closing), "bi-calendar-check"]
+  ].each_with_index do |(label, value, icon), index| %>
+    <div class="col-6 col-xl-3">
+      <div class="card h-100"><div class="card-body d-flex align-items-center gap-3">
+        <div class="rounded-circle p-2 <%= index == 3 ? 'bg-primary-subtle text-primary' : 'bg-secondary-subtle text-secondary' %>">
+          <i class="bi <%= icon %>"></i>
+        </div>
+        <div><div class="text-muted small"><%= label %></div><div class="fs-5 fw-semibold"><%= value %></div></div>
+      </div></div>
+    </div>
+  <% end %>
+</div>
+
+<div class="row g-3">
+  <div class="col-lg-8">
+    <div class="card">
+      <div class="card-header bg-white d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <span class="fw-semibold"><%= qm_date(@from) %> to <%= qm_date(@to) %></span>
+        <%= permitted_form_with url: cash_book_path, method: :get, local: true, class: "d-flex gap-2 flex-wrap qm-toolbar" do %>
+          <%= date_field_tag :from, @from, class: "form-control form-control-sm" %>
+          <%= date_field_tag :to, @to, class: "form-control form-control-sm" %>
+          <%= select_tag :payment_mode_id,
+                         options_for_select([["All modes", ""]] + @payment_modes.map { |m| [m.name, m.id] }, params[:payment_mode_id]),
+                         class: "form-select form-select-sm" %>
+          <%= select_tag :direction, options_for_select([["In and out", ""], %w[Money in in], %w[Money out out]], params[:direction]),
+                         class: "form-select form-select-sm" %>
+          <%= submit_tag "Apply", class: "btn btn-sm btn-outline-secondary" %>
+        <% end %>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-sm align-middle mb-0">
+          <thead class="table-light">
+            <tr><th>Date</th><th>Type</th><th>Reference</th><th>Particulars</th><th>Mode</th>
+                <th class="text-end">Cash In</th><th class="text-end">Cash Out</th><th class="text-end">Balance</th></tr>
+          </thead>
+          <tbody>
+            <% @rows.each do |entry, running| %>
+              <tr>
+                <td><%= qm_date(entry.entry_date) %></td>
+                <td><span class="badge bg-light text-dark"><%= entry.source_label %></span></td>
+                <td class="small"><%= entry.source_no.presence || "—" %></td>
+                <td><%= entry.particulars.presence || "—" %></td>
+                <td><%= entry.payment_mode&.name || "—" %></td>
+                <td class="text-end text-success"><%= entry.cash_in? ? money(entry.amount) : "" %></td>
+                <td class="text-end text-danger"><%= entry.cash_out? ? money(entry.amount) : "" %></td>
+                <td class="text-end fw-semibold"><%= money(running) %></td>
+              </tr>
+            <% end %>
+            <% if @rows.empty? %>
+              <tr><td colspan="8" class="text-center text-muted py-4">No cash movement in this period.</td></tr>
+            <% end %>
+          </tbody>
+          <tfoot class="table-light">
+            <tr>
+              <th colspan="5">Totals</th>
+              <th class="text-end"><%= money(@totals[:in]) %></th>
+              <th class="text-end"><%= money(@totals[:out]) %></th>
+              <th class="text-end"><%= money(@closing) %></th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="card">
+      <div class="card-header bg-white fw-semibold">By payment mode</div>
+      <div class="table-responsive">
+        <table class="table table-sm align-middle mb-0">
+          <thead class="table-light"><tr><th>Mode</th><th class="text-end">Net</th></tr></thead>
+          <tbody>
+            <% @by_mode.each do |name, net| %>
+              <tr>
+                <td><%= name %></td>
+                <td class="text-end <%= net.negative? ? 'text-danger' : 'text-success' %>"><%= money(net.abs) %> <%= net.negative? ? 'out' : 'in' %></td>
+              </tr>
+            <% end %>
+            <% if @by_mode.empty? %>
+              <tr><td colspan="2" class="text-center text-muted py-3">Nothing to show.</td></tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

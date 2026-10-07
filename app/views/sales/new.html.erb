@@ -1,0 +1,221 @@
+<%= page_header @sale.persisted? ? "Edit Sale #{@sale.sale_no}" : "New Sale",
+              subtitle: "Record a vehicle sale and its installment plan",
+              icon: "bi-receipt" do %>
+  <%= permitted_link_to "Back to sales", sales_path, class: "btn btn-light" %>
+<% end %>
+
+<%= permitted_form_with model: @sale, url: @sale.persisted? ? sale_path(@sale) : sales_path,
+              method: @sale.persisted? ? :patch : :post, local: true do |f| %>
+
+  <% if @sale.errors.any? %>
+    <div class="alert alert-danger">
+      <strong><%= pluralize(@sale.errors.count, "error") %> prevented this sale being saved:</strong>
+      <ul class="mb-0">
+        <% @sale.errors.full_messages.each do |message| %><li><%= message %></li><% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="card mb-3">
+    <div class="card-header bg-white fw-semibold">Customer and vehicle</div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-4">
+          <label class="form-label">Customer *</label>
+          <%= f.select :customer_id, @customers.map { |c| ["#{c.account_no} - #{c.name}", c.id] },
+                       { include_blank: "Select customer" }, class: "form-select" %>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Sale date *</label>
+          <%= f.date_field :sale_date, class: "form-control" %>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Payment type *</label>
+          <%= f.select :sale_type, [%w[Credit credit], %w[Cash cash]], {}, class: "form-select" %>
+        </div>
+        <div class="col-md-2">
+          <label class="form-label">Payment mode</label>
+          <%= f.select :payment_mode_id, @payment_modes.map { |m| [m.name, m.id] },
+                       { include_blank: "—" }, class: "form-select" %>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Vehicle from stock</label>
+          <%= f.select :stock_unit_id,
+                       @stock_units.map { |u| ["#{u.label} - #{money(u.sale_price)}", u.id] },
+                       { include_blank: "No stock unit (loose sale)" }, class: "form-select",
+                       data: { controller: "sale-vehicle" } %>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Registration no</label>
+          <%= f.text_field :reg_no, class: "form-control" %>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Agent</label>
+          <%= f.select :agent_id, @agents.map { |a| [a.name, a.id] }, { include_blank: "—" }, class: "form-select" %>
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label">Total amount *</label>
+          <%= f.number_field :total_amount, step: "0.01", min: 0, class: "form-control", id: "sale_total_amount" %>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Discount</label>
+          <%= f.number_field :discount, step: "0.01", min: 0, class: "form-control", id: "sale_discount" %>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Down payment</label>
+          <%= f.number_field :down_payment, step: "0.01", min: 0, class: "form-control", id: "sale_down_payment" %>
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-label">Months</label>
+          <%= f.number_field :months, min: 0, class: "form-control", id: "sale_months" %>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Monthly installment</label>
+          <input type="text" class="form-control" id="sale_monthly_preview" value="—" readonly>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Cost price</label>
+          <%= f.number_field :cost_amount, step: "0.01", min: 0, class: "form-control", id: "sale_cost_amount" %>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Profit</label>
+          <input type="text" class="form-control" id="sale_profit_preview" value="—" readonly>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Notes</label>
+          <%= f.text_area :notes, rows: 2, class: "form-control" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header bg-white fw-semibold">Sale lines</div>
+    <div class="card-body">
+      <div id="sale_lines">
+        <%= f.fields_for :items do |item| %>
+          <div class="row g-2 align-items-end mb-2 sale-line">
+            <div class="col-md-4">
+              <label class="form-label small">Description</label>
+              <%= item.text_field :description, class: "form-control form-control-sm" %>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label small">Qty</label>
+              <%= item.number_field :qty, step: "0.01", min: 0, class: "form-control form-control-sm line-qty", value: item.object.qty || 1 %>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label small">Unit price</label>
+              <%= item.number_field :unit_price, step: "0.01", min: 0, class: "form-control form-control-sm line-price" %>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label small">Discount</label>
+              <%= item.number_field :discount, step: "0.01", min: 0, class: "form-control form-control-sm line-discount" %>
+            </div>
+            <div class="col-md-1">
+              <span class="form-label small d-block">Total</span>
+              <span class="line-total fw-semibold">—</span>
+            </div>
+            <% if item.object.persisted? %>
+              <div class="col-md-1 form-check mb-2">
+                <%= item.check_box :_destroy, class: "form-check-input" %>
+                <%= item.label :_destroy, "Del", class: "form-check-label small" %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+      <button type="button" class="btn btn-sm btn-outline-secondary" id="add_sale_line">
+        <i class="bi bi-plus-lg me-1"></i>Add line
+      </button>
+    </div>
+
+    <div class="card-footer bg-white d-flex justify-content-end gap-2">
+      <%= permitted_link_to "Cancel", sales_path, class: "btn btn-light" %>
+      <button type="submit" class="btn btn-primary">
+        <i class="bi bi-check-lg me-1"></i><%= @sale.persisted? ? "Save changes" : "Record sale" %>
+      </button>
+    </div>
+  </div>
+<% end %>
+
+<script type="text/template" id="sale_line_template">
+  <div class="row g-2 align-items-end mb-2 sale-line">
+    <div class="col-md-4"><label class="form-label small">Description</label>
+      <input class="form-control form-control-sm" type="text" name="sale[items_attributes][__INDEX__][description]"></div>
+    <div class="col-md-2"><label class="form-label small">Qty</label>
+      <input class="form-control form-control-sm line-qty" type="number" step="0.01" min="0" value="1" name="sale[items_attributes][__INDEX__][qty]"></div>
+    <div class="col-md-3"><label class="form-label small">Unit price</label>
+      <input class="form-control form-control-sm line-price" type="number" step="0.01" min="0" name="sale[items_attributes][__INDEX__][unit_price]"></div>
+    <div class="col-md-2"><label class="form-label small">Discount</label>
+      <input class="form-control form-control-sm line-discount" type="number" step="0.01" min="0" value="0" name="sale[items_attributes][__INDEX__][discount]"></div>
+    <div class="col-md-1"><span class="form-label small d-block">Total</span><span class="line-total fw-semibold">—</span></div>
+  </div>
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var total = document.getElementById("sale_total_amount");
+    var discount = document.getElementById("sale_discount");
+    var down = document.getElementById("sale_down_payment");
+    var months = document.getElementById("sale_months");
+    var cost = document.getElementById("sale_cost_amount");
+    var monthly = document.getElementById("sale_monthly_preview");
+    var profit = document.getElementById("sale_profit_preview");
+
+    function num(el) { return parseFloat(el && el.value) || 0; }
+    function money(value) { return "Rs " + value.toLocaleString("en-PK", { maximumFractionDigits: 2 }); }
+
+    function recalc() {
+      var gross = Math.max(num(total) - num(discount), 0);
+      var financed = Math.max(gross - num(down), 0);
+      var count = Math.floor(num(months));
+      monthly.value = count > 0 ? money(financed / count) : "—";
+      profit.value = money(gross - num(cost));
+      recalcLines();
+    }
+
+    function recalcLines() {
+      document.querySelectorAll("#sale_lines .sale-line").forEach(function (line) {
+        var qty = num(line.querySelector(".line-qty"));
+        var price = num(line.querySelector(".line-price"));
+        var disc = num(line.querySelector(".line-discount"));
+        var out = line.querySelector(".line-total");
+        if (out) out.textContent = money(Math.max(qty * price - disc, 0));
+      });
+    }
+
+    [total, discount, down, months, cost].forEach(function (el) {
+      if (el) el.addEventListener("input", recalc);
+    });
+    document.getElementById("sale_lines").addEventListener("input", recalcLines);
+
+    var addButton = document.getElementById("add_sale_line");
+    addButton.addEventListener("click", function () {
+      var template = document.getElementById("sale_line_template").innerHTML;
+      var index = Date.now();
+      document.getElementById("sale_lines")
+        .insertAdjacentHTML("beforeend", template.replace(/__INDEX__/g, index));
+      recalcLines();
+    });
+
+    var stockSelect = document.querySelector("[data-controller='sale-vehicle']");
+    if (stockSelect) {
+      stockSelect.addEventListener("change", function () {
+        var option = stockSelect.options[stockSelect.selectedIndex];
+        if (!option || !option.value) return;
+        var match = option.textContent.match(/Rs ([\d,]+(?:\.\d+)?)/);
+        if (match && num(total) === 0) total.value = parseFloat(match[1].replace(/,/g, ""));
+        var description = option.textContent.split(" - ")[0];
+        var firstDescription = document.querySelector("#sale_lines input[name$='[description]']");
+        if (firstDescription && !firstDescription.value) firstDescription.value = description;
+        recalc();
+      });
+    }
+
+    recalc();
+  });
+</script>

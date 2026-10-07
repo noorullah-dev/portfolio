@@ -1,0 +1,57 @@
+<fieldset class="mt-3">
+  <legend class="h6"><%= title %></legend>
+  <p class="small text-muted"><%= description %> Dashboard and password access remain available. Changes apply on the next request.</p>
+  <div class="d-flex flex-wrap gap-3 mb-3">
+    <% [[default_label, "default"], ["Choose permissions", "custom"]].each do |label, mode| %>
+      <div class="form-check">
+        <%= radio_button_tag "#{prefix}[permission_mode]", mode, (custom ? "custom" : "default") == mode,
+              id: "#{prefix}_permissions_#{mode}", class: "form-check-input" %>
+        <%= label_tag "#{prefix}_permissions_#{mode}", label, class: "form-check-label" %>
+      </div>
+    <% end %>
+  </div>
+  <details <%= "open" if custom %>>
+    <summary class="small mb-3">Select the actions available when “Choose permissions” is selected</summary>
+    <p class="small text-muted">Select View as well when staff need to open a module's lists and records.</p>
+    <div class="d-flex gap-2 mb-3">
+      <button type="button" class="btn btn-sm btn-outline-secondary" data-permission-selection="all">Select all</button>
+      <button type="button" class="btn btn-sm btn-outline-secondary" data-permission-selection="none">Clear all</button>
+    </div>
+    <%= hidden_field_tag "#{prefix}[#{attribute}][]", "" %>
+    <div class="row g-3">
+      <% Permissions.staff_permission_groups.each do |mod, permissions| %>
+        <div class="col-sm-6 col-lg-4">
+          <div class="border rounded p-3 h-100">
+            <h3 class="h6"><%= mod.humanize %></h3>
+            <% permissions.each do |permission| %>
+              <% checkbox_id = "#{prefix}_permission_#{permission.tr('.', '_')}" %>
+              <div class="form-check">
+                <%= check_box_tag "#{prefix}[#{attribute}][]", permission, selected.include?(permission),
+                      id: checkbox_id, class: "form-check-input" %>
+                <%= label_tag checkbox_id, permission.split(".").last.humanize, class: "form-check-label small" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </details>
+</fieldset>
+<script>
+  (function () {
+    var picker = document.currentScript.previousElementSibling;
+    picker.addEventListener("change", function (event) {
+      if (event.target.type === "radio") {
+        picker.querySelector("details").open = event.target.value === "custom";
+      }
+    });
+    picker.addEventListener("click", function (event) {
+      var button = event.target.closest("[data-permission-selection]");
+      if (!button) return;
+      picker.querySelectorAll("input[type=checkbox]").forEach(function (checkbox) {
+        checkbox.checked = button.dataset.permissionSelection === "all";
+      });
+      picker.querySelector("input[type=radio][value=custom]").checked = true;
+    });
+  })();
+</script>

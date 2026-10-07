@@ -1,0 +1,54 @@
+<%= page_header(@transfer.persisted? ? "Edit Account Transfer" : "New Account Transfer",
+               subtitle: "Shift the remaining installments to another customer",
+               icon: "bi-arrow-left-right") do %>
+  <%= permitted_link_to "Back", @transfer.persisted? ? account_transfers_path : account_transfers_path, class: "btn btn-light" %>
+<% end %>
+
+<%= permitted_form_with model: @transfer,
+              url: (@transfer.persisted? ? account_transfer_path(@transfer) : account_transfers_path),
+              method: (@transfer.persisted? ? :patch : :post), local: true do |f| %>
+  <% if @transfer.errors.any? %>
+    <div class="alert alert-danger"><%= @transfer.errors.full_messages.to_sentence %></div>
+  <% end %>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-3"><label class="form-label">Date *</label><%= f.date_field :transfer_date, class: "form-control" %></div>
+        <div class="col-md-4">
+          <label class="form-label">From customer *</label>
+          <%= f.select :from_customer_id, @customers.map { |c| [c.display_name, c.id] }, { include_blank: "Select" }, class: "form-select", id: "transfer_from" %>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">To customer *</label>
+          <%= f.select :to_customer_id, @customers.map { |c| [c.display_name, c.id] }, { include_blank: "Select" }, class: "form-select" %>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Against sale</label>
+          <%= f.select :sale_id, @sales.map { |s| ["#{s.sale_no} - #{s.customer.display_name} (#{money(s.balance)})", s.id] }, { include_blank: "—" }, class: "form-select" %>
+        </div>
+        <div class="col-md-4"><label class="form-label">Balance moved</label><%= f.number_field :remaining_balance, step: "0.01", min: 0, class: "form-control" %></div>
+        <div class="col-md-4"><label class="form-label">Transfer fee</label><%= f.number_field :fee, step: "0.01", min: 0, class: "form-control" %></div>
+        <div class="col-12"><label class="form-label">Remarks</label><%= f.text_area :remarks, rows: 2, class: "form-control" %></div>
+      </div>
+    </div>
+    <div class="card-footer bg-white d-flex justify-content-between">
+      <%= permitted_link_to "Cancel", account_transfers_path, class: "btn btn-light" %>
+      <button class="btn btn-primary" type="submit"><i class="bi bi-check-lg me-1"></i><%= @transfer.persisted? ? "Save changes" : "Record transfer" %></button>
+    </div>
+  </div>
+<% end %>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var from = document.getElementById("transfer_from");
+    var saleSelect = document.querySelector("select[name='account_transfer[sale_id]']");
+    if (!from || !saleSelect) return;
+
+    function refresh() {
+      saleSelect.innerHTML = '<option value="">—</option>';
+    }
+
+    from.addEventListener("change", refresh);
+  });
+</script>

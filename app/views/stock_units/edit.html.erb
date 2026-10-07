@@ -1,0 +1,40 @@
+<%= page_header "Edit #{@stock_unit.label}", subtitle: "Adjust pricing or status", icon: "bi-pencil-square" do %>
+  <%= permitted_link_to "Back to stock", stock_units_path, class: "btn btn-light" %>
+<% end %>
+
+<%= permitted_form_with model: @stock_unit, url: stock_unit_path(@stock_unit), method: :patch, local: true do |f| %>
+  <% if @stock_unit.errors.any? %>
+    <div class="alert alert-danger"><%= @stock_unit.errors.full_messages.to_sentence %></div>
+  <% end %>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-4">
+          <label class="form-label">Status</label>
+          <%= f.select :status, %w[available reserved sold].map { |s| [s.humanize, s] }, {}, class: "form-select" %>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Cost price</label>
+          <%= f.number_field :cost_price, step: "0.01", min: 0, class: "form-control" %>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Sale price</label>
+          <%= f.number_field :sale_price, step: "0.01", min: 0, class: "form-control" %>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Date added</label>
+          <%= f.date_field :date_added, class: "form-control" %>
+        </div>
+        <div class="col-md-8">
+          <label class="form-label">Remarks</label>
+          <%= f.text_field :remarks, class: "form-control" %>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer bg-white d-flex justify-content-between">
+      <%= permitted_link_to "Cancel", stock_units_path, class: "btn btn-light" %>
+      <button class="btn btn-primary" type="submit"><i class="bi bi-check-lg me-1"></i>Save</button>
+    </div>
+  </div>
+<% end %>

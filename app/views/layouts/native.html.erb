@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" data-hotwire-native>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=0">
+    <title><%= document_title %></title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <meta name="theme-color" content="#6366f1">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+    <link rel="stylesheet" href="/vendor/bootstrap.min.css">
+    <link rel="stylesheet" href="/vendor/bootstrap-icons.min.css">
+    <%= stylesheet_link_tag "site", "native", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags "native" %>
+    <script>
+      /* Applies the saved appearance before first paint (same contract as the
+         website layout) so the native shell never flashes the wrong theme. */
+      (function () {
+        try {
+          var root = document.documentElement;
+          var media = window.matchMedia("(prefers-color-scheme: dark)");
+          var theme = localStorage.getItem("qm.theme") || "light";
+          if (theme === "auto") theme = media.matches ? "dark" : "light";
+          var accent = localStorage.getItem("qm.accent") || "indigo";
+          var density = localStorage.getItem("qm.density") || "comfortable";
+          root.setAttribute("data-theme", theme);
+          root.setAttribute("data-bs-theme", theme);
+          root.setAttribute("data-accent", accent);
+          root.setAttribute("data-density", density);
+          media.addEventListener("change", function () {
+            if ((localStorage.getItem("qm.theme") || "light") === "auto") {
+              var t = media.matches ? "dark" : "light";
+              root.setAttribute("data-theme", t);
+              root.setAttribute("data-bs-theme", t);
+            }
+          });
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+
+  <body class="qm-native">
+    <main class="qm-native-view">
+      <% flash.each do |level, message| %>
+        <div class="alert <%= flash_class(level) %> alert-dismissible fade show qm-native-flash" role="alert">
+          <%= message %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      <% end %>
+
+      <div class="qm-native-content">
+        <%= yield %>
+      </div>
+    </main>
+
+    <script data-turbo-eval="false">
+      // Same bootstrap object the website layout exposes, so the shared print
+      // helpers, toasts and formatters behave identically inside the app.
+      // data-turbo-eval keeps Turbo from re-running these on every visit: the
+      // globals stay alive for the whole session.
+      var QM = {
+        bizName: <%= raw((current_user&.tenant_label || business&.name || "QistManager").to_json) %>,
+        bizAddress: <%= raw business&.address.to_json %>,
+        bizPhone: <%= raw business&.phone.to_json %>,
+        bizEmail: <%= raw business&.email.to_json %>,
+        bizLogo: <%= raw business&.logo_path.to_json %>,
+        bizFooter: <%= raw business&.footer_text.to_json %>,
+        bizType: <%= raw business&.business_type.to_json %>,
+        currency: <%= raw((business&.currency_symbol || business&.currency || "Rs.").to_json) %>,
+        fullName: <%= raw current_user.full_name.to_json %>,
+        username: <%= raw current_user.username.to_json %>,
+        role: <%= raw current_user.display_role.to_json %>,
+        native: true
+      };
+    </script>
+    <script src="/vendor/jquery.min.js" data-turbo-eval="false"></script>
+    <script src="/vendor/bootstrap.bundle.min.js" data-turbo-eval="false"></script>
+    <script src="/vendor/chart.umd.min.js" data-turbo-eval="false"></script>
+    <%= javascript_include_tag "site", "data-turbo-track": "reload", "data-turbo-eval": "false", defer: false %>
+    <% if business&.footer_text.present? %>
+      <div class="print-footer print-only"><%= business.footer_text %></div>
+    <% end %>
+  </body>
+</html>

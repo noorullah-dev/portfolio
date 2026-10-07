@@ -1,0 +1,44 @@
+<% content_for :title, "Locations" %>
+<div class="qm-page">
+  <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
+    <div>
+      <h1 class="h4 mb-1">Locations</h1>
+      <p class="text-muted mb-0">Customers belong to a location; recovery officers are assigned to locations.</p>
+    </div>
+    <div class="d-flex gap-2">
+      <%= permitted_link_to new_location_path, class: "btn btn-primary" do %><i class="bi bi-plus-lg"></i> Add location<% end %>
+      <%= permitted_link_to branches_path, class: "btn btn-outline-secondary" %><i class="bi bi-diagram-3"></i> Branches
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead><tr><th>Location</th><th>City</th><th>Zone</th><th class="text-end">Customers</th><th class="text-end">Recovery officers</th><th>Status</th><th></th></tr></thead>
+        <tbody>
+          <% @locations.each do |row| %>
+            <% l = row[:location] %>
+            <tr>
+              <td><%= permitted_link_to l.name, location_path(l) %></td>
+              <td><%= l.city.presence || "—" %></td>
+              <td><%= l.zone.presence || "—" %></td>
+              <td class="text-end"><%= row[:customers] %></td>
+              <td class="text-end"><%= row[:officers] %></td>
+              <td><%= status_badge(l.status) %></td>
+              <td class="text-end">
+                <% if can?("branches.edit") %>
+                  <%= permitted_link_to edit_location_path(l), class: "btn btn-sm btn-outline-secondary", title: "Edit" do %><i class="bi bi-pencil me-1"></i>Edit<% end %>
+                  <%= permitted_button_to location_path(l), method: :delete, class: "btn btn-sm btn-outline-danger", title: "Delete",
+                        form: { data: { turbo_confirm: "Delete this location?" } } do %><i class="bi bi-trash me-1"></i>Delete<% end %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+          <% if @locations.empty? %>
+            <tr><td colspan="7" class="text-muted">No locations yet.</td></tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

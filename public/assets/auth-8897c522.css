@@ -1,0 +1,80 @@
+/* Authentication has its own layout, separate from the app's sidebar. */
+.qm-auth-body {
+    min-height: 100vh;
+    min-height: 100svh;
+    height: auto;
+    display: grid;
+    place-items: center;
+    padding: 40px 24px;
+    background: #eef2f7;
+    color: #334155;
+    color-scheme: light;
+}
+.qm-auth-shell {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: min(1060px, 100%);
+    min-height: 660px;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    border-radius: 24px;
+    background: #fff;
+    box-shadow: 0 24px 70px rgba(30, 41, 59, .10);
+}
+.qm-auth-story {
+    display: flex;
+    flex-direction: column;
+    padding: 42px;
+    color: #fff;
+    background: radial-gradient(ellipse at 100% 100%, rgba(99, 102, 241, .4), transparent 65%), #182443;
+}
+.qm-auth-brand { display: flex; align-items: center; gap: 12px; }
+.qm-auth-logo { display: grid; place-items: center; width: 44px; height: 44px; flex-shrink: 0; border: 1px solid rgba(255, 255, 255, .2); border-radius: 13px; background: rgba(255, 255, 255, .10); font-size: 23px; }
+.qm-auth-brand-name { display: block; font-size: 20px; font-weight: 700; overflow-wrap: anywhere; }
+.qm-auth-brand-tagline { display: block; margin-top: 2px; font-size: 11px; color: #bdc9e5; }
+.qm-auth-story-content { margin: 68px 0 45px; }
+.qm-auth-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 1.8px; color: #b6bcff; }
+.qm-auth-story h2 { margin: 18px 0; color: #fff; font-size: clamp(32px, 3.4vw, 44px); font-weight: 700; line-height: 1.15; letter-spacing: -1.5px; }
+.qm-auth-story-content > p { max-width: 340px; color: #c1cbe0; font-size: 14px; line-height: 1.8; }
+.qm-auth-features { display: grid; gap: 23px; list-style: none; padding: 0; margin: 32px 0 0; }
+.qm-auth-features li { display: flex; gap: 13px; align-items: center; }
+.qm-auth-features li > span { display: grid; place-items: center; width: 38px; height: 38px; flex-shrink: 0; background: rgba(255, 255, 255, .07); border-radius: 10px; color: #c2c7ff; font-size: 17px; }
+.qm-auth-features strong { display: block; font-size: 13px; font-weight: 600; }
+.qm-auth-features small { display: block; margin-top: 4px; font-size: 11px; color: #c1cbe0; line-height: 1.5; }
+.qm-auth-story-footer { margin: auto 0 0; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, .12); font-size: 11px; color: #c1cbe0; }
+.qm-auth-panel { display: flex; flex-direction: column; justify-content: center; padding: 60px 56px 28px; min-width: 0; }
+.qm-auth-card { width: 100%; margin: auto 0; }
+.qm-auth-kicker { color: #595cc8; font-size: 10px; font-weight: 700; letter-spacing: 1.6px; }
+.qm-auth-card h1 { margin: 12px 0 8px; color: #17233d; font-size: 32px; font-weight: 700; letter-spacing: -1px; }
+.qm-auth-intro { margin: 0 0 32px; color: #64748b; font-size: 14px; }
+.qm-auth-field { margin-bottom: 22px; }
+.qm-auth-field label { display: block; margin-bottom: 9px; color: #334155; font-size: 12px; font-weight: 600; }
+.qm-auth-input { position: relative; }
+.qm-auth-input > i { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #64748b; pointer-events: none; font-size: 17px; }
+.qm-auth-input input { width: 100%; height: 50px; padding: 12px 16px 12px 45px; border: 1px solid #dce2eb; border-radius: 10px; background: #f8fafc; color: #17233d; font: inherit; font-size: 14px; transition: border-color .15s, box-shadow .15s; }
+.qm-auth-input input::placeholder { color: #718096; }
+.qm-auth-input input:focus { outline: none; border-color: #6366f1; background: #fff; box-shadow: 0 0 0 3px rgba(99, 102, 241, .12); }
+.qm-auth-submit { display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; min-height: 50px; margin-top: 28px; padding: 12px; border: 0; border-radius: 10px; background: #4f52d6; color: #fff; font: inherit; font-weight: 600; cursor: pointer; box-shadow: 0 5px 12px rgba(79, 82, 214, .17); transition: background .15s; }
+.qm-auth-submit:hover { background: #4043b8; }
+.qm-auth-submit:focus-visible { outline: 3px solid #6366f1; outline-offset: 3px; }
+.qm-auth-help { display: flex; align-items: flex-start; gap: 10px; margin-top: 28px; padding: 16px; border: 1px solid #e8ecf2; border-radius: 10px; background: #f8fafc; }
+.qm-auth-help > i { color: #64748b; margin-top: 1px; }
+.qm-auth-help p { margin: 0; color: #475569; font-size: 12px; line-height: 1.7; font-weight: 600; }
+.qm-auth-help span { color: #64748b; font-size: 11px; font-weight: 400; }
+.qm-auth-footer { margin: 40px 0 0; text-align: center; font-size: 10px; color: #64748b; }
+.qm-auth-footer i { margin-right: 5px; }
+.qm-auth-alert { font-size: 13px; line-height: 1.5; }
+@media (max-width: 850px) {
+    .qm-auth-story { padding: 32px; }
+    .qm-auth-panel { padding: 44px 32px 24px; }
+}
+@media (max-width: 650px) {
+    .qm-auth-body { padding: 20px 16px; }
+    .qm-auth-shell { grid-template-columns: 1fr; min-height: 0; border-radius: 18px; }
+    .qm-auth-story { padding: 24px; }
+    .qm-auth-story-content, .qm-auth-story-footer { display: none; }
+    .qm-auth-panel { padding: 36px 24px 24px; }
+    .qm-auth-card h1 { font-size: 28px; }
+    .qm-auth-input input { font-size: 16px; }
+    .qm-auth-footer { margin-top: 30px; }
+}

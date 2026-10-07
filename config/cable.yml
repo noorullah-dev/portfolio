@@ -1,0 +1,10 @@
+development:
+  adapter: async
+
+test:
+  adapter: test
+
+production:
+  # No broadcasts currently exist. Add a shared adapter before using broadcasts
+  # across Puma workers or autoscaled instances.
+  adapter: async

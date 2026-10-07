@@ -1,0 +1,102 @@
+<% content_for :title, "My Account" %>
+<div class="qm-page">
+  <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
+    <div>
+      <h1 class="h4 mb-1">My account</h1>
+      <p class="text-muted mb-0">
+        <%= @customer.name %> &middot; <%= @customer.account_no %>
+        <% if @customer.business %> &middot; <%= @customer.business.name %><% end %>
+      </p>
+    </div>
+    <div class="d-flex gap-2">
+      <%= permitted_link_to "Download statement", customer_portal_statement_path, class: "btn btn-outline-secondary" %>
+      <%= permitted_link_to "Change password", change_password_path, class: "btn btn-outline-secondary" %>
+    </div>
+  </div>
+
+  <div class="row g-3 mb-4">
+    <% { "Total purchases" => @sales.size,
+         "Outstanding balance" => number_to_currency(@customer.balance),
+         "Instalments due" => @plans.count { |p| p.status != "paid" },
+         "Next due date" => (@plans.reject { |p| p.status == "paid" }.first&.due_date&.strftime("%d %b %Y") || "—") }.each do |label, value| %>
+      <div class="col-6 col-lg-3"><div class="card h-100"><div class="card-body">
+        <div class="small text-muted"><%= label %></div>
+        <div class="fs-5 fw-semibold"><%= value %></div>
+      </div></div></div>
+    <% end %>
+  </div>
+
+  <div class="card mb-3">
+    <div class="card-header bg-transparent fw-semibold">Instalment plans</div>
+    <div class="table-responsive">
+      <table class="table align-middle mb-0">
+        <thead><tr><th>Sale</th><th>Due date</th><th class="text-end">Amount</th><th class="text-end">Paid</th><th class="text-end">Remaining</th><th>Status</th></tr></thead>
+        <tbody>
+          <% @plans.each do |plan| %>
+            <tr>
+              <td><%= plan.sale&.sale_no %></td>
+              <td><%= plan.due_date %></td>
+              <td class="text-end"><%= number_to_currency(plan.amount) %></td>
+              <td class="text-end"><%= number_to_currency(plan.paid_amount) %></td>
+              <td class="text-end"><%= number_to_currency(plan.remaining) %></td>
+              <td><%= status_badge(plan.status) %></td>
+            </tr>
+          <% end %>
+          <% if @plans.empty? %><tr><td colspan="6" class="text-muted">No instalment plans.</td></tr><% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-lg-7">
+      <div class="card h-100">
+        <div class="card-header bg-transparent fw-semibold">My purchases</div>
+        <div class="table-responsive">
+          <table class="table align-middle mb-0">
+            <thead><tr><th>Sale no</th><th>Date</th><th>Vehicle</th><th class="text-end">Total</th></tr></thead>
+            <tbody>
+              <% @sales.each do |sale| %>
+                <tr>
+                  <td><%= sale.sale_no %></td>
+                  <td><%= sale.sale_date %></td>
+                  <td><%= sale.stock_unit&.product&.name || "—" %></td>
+                  <td class="text-end"><%= number_to_currency(sale.total_amount) %></td>
+                </tr>
+              <% end %>
+              <% if @sales.empty? %><tr><td colspan="4" class="text-muted">No purchases yet.</td></tr><% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-5">
+      <div class="card mb-3">
+        <div class="card-header bg-transparent fw-semibold">Recent payments</div>
+        <ul class="list-group list-group-flush">
+          <% @payments.each do |p| %>
+            <li class="list-group-item d-flex justify-content-between">
+              <span><%= p.payment_date %> <span class="text-muted small"><%= p.payment_mode&.name %></span></span>
+              <span class="text-success fw-semibold"><%= number_to_currency(p.amount) %></span>
+            </li>
+          <% end %>
+          <% if @payments.empty? %><li class="list-group-item text-muted">No payments recorded.</li><% end %>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-transparent fw-semibold">My documents</div>
+        <ul class="list-group list-group-flush">
+          <% @documents.each do |d| %>
+            <li class="list-group-item d-flex justify-content-between">
+              <span><%= d.document_type.humanize %></span>
+              <span class="text-muted small"><%= d.created_at.to_date %></span>
+            </li>
+          <% end %>
+          <% if @documents.empty? %><li class="list-group-item text-muted">No documents uploaded.</li><% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

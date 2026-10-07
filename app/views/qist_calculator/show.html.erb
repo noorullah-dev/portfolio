@@ -1,0 +1,49 @@
+<%= page_header "Qist Calculator", subtitle: "Work out monthly instalments before you commit to a deal", icon: "bi-calculator" do %>
+
+<%= permitted_form_with url: qist_calculator_path, method: :post, local: true, class: "row g-2 align-items-end" do %>
+  <div class="col-6 col-md-2"><label class="form-label small mb-0">Amount</label><input type="number" step="0.01" name="amount" value="<%= @amount %>" class="form-control form-control-sm"></div>
+  <div class="col-6 col-md-2"><label class="form-label small mb-0">Down payment</label><input type="number" step="0.01" name="down_payment" value="<%= @down_payment %>" class="form-control form-control-sm"></div>
+  <div class="col-6 col-md-2"><label class="form-label small mb-0">Months</label><input type="number" name="months" value="<%= @months %>" min="1" class="form-control form-control-sm"></div>
+  <div class="col-6 col-md-2"><label class="form-label small mb-0">Monthly rate %</label><input type="number" step="0.01" name="rate" value="<%= @rate %>" class="form-control form-control-sm"></div>
+  <div class="col-12 col-md-2"><button class="btn btn-sm btn-primary w-100" type="submit"><i class="bi bi-calculator me-1"></i>Calculate</button></div>
+<% end %>
+
+<% end %>
+
+<% if @result %>
+  <div class="row g-3">
+    <div class="col-lg-4">
+      <div class="card"><div class="card-header bg-white fw-semibold">Result</div>
+        <div class="card-body">
+          <div class="d-flex justify-content-between"><span class="text-secondary small">Financed</span><strong><%= money(@result[:financed]) %></strong></div>
+          <div class="d-flex justify-content-between"><span class="text-secondary small">Monthly</span><strong class="text-primary"><%= money(@result[:monthly]) %></strong></div>
+          <div class="d-flex justify-content-between"><span class="text-secondary small">Total payable</span><strong><%= money(@result[:total_payable]) %></strong></div>
+          <div class="d-flex justify-content-between"><span class="text-secondary small">Total markup</span><strong><%= money(@result[:total_markup]) %></strong></div>
+          <div class="d-flex justify-content-between border-top mt-2 pt-2"><span class="text-secondary small">First due</span><strong><%= qm_date(@result[:first_due_date]) %></strong></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-8">
+      <div class="card">
+        <div class="card-header bg-white fw-semibold">Schedule</div>
+        <div class="table-responsive" style="max-height: 26rem; overflow-y: auto;">
+          <table class="table table-sm table-hover align-middle mb-0">
+            <thead class="table-light"><tr><th>#</th><th>Due date</th><th class="text-end">Principal</th><th class="text-end">Payment</th><th class="text-end">Balance</th></tr></thead>
+            <tbody>
+              <% @result[:schedule].each do |row| %>
+                <tr>
+                  <td><%= row[:installment_no] %></td>
+                  <td><%= qm_date(row[:due_date]) %></td>
+                  <td class="text-end"><%= money(row[:principal]) %></td>
+                  <td class="text-end"><%= money(row[:payment]) %></td>
+                  <td class="text-end"><%= money(row[:balance]) %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

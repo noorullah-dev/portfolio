@@ -1,0 +1,57 @@
+<% content_for :title, "Owner Console" %>
+<div class="qm-page">
+  <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
+    <div>
+      <h1 class="h4 mb-1">Owner Console</h1>
+      <p class="text-muted mb-0">Provision shops and their administrators, then open a shop to work inside it with full permissions.</p>
+    </div>
+    <%= permitted_link_to new_owner_business_path, class: "btn btn-primary" do %>
+      <i class="bi bi-plus-lg"></i> Provision a new shop
+    <% end %>
+  </div>
+
+  <div class="row g-3 mb-4">
+    <% { "Shops" => @platform[:shops], "Active shops" => @platform[:active_shops],
+         "Suspended" => @platform[:suspended_shops], "Branches" => @platform[:branches],
+         "Staff logins" => @platform[:staff], "Customer logins" => @platform[:portal_logins] }.each do |label, value| %>
+      <div class="col-6 col-md-4 col-xl-2">
+        <div class="card h-100"><div class="card-body">
+          <div class="text-muted small"><%= label %></div>
+          <div class="fs-3 fw-semibold"><%= number_with_delimiter(value) %></div>
+        </div></div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="card">
+    <div class="card-header bg-transparent fw-semibold">Shops</div>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead>
+          <tr>
+            <th>Shop</th><th>Status</th><th>Admin</th><th class="text-end">Branches</th>
+            <th class="text-end">Staff</th><th class="text-end">Customers</th>
+            <th class="text-end">Sales</th><th class="text-end">Revenue</th><th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @businesses.each do |row| %>
+            <tr>
+              <td><%= permitted_link_to row[:business].name, owner_business_path(row[:business]) %></td>
+              <td><%= status_badge(row[:business].status) %></td>
+              <td><%= row[:owner]&.full_name || content_tag(:span, "No admin yet", class: "text-muted") %></td>
+              <td class="text-end"><%= row[:branches] %></td>
+              <td class="text-end"><%= row[:staff] %></td>
+              <td class="text-end"><%= row[:customers] %></td>
+              <td class="text-end"><%= row[:sales] %></td>
+              <td class="text-end"><%= number_to_currency(row[:revenue]) %></td>
+              <td class="text-end">
+                <%= permitted_link_to "Inspect", owner_business_path(row[:business]), class: "btn btn-sm btn-outline-secondary" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

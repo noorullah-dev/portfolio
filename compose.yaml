@@ -1,0 +1,59 @@
+name: qistmanager
+
+services:
+  db:
+    image: postgres:17-bookworm
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: qistmanager
+      POSTGRES_PASSWORD: local-test-only
+      POSTGRES_DB: qistmanager_development
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  web:
+    build:
+      context: .
+      target: production
+    restart: unless-stopped
+    init: true
+    environment:
+      # Works out of the box: points at the bundled `db` service above.
+      # Override with shell variables or an optional `.env` file.
+      DATABASE_URL: ${DATABASE_URL:-postgresql://qistmanager:local-test-only@db:5432/qistmanager_development}
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE:-local-compose-only-secret-key-base-please-override-0123456789abcdef}
+      RAILS_FORCE_SSL: ${RAILS_FORCE_SSL:-false}
+      RAILS_ASSUME_SSL: ${RAILS_ASSUME_SSL:-false}
+      RAILS_LOG_LEVEL: ${RAILS_LOG_LEVEL:-info}
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:${APP_PORT:-3000}:3000"
+    volumes:
+      - storage_data:/rails/storage
+      - uploads_data:/rails/public/uploads
+
+  test:
+    profiles: [test]
+    build:
+      context: .
+      target: test
+    environment:
+      RAILS_ENV: test
+      # Always use the isolated local database, never the hosted app database.
+      DATABASE_URL: postgresql://qistmanager:local-test-only@db/qistmanager_test
+    depends_on:
+      db:
+        condition: service_healthy
+    command: ["sh", "-c", "./bin/rails db:create db:migrate && ./bin/rails zeitwerk:check && ./bin/rails test"]
+
+volumes:
+  postgres_data:
+  storage_data:
+  uploads_data:

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sign in - QistManager</title>
+    <%= csrf_meta_tags %>
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <meta name="theme-color" content="#6366f1">
+    <link rel="manifest" href="<%= pwa_manifest_path %>">
+    <link rel="apple-touch-icon" href="/icon.png">
+    <link rel="stylesheet" href="/vendor/bootstrap.min.css">
+    <link rel="stylesheet" href="/vendor/bootstrap-icons.min.css">
+    <%= stylesheet_link_tag "site", "auth", "data-turbo-track": "reload" %>
+  </head>
+  <body class="qm-auth-body">
+    <main class="qm-auth-shell">
+      <section class="qm-auth-story" aria-label="About QistManager">
+        <div class="qm-auth-brand">
+          <div class="qm-auth-logo"><i class="bi bi-cash-coin" aria-hidden="true"></i></div>
+          <div>
+            <span class="qm-auth-brand-name"><%= platform_brand_name %></span>
+            <span class="qm-auth-brand-tagline">Business management, simplified</span>
+          </div>
+        </div>
+        <div class="qm-auth-story-content">
+          <span class="qm-auth-eyebrow">YOUR BUSINESS. ONE PLACE.</span>
+          <h2>Less paperwork.<br>More progress.</h2>
+          <p>Keep your sales, installments, and accounts connected. Stay focused on moving your business forward.</p>
+          <ul class="qm-auth-features">
+            <li><span><i class="bi bi-wallet2" aria-hidden="true"></i></span><div><strong>Stay on top of collections</strong><small>Track installments and customer balances.</small></div></li>
+            <li><span><i class="bi bi-box-seam" aria-hidden="true"></i></span><div><strong>Keep your business organized</strong><small>Manage inventory, sales, and purchases.</small></div></li>
+            <li><span><i class="bi bi-bar-chart" aria-hidden="true"></i></span><div><strong>See the bigger picture</strong><small>Follow your accounts and business reports.</small></div></li>
+          </ul>
+        </div>
+        <p class="qm-auth-story-footer">Built for your everyday business.</p>
+      </section>
+      <section class="qm-auth-panel" aria-labelledby="sign-in-title">
+        <%= yield %>
+        <p class="qm-auth-footer"><i class="bi bi-shield-lock" aria-hidden="true"></i> Your workspace, securely connected.</p>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,47 @@
+<%= page_header "Registration File", subtitle: "Sale #{@sale.sale_no} · #{@sale.customer.name}", icon: "bi-check2-square" do %>
+  <div class="d-flex gap-2">
+    <%# a sale without tracking yet renders an unsaved record, which has no id %>
+    <%= permitted_link_to (@tracking.persisted? ? edit_registration_tracking_path(@tracking) : new_sale_registration_tracking_path(@sale)),
+                    class: "btn btn-outline-primary", title: "Edit" do %><i class="bi bi-pencil me-1"></i>Edit<% end %>
+    <%= permitted_link_to "Back to sale", sale_path(@sale), class: "btn btn-light" %>
+  </div>
+<% end %>
+
+<div class="row g-3">
+  <div class="col-md-4">
+    <div class="card"><div class="card-body">
+      <div class="text-muted small">Status</div>
+      <div class="fs-5"><%= status_badge(@tracking.status) %></div>
+      <% if @tracking.overdue? %>
+        <div class="text-danger small mt-1">Past expected return by <%= (@tracking.expected_return_date - Date.current).to_i.abs %> days</div>
+      <% end %>
+    </div></div>
+  </div>
+  <div class="col-md-4">
+    <div class="card"><div class="card-body">
+      <div class="text-muted small">Days pending</div>
+      <div class="fs-5 fw-semibold"><%= @tracking.days_pending %></div>
+    </div></div>
+  </div>
+  <div class="col-md-4">
+    <div class="card"><div class="card-body">
+      <div class="text-muted small">Expected return</div>
+      <div class="fs-5 fw-semibold"><%= qm_date(@tracking.expected_return_date) %></div>
+    </div></div>
+  </div>
+</div>
+
+<div class="card mt-3">
+  <div class="card-header bg-white fw-semibold">Details</div>
+  <div class="card-body">
+    <dl class="row mb-0">
+      <dt class="col-sm-3 text-secondary small">Engine no</dt><dd class="col-sm-9"><%= @tracking.engine_no.presence || "—" %></dd>
+      <dt class="col-sm-3 text-secondary small">Chassis no</dt><dd class="col-sm-9"><%= @tracking.chassis_no.presence || "—" %></dd>
+      <dt class="col-sm-3 text-secondary small">Submitted</dt><dd class="col-sm-9"><%= qm_date(@tracking.submitted_date) %></dd>
+      <dt class="col-sm-3 text-secondary small">Received</dt><dd class="col-sm-9"><%= qm_date(@tracking.received_date) %></dd>
+      <dt class="col-sm-3 text-secondary small">Remarks</dt><dd class="col-sm-9"><%= @tracking.remarks.presence || "—" %></dd>
+    </dl>
+  </div>
+</div>
+
+<%= permitted_link_to "All tracked files", registration_trackings_path, class: "btn btn-light mt-3" %>

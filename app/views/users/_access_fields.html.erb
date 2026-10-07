@@ -1,0 +1,33 @@
+<div class="col-md-6">
+  <%= f.label :branch_id, "Assigned branch", class: "form-label" %>
+  <%= f.collection_select :branch_id, business.branches.ordered, :id, :display_name,
+        { include_blank: "Select a branch" }, class: "form-select" %>
+  <p class="form-text">Branch staff work with transactions from their assigned branch and can sign in only while it is active. Shop admins can access all branches.</p>
+</div>
+<div class="col-md-6">
+  <%= f.label :customer_id, "Customer account (portal logins only)", class: "form-label" %>
+  <%= f.collection_select :customer_id, Customer.shop.active, :id, :display_name,
+        { include_blank: "Not a customer login" }, class: "form-select" %>
+</div>
+<div class="col-12">
+  <details <%= "open" if @user.recovery_officer? %>>
+    <summary>Recovery locations</summary>
+    <p class="small text-muted mt-2">Recovery officers can access only customers in selected locations.</p>
+    <%= hidden_field_tag "user[location_ids][]", "" %>
+    <div class="d-flex flex-wrap gap-3">
+      <% @locations.each do |location| %>
+        <div class="form-check">
+          <%= check_box_tag "user[location_ids][]", location.id, @user.location_ids.include?(location.id),
+                id: "user_location_#{location.id}", class: "form-check-input" %>
+          <%= label_tag "user_location_#{location.id}", location.name, class: "form-check-label" %>
+        </div>
+      <% end %>
+    </div>
+  </details>
+</div>
+<div class="col-12">
+  <%= render "shared/permission_picker", title: "Staff permissions", prefix: "user", attribute: "custom_permissions",
+        custom: !@user.custom_permissions.nil?, selected: @user.custom_permissions || Permissions.for_role(@user.role),
+        default_label: "Use role permissions",
+        description: "Choose actions for this staff member. Their branch permissions also limit access. These settings apply to branch staff; shop admins keep full shop access and customers use the portal." %>
+</div>

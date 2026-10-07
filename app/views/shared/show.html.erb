@@ -1,0 +1,39 @@
+<%
+  crud = controller.class
+%>
+<%= page_header page_title, subtitle: page_subtitle, icon: page_icon do %>
+  <% if crud.edit_path.present? %>
+    <%= permitted_link_to instance_exec(@record, &crud.edit_path), class: "btn btn-primary" do %>
+      <i class="bi bi-pencil me-1"></i>Edit
+    <% end %>
+  <% end %>
+<% end %>
+
+<div class="card">
+  <div class="card-body">
+    <dl class="row mb-0">
+      <% crud.fields.each do |field| %>
+        <dt class="col-sm-3 text-secondary small"><%= field[:label] %></dt>
+        <dd class="col-sm-9">
+          <% value = @record.public_send(field[:name]) %>
+          <%= case field[:type]
+              when :select
+                options = field[:collection].respond_to?(:call) ? field[:collection].call : field[:collection]
+                pair = Array(options).find { |option| option.last.to_s == value.to_s }
+                pair ? pair.first : value.presence || "—"
+              when :decimal, :number
+                value.present? ? plain_number(value) : "—"
+              when :date
+                qm_date(value)
+              when :check_box
+                value ? "Yes" : "No"
+              else
+                value.presence || "—"
+              end %>
+        </dd>
+      <% end %>
+    </dl>
+  </div>
+</div>
+
+<%= permitted_link_to "Back to list", index_path, class: "btn btn-light mt-3" %>

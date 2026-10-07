@@ -1,0 +1,31 @@
+# syntax=docker/dockerfile:1
+# Vercel detects this file and routes requests to the container's HTTP server.
+ARG RUBY_VERSION=3.4.5
+FROM ruby:${RUBY_VERSION}-slim AS base
+WORKDIR /rails
+RUN apt-get update -qq && apt-get install --no-install-recommends -y curl libpq5 libvips tzdata && rm -rf /var/lib/apt/lists/*
+ENV BUNDLE_PATH=/usr/local/bundle BUNDLE_FROZEN=true
+
+FROM base AS build
+ENV RAILS_ENV=production BUNDLE_WITHOUT=development:test
+RUN apt-get update -qq && apt-get install --no-install-recommends -y build-essential git libpq-dev pkg-config && rm -rf /var/lib/apt/lists/*
+COPY Gemfile Gemfile.lock ./
+RUN gem install bundler -v 4.0.15 --no-document && bundle install && rm -rf /usr/local/bundle/cache
+COPY . .
+RUN ruby -rsecurerandom -e 'File.write("config/container_secret_key_base", SecureRandom.hex(64))'
+RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
+
+FROM base AS production
+ENV RAILS_ENV=production BUNDLE_WITHOUT=development:test PORT=80 \
+    RAILS_FORCE_SSL=true RAILS_ASSUME_SSL=true RAILS_LOG_LEVEL=info \
+    RAILS_MAX_THREADS=3 WEB_CONCURRENCY=0
+COPY --from=build /usr/local/bundle /usr/local/bundle
+COPY --from=build /rails /rails
+# Use ephemeral directories for runtime files. Durable uploads need object storage.
+RUN groupadd --gid 1000 rails && useradd --uid 1000 --gid 1000 --create-home rails && rm -rf /rails/tmp && ln -s /tmp /rails/tmp && mkdir -p log storage public/uploads && chown -R rails:rails log storage public/uploads
+# Vercel expects port 80 when no project PORT variable is configured.
+# This image runs as the default container user to bind that privileged port.
+# The separate local Docker image continues to run as the non-root rails user.
+EXPOSE 80
+# Migrations are a separate release operation, never a serverless cold-start task.
+CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]

@@ -1,0 +1,37 @@
+<div class="qm-auth-card">
+  <span class="qm-auth-kicker">LET'S GET STARTED</span>
+  <h1 id="sign-in-title">Welcome back</h1>
+  <p class="qm-auth-intro">Sign in to your account to continue.</p>
+
+  <% flash.each do |level, message| %>
+    <div class="alert <%= flash_class(level) %> qm-auth-alert" role="alert"><%= message %></div>
+  <% end %>
+
+  <%= permitted_form_with url: login_path, method: :post, local: true, class: "qm-auth-form" do %>
+    <div class="qm-auth-field">
+      <label for="username">Username or full name</label>
+      <div class="qm-auth-input">
+        <i class="bi bi-person" aria-hidden="true"></i>
+        <input type="text" name="username" id="username" value="<%= @username %>"
+               placeholder="Enter your username" autocomplete="username" autocapitalize="none"
+               spellcheck="false" autofocus required>
+      </div>
+    </div>
+    <div class="qm-auth-field">
+      <label for="password">Password</label>
+      <div class="qm-auth-input">
+        <i class="bi bi-lock" aria-hidden="true"></i>
+        <input type="password" name="password" id="password" placeholder="Enter your password"
+               autocomplete="current-password" required>
+      </div>
+    </div>
+    <button class="qm-auth-submit" type="submit">
+      Sign in <i class="bi bi-arrow-right" aria-hidden="true"></i>
+    </button>
+  <% end %>
+
+  <div class="qm-auth-help">
+    <i class="bi bi-info-circle" aria-hidden="true"></i>
+    <p>Need help signing in?<br><span>Contact your administrator for account access.</span></p>
+  </div>
+</div>

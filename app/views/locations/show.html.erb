@@ -1,0 +1,50 @@
+<% content_for :title, @location.full_name %>
+<div class="qm-page">
+  <div class="d-flex justify-content-between align-items-start gap-3 mb-4">
+    <div>
+      <h1 class="h4 mb-1"><%= @location.name %> <%= status_badge(@location.status) %></h1>
+      <p class="text-muted mb-0"><%= [@location.city, @location.zone].compact.join(" &middot; ").html_safe %></p>
+    </div>
+    <div class="d-flex gap-2">
+      <% if can?("branches.edit") %><%= permitted_link_to edit_location_path(@location), class: "btn btn-outline-secondary", title: "Edit" do %><i class="bi bi-pencil me-1"></i>Edit<% end %><% end %>
+      <%= permitted_link_to "All locations", locations_path, class: "btn btn-link" %>
+    </div>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-lg-7">
+      <div class="card">
+        <div class="card-header bg-transparent fw-semibold">Customers in this location</div>
+        <ul class="list-group list-group-flush">
+          <% if @customers.any? %>
+            <% @customers.each do |c| %>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span><%= permitted_link_to c.name, customer_path(c) %><span class="text-muted small ms-1"><%= c.account_no %></span></span>
+                <span class="text-end"><%= c.phone.presence || "—" %><br>
+                  <span class="small <%= c.balance.to_d.positive? ? "text-danger" : "text-muted" %>"><%= number_to_currency(c.balance) %></span></span>
+              </li>
+            <% end %>
+          <% else %><li class="list-group-item text-muted">No customers in this location.</li><% end %>
+        </ul>
+      </div>
+    </div>
+    <div class="col-lg-5">
+      <div class="card">
+        <div class="card-header bg-transparent fw-semibold">Recovery officers assigned here</div>
+        <ul class="list-group list-group-flush">
+          <% if @officers.any? %>
+            <% @officers.each do |u| %>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span><%= u.full_name %><span class="text-muted small ms-1">(@<%= u.username %>)</span></span>
+                <%= status_badge(u.status) %>
+              </li>
+            <% end %>
+          <% else %><li class="list-group-item text-muted">No recovery officer assigned to this location.</li><% end %>
+        </ul>
+        <div class="card-footer bg-transparent">
+          <div class="small text-muted">Assign officers from <%= permitted_link_to "Staff logins", users_path %>.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,46 @@
+<%= page_header "Commission ##{@commission.id}", subtitle: @commission.agent.name, icon: "bi-percent" do %>
+  <%= permitted_link_to "Back", agent_commissions_path, class: "btn btn-light" %>
+<% end %>
+
+<div class="row g-3">
+  <div class="col-lg-5">
+    <div class="card"><div class="card-body">
+      <dl class="row mb-0">
+        <dt class="col-4 text-secondary small">Sale date</dt><dd class="col-8"><%= qm_date(@commission.sale_date) %></dd>
+        <dt class="col-4 text-secondary small">Sale</dt>
+        <dd class="col-8"><%= @commission.sale ? permitted_link_to(@commission.sale.sale_no, sale_path(@commission.sale)) : "—" %></dd>
+        <dt class="col-4 text-secondary small">Type</dt><dd class="col-8 text-capitalize"><%= @commission.commission_type %></dd>
+        <dt class="col-4 text-secondary small">Rate</dt><dd class="col-8"><%= @commission.commission_type == "percent" ? "#{@commission.commission_value}%" : money(@commission.commission_value) %></dd>
+        <dt class="col-4 text-secondary small">Basis</dt><dd class="col-8"><%= money(@commission.basis_amount) %></dd>
+        <dt class="col-4 text-secondary small">Earned</dt><dd class="col-8 fw-semibold"><%= money(@commission.earned_amount) %></dd>
+        <dt class="col-4 text-secondary small">Paid</dt><dd class="col-8"><%= money(@commission.paid_amount) %></dd>
+        <dt class="col-4 text-secondary small">Balance</dt><dd class="col-8 fw-semibold"><%= money(@commission.balance) %></dd>
+        <dt class="col-4 text-secondary small">Status</dt><dd class="col-8"><%= status_badge(@commission.status) %></dd>
+      </dl>
+    </div></div>
+  </div>
+
+  <div class="col-lg-7">
+    <div class="card">
+      <div class="card-header bg-white fw-semibold">Payouts</div>
+      <div class="table-responsive">
+        <table class="table table-sm table-hover align-middle mb-0">
+          <thead class="table-light"><tr><th>Date</th><th class="text-end">Amount</th><th>Mode</th><th>Remarks</th></tr></thead>
+          <tbody>
+            <% @payments.each do |payment| %>
+              <tr>
+                <td><%= qm_date(payment.payment_date) %></td>
+                <td class="text-end"><%= money(payment.amount) %></td>
+                <td><%= payment.payment_mode&.name || "—" %></td>
+                <td class="small text-secondary"><%= payment.remarks.presence || "—" %></td>
+              </tr>
+            <% end %>
+            <% if @payments.empty? %>
+              <tr><td colspan="4" class="text-center text-muted py-3">No payouts recorded yet.</td></tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

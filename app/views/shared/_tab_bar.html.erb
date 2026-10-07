@@ -1,0 +1,15 @@
+<%# Bottom tab bar for phones and tablets. Rendered by the website layout only -
+   the native shell gets its tabs from the native navigation controller. %>
+<% items = tab_bar_items %>
+<% if items.any? %>
+  <nav class="qm-tabbar" aria-label="Primary">
+    <% items.each do |item| %>
+      <%= link_to public_send(item[:path]),
+                  class: "qm-tab#{' active' if tab_active?(item)}",
+                  aria: { current: ("page" if tab_active?(item)) } do %>
+        <i class="bi <%= item[:icon] %>"></i>
+        <span><%= item[:text] %></span>
+      <% end %>
+    <% end %>
+  </nav>
+<% end %>

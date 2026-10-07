@@ -1,0 +1,40 @@
+<%= page_header "Registration Tracking", subtitle: "Documents submitted to the registration authority", icon: "bi-card-checklist" do %>
+<% end %>
+
+<div class="card">
+  <div class="card-header bg-white d-flex justify-content-between align-items-center">
+    <span class="fw-semibold small text-secondary"><%= @trackings.size %> record(s)</span>
+    <%= permitted_form_with url: registration_trackings_path, method: :get, local: true, class: "d-flex gap-2 flex-wrap qm-toolbar" do %>
+      <%= select_tag :status, options_for_select([["All statuses", ""]] + RegistrationTracking::STATUSES.map { |s| [s.titleize, s] }, params[:status]), class: "form-select form-select-sm" %>
+      <%= submit_tag "Filter", class: "btn btn-sm btn-outline-secondary" %>
+    <% end %>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0">
+      <thead class="table-light"><tr><th>Sale No</th><th>Customer</th><th>Agent</th><th>Engine No</th><th>Chassis No</th><th>Submitted Date</th><th>Expected Return</th><th>Days Pending</th><th>Letter Received</th><th>Status</th><th class="text-end">Actions</th></tr></thead>
+      <tbody>
+        <% @trackings.each do |tracking| %>
+          <tr>
+            <td><%= permitted_link_to tracking.sale.sale_no, sale_path(tracking.sale) %></td>
+            <td><%= permitted_link_to tracking.customer.display_name, customer_path(tracking.customer) %></td>
+            <td><%= tracking.sale.agent&.name || "—" %></td>
+            <td class="small"><%= tracking.engine_no.presence || "—" %></td>
+            <td class="small"><%= tracking.chassis_no.presence || "—" %></td>
+            <td><%= qm_date(tracking.submitted_date) %></td>
+            <td><%= qm_date(tracking.expected_return_date) %></td>
+            <td class="text-end"><%= tracking.days_pending %></td>
+            <td><%= tracking.letter_received ? status_badge("received") : status_badge("pending") %></td>
+            <td><%= status_badge(tracking.status) %></td>
+            <td class="text-end text-nowrap">
+              <%= permitted_link_to sale_registration_tracking_path(tracking.sale), class: "btn btn-sm btn-outline-secondary" do %><i class="bi bi-eye"></i><% end %>
+              <%= permitted_link_to edit_registration_tracking_path(tracking), class: "btn btn-sm btn-outline-secondary" do %><i class="bi bi-pencil"></i><% end %>
+            </td>
+          </tr>
+        <% end %>
+        <% if @trackings.empty? %>
+          <tr><td colspan="11" class="text-center text-muted py-4">No registration records. Add one from a sale.</td></tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

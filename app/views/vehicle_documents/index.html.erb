@@ -1,0 +1,77 @@
+<%= page_header "Vehicle Documents", subtitle: "Track delivery, insurance and registration papers", icon: "bi-file-earmark-text" do %>
+  <%= permitted_link_to "Back to sales", sales_path, class: "btn btn-light" %>
+<% end %>
+
+<div class="card">
+  <div class="card-header bg-white d-flex justify-content-between align-items-center flex-wrap gap-2">
+    <span class="fw-semibold">
+      <% if @sale %>Documents for <%= @sale.sale_no %> — <%= @sale.customer.name %><% else %>All documents<% end %>
+    </span>
+    <% unless @sale %>
+      <%= permitted_form_with url: vehicle_documents_path, method: :get, local: true, class: "d-flex gap-2 flex-wrap qm-toolbar" do %>
+        <%= select_tag :customer_id, options_for_select([["All customers", ""]] + @customers.map { |c| [c.display_name, c.id] }, params[:customer_id]),
+                       class: "form-select form-select-sm" %>
+        <%= submit_tag "Filter", class: "btn btn-sm btn-outline-secondary" %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="card-body border-bottom">
+    <% if @sale %>
+      <%= permitted_form_with url: sale_vehicle_documents_path(@sale), method: :post, local: true, class: "row g-2 align-items-end" do %>
+        <div class="col-md-4">
+          <label class="form-label small">Document</label>
+          <%= select_tag "vehicle_document[document_type]",
+                         options_for_select(VehicleDocument::DOCUMENT_TYPES.map { |t| [t.humanize, t] }),
+                         class: "form-select form-select-sm" %>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label small">Expected</label>
+          <input type="date" name="vehicle_document[expected_date]" class="form-control form-control-sm">
+        </div>
+        <div class="col-md-3">
+          <label class="form-label small">Notes</label>
+          <input type="text" name="vehicle_document[notes]" class="form-control form-control-sm">
+        </div>
+        <div class="col-md-2 form-check mb-1">
+          <input class="form-check-input" type="checkbox" name="received" id="received" value="1">
+          <label class="form-check-label small" for="received">Already received</label>
+        </div>
+        <div class="col-md-12">
+          <button class="btn btn-sm btn-primary" type="submit">Add document</button>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0">
+      <thead class="table-light"><tr><th>Sale #</th><th>Date</th><th>Customer</th><th>Phone</th><th>Type</th><th>Bike</th><th>Engine / Chassis</th><th>Reg No</th><th>Letter</th><th>Warranty Book</th><th>Doc Remarks</th><th>Action</th></tr></thead>
+      <tbody>
+        <% @documents.each do |document| %>
+          <tr>
+            <td><%= document.sale ? permitted_link_to(document.sale.sale_no, sale_path(document.sale)) : "—" %></td>
+            <td><%= qm_date(document.sale&.sale_date || document.created_at) %></td>
+            <td><%= document.customer&.display_name || "—" %></td>
+            <td><%= document.customer&.phone.presence || "—" %></td>
+            <td><i class="bi bi-file-earmark me-1"></i><%= document.document_type.humanize %></td>
+            <td><%= document.sale&.vehicle_label.presence || "—" %></td>
+            <td class="small"><%= [document.sale&.stock_unit&.engine_no, document.sale&.stock_unit&.chassis_no].compact_blank.join(" / ").presence || "—" %></td>
+            <td><%= document.sale&.stock_unit&.reg_no.presence || "—" %></td>
+            <td><%= document_state(document.sale, "letter") %></td>
+            <td><%= document_state(document.sale, "warranty_book") %></td>
+            <td><%= document.notes.presence || "—" %></td>
+            <td class="text-end">
+              <%= permitted_button_to "Remove", (@sale ? sale_vehicle_document_path(@sale, document) : vehicle_document_path(document)),
+                            method: :delete, class: "btn btn-sm btn-outline-danger",
+                            form: { class: "d-inline", data: { turbo_confirm: "Remove this document?" } } %>
+            </td>
+          </tr>
+        <% end %>
+        <% if @documents.empty? %>
+          <tr><td colspan="12" class="text-center text-muted py-4">No documents tracked.</td></tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

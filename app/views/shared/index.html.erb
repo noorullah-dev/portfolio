@@ -1,0 +1,96 @@
+<%#
+  Columns are declared per controller as a list of hashes:
+    { label:, value: ->(record) { ... }, class: "text-end", sort: ... }
+  Passing a proc keeps the table definition close to the controller.
+%>
+<%
+  crud = controller.class
+  columns = crud.columns
+  records = @records.respond_to?(:records) ? @records.records : @records
+%>
+
+<%= page_header page_title, subtitle: page_subtitle, icon: page_icon do %>
+  <% if crud.new_path.present? %>
+    <%= permitted_link_to instance_exec(&crud.new_path), class: "btn btn-primary" do %>
+      <i class="bi bi-plus-lg me-1"></i><%= crud.new_button_label.presence || "Add #{page_title}" %>
+    <% end %>
+  <% end %>
+<% end %>
+
+<div class="card">
+  <div class="card-body p-0">
+    <div class="d-flex align-items-center justify-content-between px-4 py-3 border-bottom flex-wrap gap-2 qm-toolbar">
+      <span class="fw-semibold text-secondary small">
+        <%= crud.count_label.presence || plural_count(records.size) %>
+      </span>
+      <div class="d-flex gap-2 flex-wrap qm-toolbar-group">
+        <%= search_form(polymorphic_path(crud.resource_class), placeholder: crud.search_placeholder, param: crud.search_param) %>
+        <% crud.filter_options&.each do |filter| %>
+          <%= select_tag filter[:param],
+                         options_for_select(resolve_options(filter[:options]), params[filter[:param]]),
+                         class: "form-select form-select-sm",
+                         onchange: "this.form.submit()" %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <% columns.each do |column| %>
+              <th class="<%= column[:class] %>"><%= column[:label] %></th>
+            <% end %>
+            <th class="text-end" style="width: 140px;"><%= actions_label %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% records.each do |record| %>
+            <tr>
+              <% columns.each do |column| %>
+                <td class="<%= column[:class] %>"><%= instance_exec(record, &column[:value]) %></td>
+              <% end %>
+              <td class="text-end text-nowrap">
+                <% if crud.show_path.present? %>
+                  <%= permitted_link_to instance_exec(record, &crud.show_path), class: "btn btn-sm btn-outline-secondary",
+                              title: "View" do %><i class="bi bi-eye"></i><% end %>
+                <% end %>
+                <% if crud.edit_path.present? %>
+                  <%= permitted_link_to instance_exec(record, &crud.edit_path), class: "btn btn-sm btn-outline-primary",
+                              title: "Edit" do %><i class="bi bi-pencil"></i><% end %>
+                <% end %>
+                <% if crud.destroy_path.present? %>
+                  <%= permitted_button_to instance_exec(record, &crud.destroy_path), method: :delete,
+                                class: "btn btn-sm btn-outline-danger d-inline-block", title: "Delete",
+                                form: { class: "d-inline", data: { confirm: "Delete this record?" } } do %>
+                    <i class="bi bi-trash"></i>
+                  <% end %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+
+          <% if records.empty? %>
+            <tr>
+              <td colspan="<%= columns.size + 1 %>" class="text-center text-muted py-4">
+                <i class="bi bi-inbox me-2"></i>No records found.
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <% if @records.respond_to?(:total_pages) && @records.total_pages > 1 %>
+      <div class="px-4 py-3 border-top d-flex justify-content-between align-items-center">
+        <span class="small text-muted">
+          Showing <%= @records.offset_value + 1 %>-<%= @records.offset_value + records.size %> of <%= @total_count %>
+        </span>
+        <span>
+          <%= permitted_link_to "Previous", url_for(page: (@records.current_page - 1)), class: "btn btn-sm btn-outline-secondary #{'disabled' if @records.current_page == 1}" %>
+          <%= permitted_link_to "Next", url_for(page: (@records.current_page + 1)), class: "btn btn-sm btn-outline-secondary #{'disabled' if @records.current_page == @records.total_pages}" %>
+        </span>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+<%= page_header "Change Password", subtitle: "Update the password for #{current_user.username}", icon: "bi-key" do %>
+  <%= permitted_link_to "Back", root_path, class: "btn btn-light" %>
+<% end %>
+
+<%= permitted_form_with url: change_password_path, method: :patch, local: true, scope: nil do %>
+  <% if flash[:alert].present? %>
+    <div class="alert alert-danger"><%= flash[:alert] %></div>
+  <% end %>
+
+  <div class="card" style="max-width: 32rem;">
+    <div class="card-body">
+      <div class="mb-3">
+        <label class="form-label">Current password</label>
+        <input type="password" name="current_password" class="form-control" autocomplete: "current-password">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">New password</label>
+        <input type="password" name="password" class="form-control" autocomplete: "new-password">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Confirm new password</label>
+        <input type="password" name="password_confirmation" class="form-control" autocomplete: "new-password">
+      </div>
+    </div>
+    <div class="card-footer bg-white d-flex justify-content-between">
+      <%= permitted_link_to "Cancel", root_path, class: "btn btn-light" %>
+      <button class="btn btn-primary" type="submit"><i class="bi bi-check-lg me-1"></i>Change password</button>
+    </div>
+  </div>
+<% end %>

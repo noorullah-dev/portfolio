@@ -1,0 +1,59 @@
+<%= page_header "Registration Tracking", subtitle: "Track the file for sale #{@sale.sale_no}", icon: "bi-check2-square" do %>
+  <%= permitted_link_to "Back to sale", sale_path(@sale), class: "btn btn-light" %>
+<% end %>
+
+<%= permitted_form_with model: @tracking,
+              url: (@tracking.persisted? ? sale_registration_tracking_path(@sale) : sale_registration_tracking_path(@sale)),
+              method: (@tracking.persisted? ? :patch : :post), local: true do |f| %>
+  <% if @tracking.errors.any? %>
+    <div class="alert alert-danger"><%= @tracking.errors.full_messages.to_sentence %></div>
+  <% end %>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-4">
+          <label class="form-label">Engine no</label>
+          <%= f.text_field :engine_no, class: "form-control", readonly: true %>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Chassis no</label>
+          <%= f.text_field :chassis_no, class: "form-control", readonly: true %>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Status</label>
+          <%= f.select :status, RegistrationTracking::STATUSES.map { |s| [s.humanize, s] }, {}, class: "form-select" %>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Submitted date</label>
+          <%= f.date_field :submitted_date, class: "form-control" %>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Expected return</label>
+          <%= f.date_field :expected_return_date, class: "form-control" %>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Received date</label>
+          <%= f.date_field :received_date, class: "form-control" %>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label small">Letter received</label>
+          <div class="form-check mt-2">
+            <%= f.check_box :letter_received, class: "form-check-input" %>
+            <label class="form-check-label" for="registration_tracking_letter_received">File back from office</label>
+          </div>
+        </div>
+        <div class="col-12">
+          <label class="form-label">Remarks</label>
+          <%= f.text_area :remarks, rows: 2, class: "form-control" %>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer bg-white d-flex justify-content-between">
+      <%= permitted_link_to "Back", sale_path(@sale), class: "btn btn-light" %>
+      <button class="btn btn-primary" type="submit">
+        <i class="bi bi-check-lg me-1"></i><%= @tracking.persisted? ? "Save tracking" : "Start tracking" %>
+      </button>
+    </div>
+  </div>
+<% end %>

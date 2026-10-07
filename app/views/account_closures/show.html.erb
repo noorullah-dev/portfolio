@@ -1,0 +1,14 @@
+<%= page_header "Closure ##{@closure.id}", subtitle: @closure.customer.display_name, icon: "bi-check2-square" do %>
+  <%= permitted_link_to "Back", account_closures_path, class: "btn btn-light" %>
+<% end %>
+
+<div class="card"><div class="card-body">
+  <dl class="row mb-0">
+    <dt class="col-sm-3 text-secondary small">Date</dt><dd class="col-sm-9"><%= qm_date(@closure.closure_date) %></dd>
+    <dt class="col-sm-3 text-secondary small">Customer</dt><dd class="col-sm-9"><%= permitted_link_to @closure.customer.display_name, customer_path(@closure.customer) %></dd>
+    <dt class="col-sm-3 text-secondary small">Remaining</dt><dd class="col-sm-9"><%= money(@closure.remaining_balance) %></dd>
+    <dt class="col-sm-3 text-secondary small">Settled</dt><dd class="col-sm-9"><%= money(@closure.settled_amount) %></dd>
+    <dt class="col-sm-3 text-secondary small">Waived</dt><dd class="col-sm-9"><%= money(@closure.waived_amount) %></dd>
+    <dt class="col-sm-3 text-secondary small">Reason</dt><dd class="col-sm-9"><%= @closure.reason.presence || "—" %></dd>
+  </dl>
+</div></div>

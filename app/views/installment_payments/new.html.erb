@@ -1,0 +1,79 @@
+<%= page_header "Collect Installment",
+              subtitle: "Sale #{@sale.sale_no} · #{@sale.customer.name}",
+              icon: "bi-wallet2" do %>
+  <%= permitted_link_to "Back to sale", sale_path(@sale), class: "btn btn-light" %>
+<% end %>
+
+<div class="row g-3">
+  <div class="col-lg-5">
+    <div class="card">
+      <div class="card-header bg-white fw-semibold">Payment</div>
+      <div class="card-body">
+        <% if @payment.errors.any? %>
+          <div class="alert alert-danger">
+            <ul class="mb-0"><% @payment.errors.full_messages.each do |m| %><li><%= m %></li><% end %></ul>
+          </div>
+        <% end %>
+
+        <%= permitted_form_with model: @payment, url: sale_installment_payments_path(@sale), method: :post, local: true do |f| %>
+          <div class="mb-3">
+            <label class="form-label">Amount *</label>
+            <%= f.number_field :amount, step: "0.01", min: 0, class: "form-control", required: true, autofocus: true %>
+            <div class="form-text">Older unpaid installments are settled first; any extra becomes advance.</div>
+          </div>
+          <div class="row g-2 mb-3">
+            <div class="col-6">
+              <label class="form-label">Date</label>
+              <%= f.date_field :payment_date, class: "form-control" %>
+            </div>
+            <div class="col-6">
+              <label class="form-label">Mode</label>
+              <%= f.select :payment_mode_id, @payment_modes.map { |m| [m.name, m.id] }, {}, class: "form-select" %>
+            </div>
+            <div class="col-12">
+              <label class="form-label">Reference</label>
+              <%= f.text_field :reference, class: "form-control", placeholder: "Receipt / transaction no" %>
+            </div>
+            <div class="col-12">
+              <label class="form-label">Notes</label>
+              <%= f.text_area :remarks, rows: 2, class: "form-control" %>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-between">
+            <%= permitted_link_to "Cancel", sale_path(@sale), class: "btn btn-light" %>
+            <button class="btn btn-primary" type="submit"><i class="bi bi-check-lg me-1"></i>Record payment</button>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-7">
+    <div class="card">
+      <div class="card-header bg-white d-flex justify-content-between align-items-center">
+        <span class="fw-semibold">Outstanding installments</span>
+        <span class="small text-muted">Balance <%= money(@sale.balance) %></span>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-sm align-middle mb-0">
+          <thead class="table-light"><tr><th>#</th><th>Due</th><th class="text-end">Amount</th><th class="text-end">Remaining</th><th>Status</th></tr></thead>
+          <tbody>
+            <% @plans.each do |plan| %>
+              <tr class="<%= 'table-warning' if plan.overdue? %>">
+                <td><%= plan.installment_no %></td>
+                <td><%= qm_date(plan.due_date) %></td>
+                <td class="text-end"><%= money(plan.amount) %></td>
+                <td class="text-end"><%= money(plan.remaining) %></td>
+                <td><%= status_badge(plan.status) %></td>
+              </tr>
+            <% end %>
+            <% if @plans.empty? %>
+              <tr><td colspan="5" class="text-center text-muted py-3">Nothing outstanding on this sale.</td></tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

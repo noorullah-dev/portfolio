@@ -1,0 +1,178 @@
+<% summary = @sale.installment_summary %>
+<%= page_header "Sale #{@sale.sale_no}", subtitle: "#{qm_date(@sale.sale_date)} · #{@sale.customer.name}", icon: "bi-receipt" do %>
+  <div class="d-flex gap-2">
+    <% if @sale.credit_sale? && @sale.balance.positive? %>
+      <%= permitted_link_to new_sale_payment_path(@sale), class: "btn btn-primary" do %>
+        <i class="bi bi-wallet2 me-1"></i>Collect installment
+      <% end %>
+    <% end %>
+    <%= permitted_link_to edit_sale_path(@sale), class: "btn btn-outline-primary" do %><i class="bi bi-pencil me-1"></i>Edit<% end %>
+    <% unless @sale.cancelled? %>
+      <%= permitted_button_to "Cancel sale", cancel_sale_path(@sale), method: :post, class: "btn btn-outline-danger",
+                    form: { class: "d-inline", data: { turbo_confirm: "Cancel this sale?" } } %>
+    <% end %>
+    <%= permitted_link_to "Back", sales_path, class: "btn btn-light" %>
+  </div>
+<% end %>
+
+<% if @sale.cancelled? %>
+  <div class="alert alert-danger d-flex align-items-center gap-2">
+    <i class="bi bi-x-circle fs-5"></i><span>This sale was cancelled. <%= @sale.notes %></span>
+  </div>
+<% end %>
+
+<div class="row g-3 mb-3">
+  <% [
+    ["Vehicle", @sale.vehicle_label.presence || "—"],
+    ["Total", money(@sale.total_amount)],
+    ["Down payment", money(@sale.down_payment)],
+    ["Monthly", @sale.months.to_i.positive? ? money(@sale.monthly_amount) : "—"],
+    ["Balance", @sale.credit_sale? ? money(@sale.balance) : "—"],
+    ["Agent commission", @commission ? money(@commission.earned_amount) : "—"]
+  ].each do |(label, value)| %>
+    <div class="col-6 col-md-4 col-xl-2">
+      <div class="card h-100"><div class="card-body py-3">
+        <div class="text-muted small"><%= label %></div>
+        <div class="fw-semibold"><%= value %></div>
+      </div></div>
+    </div>
+  <% end %>
+</div>
+
+<div class="row g-3">
+  <div class="col-lg-7">
+    <div class="card mb-3">
+      <div class="card-header bg-white d-flex justify-content-between align-items-center">
+        <span class="fw-semibold">Installment plan</span>
+        <span class="small text-muted">
+          Paid <%= money(summary[:paid]) %> of <%= money(summary[:total]) %>
+          <% if summary[:next_due] %> · next due <%= qm_date(summary[:next_due]) %><% end %>
+        </span>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-sm align-middle mb-0">
+          <thead class="table-light">
+            <tr><th>#</th><th>Due date</th><th class="text-end">Amount</th><th class="text-end">Paid</th><th class="text-end">Remaining</th><th>Status</th><th></th></tr>
+          </thead>
+          <tbody>
+            <% @plans.each do |plan| %>
+              <tr class="<%= 'table-warning' if plan.overdue? %>">
+                <td><%= plan.installment_no %></td>
+                <td>
+                  <%= qm_date(plan.due_date) %>
+                  <% if plan.overdue? %><span class="badge bg-danger ms-1"><%= plan.days_overdue %>d late</span><% end %>
+                </td>
+                <td class="text-end"><%= money(plan.amount) %></td>
+                <td class="text-end"><%= money(plan.paid_amount) %></td>
+                <td class="text-end"><%= money(plan.remaining) %></td>
+                <td><%= status_badge(plan.status) %></td>
+                <td class="text-end">
+                  <%= permitted_button_to "Remind", installment_reminder_path(plan), method: :post,
+                                class: "btn btn-sm btn-outline-secondary d-inline-block",
+                                form: { class: "d-inline" } %>
+                </td>
+              </tr>
+            <% end %>
+            <% if @plans.empty? %>
+              <tr><td colspan="7" class="text-center text-muted py-3">This was a cash sale.</td></tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header bg-white fw-semibold">Payments received</div>
+      <div class="table-responsive">
+        <table class="table table-sm align-middle mb-0">
+          <thead class="table-light"><tr><th>Date</th><th>Mode</th><th>Reference</th><th class="text-end">Amount</th><th>By</th></tr></thead>
+          <tbody>
+            <% @payments.each do |payment| %>
+              <tr>
+                <td><%= qm_date(payment.payment_date) %></td>
+                <td><%= payment.payment_mode&.name || "—" %></td>
+                <td><%= payment.reference.presence || "—" %></td>
+                <td class="text-end"><%= money(payment.amount) %></td>
+                <td><%= payment.created_by&.full_name || "—" %></td>
+              </tr>
+            <% end %>
+            <% if @payments.empty? %>
+              <tr><td colspan="5" class="text-center text-muted py-3">No payments yet.</td></tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-5">
+    <div class="card mb-3">
+      <div class="card-header bg-white fw-semibold">Vehicle and customer</div>
+      <div class="card-body">
+        <dl class="row mb-0">
+          <dt class="col-5 text-secondary small">Customer</dt>
+          <dd class="col-7"><%= permitted_link_to @sale.customer.display_name, customer_path(@sale.customer) %></dd>
+          <dt class="col-5 text-secondary small">Phone</dt>
+          <dd class="col-7"><%= @sale.customer.phone.presence || "—" %></dd>
+          <dt class="col-5 text-secondary small">Engine no</dt>
+          <dd class="col-7"><%= @sale.stock_unit&.engine_no || "—" %></dd>
+          <dt class="col-5 text-secondary small">Chassis no</dt>
+          <dd class="col-7"><%= @sale.stock_unit&.chassis_no || "—" %></dd>
+          <dt class="col-5 text-secondary small">Registration no</dt>
+          <dd class="col-7"><%= @sale.reg_no.presence || "—" %></dd>
+          <dt class="col-5 text-secondary small">Payment mode</dt>
+          <dd class="col-7"><%= @sale.payment_mode&.name || "—" %></dd>
+          <dt class="col-5 text-secondary small">Notes</dt>
+          <dd class="col-7"><%= @sale.notes.presence || "—" %></dd>
+        </dl>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-header bg-white fw-semibold">Registration tracking</div>
+      <div class="card-body">
+        <% if @tracking %>
+          <dl class="row mb-0">
+            <dt class="col-5 text-secondary small">Status</dt><dd class="col-7"><%= status_badge(@tracking.status) %></dd>
+            <dt class="col-5 text-secondary small">Submitted</dt><dd class="col-7"><%= qm_date(@tracking.submitted_date) %></dd>
+            <dt class="col-5 text-secondary small">Expected</dt><dd class="col-7"><%= qm_date(@tracking.expected_return_date) %></dd>
+            <dt class="col-5 text-secondary small">Letter</dt><dd class="col-7"><%= @tracking.letter_received? ? "Received" : "Pending" %></dd>
+          </dl>
+        <% else %>
+          <p class="text-muted mb-2">No tracking record yet.</p>
+          <%= permitted_link_to "Start tracking", new_sale_registration_tracking_path(@sale), class: "btn btn-sm btn-outline-primary" %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header bg-white fw-semibold">Documents</div>
+      <div class="card-body">
+        <% if @documents.empty? %>
+          <p class="text-muted mb-2">No documents recorded.</p>
+        <% else %>
+          <ul class="list-group list-group-flush mb-2">
+            <% @documents.each do |document| %>
+              <li class="list-group-item px-0 d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-file-earmark-text me-1"></i><%= document.document_type.humanize %></span>
+                <span>
+                  <%= document.received? ? tag.span("Received", class: "badge bg-success") : tag.span("Pending", class: "badge bg-warning text-dark") %>
+                  <%= permitted_button_to sale_vehicle_document_path(document), method: :delete, class: "btn btn-sm btn-outline-danger d-inline-block ms-2",
+                                form: { class: "d-inline", data: { turbo_confirm: "Remove this document?" } },
+                                title: "Remove" do %><i class="bi bi-trash"></i><% end %>
+                </span>
+              </li>
+            <% end %>
+          </ul>
+        <% end %>
+
+        <%= permitted_form_with url: sale_vehicle_documents_path(@sale), method: :post, local: true, class: "d-flex gap-2 flex-wrap qm-toolbar" do %>
+          <%= select_tag "vehicle_document[document_type]",
+                         options_for_select(VehicleDocument::DOCUMENT_TYPES.map { |t| [t.humanize, t] }),
+                         class: "form-select form-select-sm" %>
+          <button class="btn btn-sm btn-outline-primary" type="submit">Add</button>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

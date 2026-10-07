@@ -1,0 +1,61 @@
+<%= page_header @stock_unit.label, subtitle: @stock_unit.remarks.presence || "Stock vehicle", icon: "bi-box-seam" do %>
+  <div class="d-flex gap-2">
+    <%= permitted_link_to edit_stock_unit_path(@stock_unit), class: "btn btn-outline-primary" do %><i class="bi bi-pencil me-1"></i>Edit<% end %>
+    <%= permitted_link_to "Back to stock", stock_units_path, class: "btn btn-light" %>
+  </div>
+<% end %>
+
+<div class="row g-3">
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-header bg-white fw-semibold">Identification</div>
+      <div class="card-body">
+        <dl class="row mb-0">
+          <dt class="col-5 text-secondary small">Model</dt><dd class="col-7"><%= @stock_unit.product&.name || "—" %></dd>
+          <dt class="col-5 text-secondary small">Variant</dt><dd class="col-7"><%= @stock_unit.variant&.display_name || "—" %></dd>
+          <dt class="col-5 text-secondary small">Engine no</dt><dd class="col-7"><%= @stock_unit.engine_no.presence || "—" %></dd>
+          <dt class="col-5 text-secondary small">Chassis no</dt><dd class="col-7"><%= @stock_unit.chassis_no.presence || "—" %></dd>
+          <dt class="col-5 text-secondary small">Color</dt><dd class="col-7"><%= @stock_unit.colour || "—" %></dd>
+          <dt class="col-5 text-secondary small">Status</dt><dd class="col-7"><%= status_badge(@stock_unit.status) %></dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    <div class="card mb-3">
+      <div class="card-header bg-white fw-semibold">Pricing</div>
+      <div class="card-body">
+        <dl class="row mb-0">
+          <dt class="col-5 text-secondary small">Cost price</dt><dd class="col-7"><%= money(@stock_unit.cost_price) %></dd>
+          <dt class="col-5 text-secondary small">Sale price</dt><dd class="col-7"><%= money(@stock_unit.sale_price) %></dd>
+          <dt class="col-5 text-secondary small">Expected margin</dt>
+          <dd class="col-7 fw-semibold"><%= money(@stock_unit.sale_price.to_d - @stock_unit.cost_price.to_d) %></dd>
+          <dt class="col-5 text-secondary small">Date added</dt><dd class="col-7"><%= qm_date(@stock_unit.date_added) %></dd>
+        </dl>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header bg-white fw-semibold">History</div>
+      <div class="card-body">
+        <dl class="row mb-0">
+          <dt class="col-5 text-secondary small">Supplier</dt>
+          <dd class="col-7"><%= @stock_unit.supplier ? permitted_link_to(@stock_unit.supplier.name, supplier_path(@stock_unit.supplier)) : "—" %></dd>
+          <dt class="col-5 text-secondary small">Purchase</dt>
+          <dd class="col-7">
+            <% if @stock_unit.purchase %>
+              <%= permitted_link_to @stock_unit.purchase.purchase_no, purchase_path(@stock_unit.purchase) %>
+            <% else %>—<% end %>
+          </dd>
+          <dt class="col-5 text-secondary small">Sale</dt>
+          <dd class="col-7">
+            <% if @stock_unit.sale %>
+              <%= permitted_link_to @stock_unit.sale.sale_no, sale_path(@stock_unit.sale) %>
+            <% else %>—<% end %>
+          </dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</div>

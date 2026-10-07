@@ -1,0 +1,18 @@
+# Nothing is generated any more — the .html files at the root are the site.
+# This file only covers tooling and OS noise.
+
+# Optional tooling dependencies (only needed for tools/generate-og-images.mjs)
+node_modules/
+package-lock.json
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Local environment
+.env
+.env.local
+.vercel/.originals/

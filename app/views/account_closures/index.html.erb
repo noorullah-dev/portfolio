@@ -1,0 +1,39 @@
+<%= page_header "Account Closures", subtitle: "Settled and written-off customer accounts", icon: "bi-check2-square" do %>
+  <%= permitted_link_to new_account_closure_path, class: "btn btn-primary" do %><i class="bi bi-plus-lg me-1"></i>Close Account<% end %>
+<% end %>
+
+<div class="row g-3 mb-3">
+  <% [["Closed accounts", @summary[:closed]], ["Settled amount", money(@summary[:settled])], ["Waived amount", money(@summary[:waived])]].each do |(label, value)| %>
+    <div class="col-md-4">
+      <div class="card"><div class="card-body">
+        <div class="text-muted small"><%= label %></div>
+        <div class="fs-5 fw-semibold"><%= value %></div>
+      </div></div>
+    </div>
+  <% end %>
+</div>
+
+<div class="card">
+  <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0">
+      <thead class="table-light"><tr><th>Date</th><th>Customer</th><th>Sale</th><th class="text-end">Balance</th><th class="text-end">Settled</th><th class="text-end">Waived</th><th>Status</th><th class="text-end"></th></tr></thead>
+      <tbody>
+        <% @closures.each do |closure| %>
+          <tr>
+            <td><%= qm_date(closure.closure_date) %></td>
+            <td><%= permitted_link_to closure.customer.display_name, customer_path(closure.customer) %></td>
+            <td><%= closure.sale ? permitted_link_to(closure.sale.sale_no, sale_path(closure.sale)) : "—" %></td>
+            <td class="text-end"><%= money(closure.remaining_balance) %></td>
+            <td class="text-end"><%= money(closure.settled_amount) %></td>
+            <td class="text-end"><%= money(closure.waived_amount) %></td>
+            <td><%= status_badge(closure.status) %></td>
+            <td class="text-end"><%= permitted_link_to account_closure_path(closure), class: "btn btn-sm btn-outline-secondary" do %><i class="bi bi-eye"></i><% end %></td>
+          </tr>
+        <% end %>
+        <% if @closures.empty? %>
+          <tr><td colspan="8" class="text-center text-muted py-4">No closures recorded.</td></tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

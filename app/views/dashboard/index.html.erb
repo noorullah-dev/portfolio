@@ -1,0 +1,156 @@
+<%= page_header "Dashboard", subtitle: "Overview of sales, stock and receivables", icon: "bi-speedometer2" do %>
+  <div class="d-flex gap-2">
+    <%= permitted_link_to new_sale_path, class: "btn btn-primary" do %><i class="bi bi-plus-lg me-1"></i>New Sale<% end %>
+    <% if !owner? && can?("installments.collect") %>
+      <%= permitted_link_to installment_collections_path, class: "btn btn-outline-primary" do %><i class="bi bi-wallet2 me-1"></i>Collect Installment<% end %>
+    <% end %>
+  </div>
+<% end %>
+
+<div class="row g-3 mb-3">
+  <% [
+    ["Customers", @counts[:customers], "bi-people", "text-primary", customers_path],
+    ["Available Stock", @counts[:stock], "bi-boxes", "text-success", stock_units_path],
+    ["Sales this month", @counts[:sales], "bi-receipt", "text-info", sales_path],
+    ["Total receivables", money(@counts[:receivables]), "bi-cash-stack", "text-warning", customers_path]
+  ].each do |label, value, icon, colour, path| %>
+    <% next unless permitted_destination?(path) %>
+    <div class="col-6 col-xl-3">
+      <%= permitted_link_to path, class: "text-decoration-none" do %>
+        <div class="card h-100">
+          <div class="card-body d-flex align-items-center gap-3">
+            <div class="fs-3 <%= colour %>"><i class="bi <%= icon %>"></i></div>
+            <div>
+              <div class="fs-5 fw-semibold"><%= value %></div>
+              <div class="text-muted small"><%= label %></div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<div class="row g-3">
+  <div class="col-lg-8">
+    <div class="card mb-3">
+      <div class="card-body">
+        <h6 class="text-secondary text-uppercase small">Sales and expenses - <%= @month.strftime("%B %Y") %></h6>
+        <div style="height: 260px"><canvas id="salesChart"></canvas></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header bg-white fw-semibold">Recent sales</div>
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr><th>Sale #</th><th>Date</th><th>Customer</th><th>Type</th><th class="text-end">Amount</th><th>Status</th></tr>
+          </thead>
+          <tbody>
+            <% @recent_sales.each do |sale| %>
+              <tr>
+                <td><%= permitted_link_to sale.sale_no, sale_path(sale), class: "text-decoration-none" %></td>
+                <td><%= qm_date(sale.sale_date) %></td>
+                <td><%= sale.customer.name %></td>
+                <td><%= sale.sale_type.humanize %></td>
+                <td class="text-end"><%= money(sale.total_amount) %></td>
+                <td><%= status_badge(sale.status) %></td>
+              </tr>
+            <% end %>
+            <% if @recent_sales.empty? %>
+              <tr><td colspan="6" class="text-center text-muted py-4">No sales recorded yet.</td></tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="card mb-3">
+      <div class="card-header bg-white fw-semibold">
+        <i class="bi bi-calendar-check me-1"></i>Due today
+        <span class="badge bg-warning text-dark float-end"><%= @due_today.size %></span>
+      </div>
+      <div class="list-group list-group-flush">
+        <% @due_today.limit(6).each do |plan| %>
+          <%= permitted_link_to sale_path(plan.sale), class: "list-group-item list-group-item-action" do %>
+            <div class="d-flex justify-content-between">
+              <span><%= plan.sale.customer.name %></span>
+              <span class="fw-semibold"><%= money(plan.remaining) %></span>
+            </div>
+            <small class="text-muted">
+              <%= tag.code(plan.sale.customer.account_no) %> ·
+              <%= plan.sale.customer.phone.presence || "—" %> ·
+              <%= plan.sale.months %> months · due <%= qm_date(plan.due_date) %>
+            </small>
+          <% end %>
+        <% end %>
+        <% if @due_today.empty? %>
+          <div class="list-group-item text-muted">Nothing due today.</div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-header bg-white fw-semibold">
+        <i class="bi bi-exclamation-triangle me-1"></i>Overdue
+        <span class="badge bg-danger float-end"><%= @overdue.size %></span>
+      </div>
+      <div class="list-group list-group-flush">
+        <% @overdue.limit(6).each do |plan| %>
+          <%= permitted_link_to sale_path(plan.sale), class: "list-group-item list-group-item-action" do %>
+            <div class="d-flex justify-content-between">
+              <span><%= plan.sale.customer.name %></span>
+              <span class="fw-semibold text-danger"><%= money(plan.remaining) %></span>
+            </div>
+            <small class="text-muted"><%= plan.days_overdue %> days late · <%= plan.sale.customer.phone %></small>
+          <% end %>
+        <% end %>
+        <% if @overdue.empty? %>
+          <div class="list-group-item text-muted">No overdue installments.</div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header bg-white fw-semibold"><i class="bi bi-boxes me-1"></i>Latest stock</div>
+      <div class="list-group list-group-flush">
+        <% @low_stock.each do |unit| %>
+          <%= permitted_link_to stock_unit_path(unit), class: "list-group-item list-group-item-action" do %>
+            <div class="d-flex justify-content-between">
+              <span><%= unit.vehicle_model.presence || unit.label %></span>
+              <span class="fw-semibold"><%= money(unit.sale_price) %></span>
+            </div>
+            <small class="text-muted"><%= unit.engine_no.presence || "No engine number" %> · <%= unit.status.humanize %></small>
+          <% end %>
+        <% end %>
+        <% if @low_stock.empty? %>
+          <div class="list-group-item text-muted">No stock in hand.</div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var canvas = document.getElementById("salesChart");
+    if (!canvas || typeof Chart === "undefined") return;
+
+    new Chart(canvas, {
+      type: "line",
+      data: {
+        labels: <%= raw @sales_series.keys.map { |d| Date.parse(d).strftime("%d %b") }.to_json %>,
+        datasets: [
+          { label: "Sales", data: <%= raw @sales_series.values.map(&:to_f).to_json %>,
+            borderColor: "#0d6efd", backgroundColor: "rgba(13,110,253,.12)", fill: true, tension: 0.3 },
+          { label: "Expenses", data: <%= raw @expense_series.values.map(&:to_f).to_json %>,
+            borderColor: "#dc3545", backgroundColor: "rgba(220,53,69,.10)", fill: true, tension: 0.3 }
+        ]
+      },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: "bottom" } } }
+    });
+  });
+</script>

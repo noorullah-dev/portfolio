@@ -1,0 +1,18 @@
+<%= page_header "Transfer ##{@transfer.id}", subtitle: qm_date(@transfer.transfer_date), icon: "bi-arrow-left-right" do %>
+  <%= permitted_link_to "Back", account_transfers_path, class: "btn btn-light" %>
+<% end %>
+
+<div class="card">
+  <div class="card-body">
+    <dl class="row mb-0">
+      <dt class="col-sm-3 text-secondary small">From</dt><dd class="col-sm-9"><%= @transfer.from_customer&.display_name || "—" %></dd>
+      <dt class="col-sm-3 text-secondary small">To</dt><dd class="col-sm-9"><%= @transfer.to_customer&.display_name || "—" %></dd>
+      <dt class="col-sm-3 text-secondary small">Sale</dt>
+      <dd class="col-sm-9"><%= @transfer.sale ? permitted_link_to(@transfer.sale.sale_no, sale_path(@transfer.sale)) : "—" %></dd>
+      <dt class="col-sm-3 text-secondary small">Balance moved</dt><dd class="col-sm-9"><%= money(@transfer.remaining_balance) %></dd>
+      <dt class="col-sm-3 text-secondary small">Fee</dt><dd class="col-sm-9"><%= money(@transfer.fee) %></dd>
+      <dt class="col-sm-3 text-secondary small">Status</dt><dd class="col-sm-9"><%= status_badge(@transfer.status) %></dd>
+      <dt class="col-sm-3 text-secondary small">Remarks</dt><dd class="col-sm-9"><%= @transfer.remarks.presence || "—" %></dd>
+    </dl>
+  </div>
+</div>

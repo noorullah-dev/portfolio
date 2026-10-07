@@ -1,0 +1,46 @@
+<%= page_header "Account Transfers", subtitle: "Move a financed vehicle from one customer to another", icon: "bi-arrow-left-right" do %>
+  <%= permitted_link_to new_account_transfer_path, class: "btn btn-primary" do %><i class="bi bi-plus-lg me-1"></i>New Transfer<% end %>
+<% end %>
+
+<div class="alert alert-info d-flex justify-content-between align-items-center">
+  <span><i class="bi bi-info-circle me-1"></i><%= @pending_count %> transfer(s) waiting for approval.</span>
+</div>
+
+<div class="card">
+  <div class="card-header bg-white d-flex justify-content-between align-items-center">
+    <span class="fw-semibold small text-secondary"><%= @transfers.size %> transfer(s)</span>
+    <%= permitted_form_with url: account_transfers_path, method: :get, local: true, class: "d-flex gap-2 flex-wrap qm-toolbar" do %>
+      <%= select_tag :status, options_for_select([["All statuses", ""], %w[Pending pending], %w[Approved approved], %w[Rejected rejected]], params[:status]), class: "form-select form-select-sm" %>
+      <%= submit_tag "Filter", class: "btn btn-sm btn-outline-secondary" %>
+    <% end %>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0">
+      <thead class="table-light"><tr><th>Date</th><th>Account No</th><th>Product</th><th>From Customer</th><th>To Customer</th><th class="text-end">Remaining Balance</th><th class="text-end">Fee</th><th>Status</th><th class="text-end">Actions</th></tr></thead>
+      <tbody>
+        <% @transfers.each do |transfer| %>
+          <tr>
+            <td><%= qm_date(transfer.transfer_date) %></td>
+            <td><%= tag.code(transfer.customer&.account_no || transfer.from_customer&.account_no) %></td>
+            <td class="small"><%= transfer.sale&.vehicle_label.presence || "—" %></td>
+            <td><%= transfer.from_customer&.display_name || "—" %></td>
+            <td><%= transfer.to_customer ? permitted_link_to(transfer.to_customer.display_name, customer_path(transfer.to_customer)) : "—" %></td>
+            <td class="text-end"><%= money(transfer.remaining_balance) %></td>
+            <td class="text-end"><%= money(transfer.fee) %></td>
+            <td><%= status_badge(transfer.status) %></td>
+            <td class="text-end text-nowrap">
+              <%= permitted_link_to account_transfer_path(transfer), class: "btn btn-sm btn-outline-secondary" do %><i class="bi bi-eye"></i><% end %>
+              <% if transfer.status == "pending" %>
+                <%= permitted_button_to "Approve", approve_account_transfer_path(transfer), method: :patch,
+                              class: "btn btn-sm btn-outline-primary d-inline-block", form: { class: "d-inline" } %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+        <% if @transfers.empty? %>
+          <tr><td colspan="9" class="text-center text-muted py-4">No transfers recorded.</td></tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

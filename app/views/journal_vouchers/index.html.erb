@@ -1,0 +1,42 @@
+<%= page_header "Journal Vouchers", subtitle: "Manual double-entry postings", icon: "bi-journal-plus" do %>
+  <%= permitted_link_to new_journal_voucher_path, class: "btn btn-primary" do %><i class="bi bi-plus-lg me-1"></i>New Journal Voucher<% end %>
+<% end %>
+
+<div class="card">
+  <div class="card-header bg-white d-flex justify-content-between align-items-center flex-wrap gap-2">
+    <span class="fw-semibold small text-secondary"><%= @vouchers.total_count %> journal voucher(s)</span>
+    <%= permitted_form_with url: journal_vouchers_path, method: :get, local: true, class: "d-flex gap-2 flex-wrap qm-toolbar" do %>
+      <%= select_tag :status, options_for_select([["All statuses", ""], %w[Draft draft], %w[Posted posted], %w[Cancelled cancelled]], params[:status]), class: "form-select form-select-sm" %>
+      <%= date_field_tag :from, params[:from], class: "form-control form-control-sm" %>
+      <%= date_field_tag :to, params[:to], class: "form-control form-control-sm" %>
+      <%= submit_tag "Filter", class: "btn btn-sm btn-outline-secondary" %>
+    <% end %>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0">
+      <thead class="table-light"><tr><th>Voucher No</th><th>Date</th><th>Description</th><th class="text-end">Total Amount</th><th>Status</th><th>Posted By</th><th class="text-end">Actions</th></tr></thead>
+      <tbody>
+        <% @vouchers.each do |voucher| %>
+          <tr>
+            <td><%= permitted_link_to voucher.voucher_no, journal_voucher_path(voucher), class: "fw-semibold text-decoration-none" %></td>
+            <td><%= qm_date(voucher.voucher_date) %></td>
+            <td><%= voucher.description.presence || "—" %></td>
+            <td class="text-end"><%= money(voucher.total_debit) %></td>
+            <td><%= status_badge(voucher.status) %></td>
+            <td><%= voucher.posted_by&.full_name || "—" %></td>
+            <td class="text-end text-nowrap">
+              <%= permitted_link_to journal_voucher_path(voucher), class: "btn btn-sm btn-outline-secondary" do %><i class="bi bi-eye"></i><% end %>
+              <% unless voucher.posted? %>
+                <%= permitted_link_to edit_journal_voucher_path(voucher), class: "btn btn-sm btn-outline-primary" do %><i class="bi bi-pencil"></i><% end %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+        <% if @vouchers.empty? %>
+          <tr><td colspan="7" class="text-center text-muted py-4">No journal vouchers yet.</td></tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

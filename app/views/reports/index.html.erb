@@ -1,0 +1,120 @@
+<%= page_header "Reports", subtitle: "Sales, cost, expense and cash movement between two dates", icon: "bi-graph-up" do %>
+
+<%= permitted_form_with url: reports_path, method: :get, local: true, class: "d-flex gap-2 align-items-end flex-wrap" do %>
+  <div><label class="form-label small mb-0">From</label><input type="date" name="from" value="<%= @from %>" class="form-control form-control-sm"></div>
+  <div><label class="form-label small mb-0">To</label><input type="date" name="to" value="<%= @to %>" class="form-control form-control-sm"></div>
+  <div><label class="form-label small mb-0">Report</label>
+    <%= select_tag :report, options_for_select([["Trading summary", "sales"], ["Accounts", "accounts"], ["Top customers", "customers"], ["Daily movement", "daily"]], @report), class: "form-select form-select-sm" %>
+  </div>
+  <button class="btn btn-sm btn-primary" type="submit"><i class="bi bi-search me-1"></i>Run</button>
+<% end %>
+
+<% end %>
+
+<div class="row g-3 mb-3">
+  <% [
+    ["Sales", money(@totals[:sales_amount]), "#{@totals[:sales_count]} sale(s)"],
+    ["Cost of goods", money(@totals[:cost_of_goods]), nil],
+    ["Expenses", money(@totals[:expenses]), nil],
+    ["Gross profit", money(@gross_profit), nil],
+    ["Customer collections", money(@totals[:collections]), nil],
+    ["Supplier payments", money(@totals[:supplier_payments]), nil]
+  ].each do |(label, value, sub)| %>
+    <div class="col-md-4 col-xl-2">
+      <div class="card h-100"><div class="card-body py-3">
+        <div class="text-muted small"><%= label %></div>
+        <div class="fs-5 fw-semibold"><%= value %></div>
+        <% if sub %><div class="text-muted small"><%= sub %></div><% end %>
+      </div></div>
+    </div>
+  <% end %>
+</div>
+
+<div class="card mb-3">
+  <div class="card-header bg-white fw-semibold">Trading summary</div>
+  <div class="card-body">
+    <div class="row g-3">
+      <div class="col-md-6">
+        <dl class="row mb-0 small">
+          <dt class="col-6 text-secondary">Sales amount</dt><dd class="col-6 text-end"><%= money(@totals[:sales_amount]) %></dd>
+          <dt class="col-6 text-secondary">Down payments</dt><dd class="col-6 text-end"><%= money(@totals[:down_payments]) %></dd>
+          <dt class="col-6 text-secondary">Financed</dt><dd class="col-6 text-end"><%= money(@totals[:financed]) %></dd>
+          <dt class="col-6 text-secondary">Cost of goods</dt><dd class="col-6 text-end"><%= money(@totals[:cost_of_goods]) %></dd>
+          <dt class="col-6 text-secondary">Gross margin</dt><dd class="col-6 text-end"><%= money(@totals[:sales_amount] - @totals[:cost_of_goods]) %></dd>
+        </dl>
+      </div>
+      <div class="col-md-6">
+        <dl class="row mb-0 small">
+          <dt class="col-6 text-secondary">Purchases</dt><dd class="col-6 text-end"><%= money(@totals[:purchases_amount]) %> (#{@totals[:purchase_count]})</dd>
+          <dt class="col-6 text-secondary">Purchased cost</dt><dd class="col-6 text-end"><%= money(@purchases.sum(:total_amount)) %></dd>
+          <dt class="col-6 text-secondary">Expenses</dt><dd class="col-6 text-end"><%= money(@totals[:expenses]) %></dd>
+          <dt class="col-6 text-secondary">Customer collections</dt><dd class="col-6 text-end"><%= money(@totals[:collections]) %></dd>
+          <dt class="col-6 text-secondary">Supplier payments</dt><dd class="col-6 text-end"><%= money(@totals[:supplier_payments]) %></dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% if @report == "accounts" %>
+  <div class="card mb-3">
+    <div class="card-header bg-white fw-semibold">Ledger movement</div>
+    <div class="table-responsive">
+      <table class="table table-sm table-hover align-middle mb-0">
+        <thead class="table-light"><tr><th>Code</th><th>Account</th><th>Type</th><th class="text-end">Debit</th><th class="text-end">Credit</th></tr></thead>
+        <tbody>
+          <% @accounts.each do |account, entries| %>
+            <% debit = entries.sum { |e| e.debit.to_d }; credit = entries.sum { |e| e.credit.to_d } %>
+            <tr class="<%= 'table-light' if debit.zero? && credit.zero? %>">
+              <td class="small"><%= account.code %></td>
+              <td><%= account.name %></td>
+              <td class="small text-secondary text-capitalize"><%= account.account_type %></td>
+              <td class="text-end"><%= debit.zero? ? "—" : money(debit) %></td>
+              <td class="text-end"><%= credit.zero? ? "—" : money(credit) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<% elsif @report == "customers" %>
+  <div class="card mb-3">
+    <div class="card-header bg-white fw-semibold">Top customers</div>
+    <div class="table-responsive">
+      <table class="table table-sm table-hover align-middle mb-0">
+        <thead class="table-light"><tr><th>Customer</th><th class="text-end">Sales value</th></tr></thead>
+        <tbody>
+          <% @top_customers.each do |customer, total| %>
+            <tr>
+              <td><%= customer ? permitted_link_to(customer.display_name, customer_path(customer)) : "—" %></td>
+              <td class="text-end"><%= money(total) %></td>
+            </tr>
+          <% end %>
+          <% if @top_customers.empty? %>
+            <tr><td colspan="2" class="text-center text-muted py-3">No sales in this period.</td></tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<% elsif @report == "daily" %>
+  <div class="card mb-3">
+    <div class="card-header bg-white fw-semibold">Daily movement</div>
+    <div class="table-responsive" style="max-height: 30rem; overflow-y: auto;">
+      <table class="table table-sm table-hover align-middle mb-0">
+        <thead class="table-light"><tr><th>Date</th><th class="text-end">Sales</th><th class="text-end">Collections</th><th class="text-end">Expenses</th><th class="text-end">Net</th></tr></thead>
+        <tbody>
+          <% @daily.each do |row| %>
+            <tr>
+              <td><%= qm_date(row[:date]) %></td>
+              <td class="text-end"><%= money(row[:sales]) %></td>
+              <td class="text-end"><%= money(row[:collections]) %></td>
+              <td class="text-end"><%= money(row[:expenses]) %></td>
+              <td class="text-end fw-semibold"><%= money(row[:collections] - row[:expenses]) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<% end %>

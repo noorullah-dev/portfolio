@@ -1,0 +1,52 @@
+<%= page_header "Short Payment Tracker", subtitle: "Installments where the customer paid less than scheduled", icon: "bi-graph-down-arrow" do %>
+  <button class="btn btn-light" type="button" onclick="window.print()"><i class="bi bi-printer me-1"></i>Print</button>
+<% end %>
+
+<%= permitted_form_with url: short_payments_path, method: :get, local: true, class: "no-print d-flex gap-2 align-items-end flex-wrap mb-3" do %>
+  <div><label class="form-label small mb-0">From</label><input type="date" name="from" value="<%= @from %>" class="form-control form-control-sm"></div>
+  <div><label class="form-label small mb-0">To</label><input type="date" name="to" value="<%= @to %>" class="form-control form-control-sm"></div>
+  <button class="btn btn-sm btn-primary" type="submit"><i class="bi bi-search me-1"></i>Apply</button>
+<% end %>
+
+<div class="row g-3 mb-3">
+  <% [["Short installments", @totals[:count]], ["Short amount", money(@totals[:short])], ["Oldest (days)", @totals[:oldest]]].each do |(label, value)| %>
+    <div class="col-md-4"><div class="card"><div class="card-body">
+      <div class="text-muted small"><%= label %></div><div class="fs-4 fw-semibold"><%= value %></div>
+    </div></div></div>
+  <% end %>
+</div>
+
+<div class="card">
+  <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0">
+      <thead class="table-light"><tr><th>Account No</th><th>Customer</th><th>Phone</th><th>Product</th><th class="text-end">Months Short</th><th class="text-end">Total Short Pending</th><th class="text-end">Remaining Balance</th><th>Risk Level</th><th class="text-end">Actions</th></tr></thead>
+      <tbody>
+        <% @rows.each do |row| %>
+          <tr>
+            <td><%= tag.code(row[:customer]&.account_no) %></td>
+            <td><%= row[:customer] ? permitted_link_to(row[:customer].display_name, customer_path(row[:customer])) : "—" %></td>
+            <td class="small"><%= row[:customer]&.phone.presence || "—" %></td>
+            <td class="small"><%= row[:sale].vehicle_label.presence || "—" %></td>
+            <td class="text-end"><%= row[:customer] ? row[:customer].short_plan_count : 0 %></td>
+            <td class="text-end text-danger"><%= money(row[:short]) %></td>
+            <td class="text-end"><%= money(row[:sale].balance) %></td>
+            <td>
+              <% if row[:age] > 90 %>
+                <%= status_badge("overdue") %>
+              <% elsif row[:age] > 30 %>
+                <%= status_badge("partial") %>
+              <% else %>
+                <%= status_badge("active") %>
+              <% end %>
+              <div class="small text-muted"><%= row[:age] %> d</div>
+            </td>
+            <td class="text-end"><%= permitted_link_to sale_path(row[:sale]), class: "btn btn-sm btn-outline-secondary" do %><i class="bi bi-eye"></i><% end %></td>
+          </tr>
+        <% end %>
+        <% if @rows.empty? %>
+          <tr><td colspan="9" class="text-center text-muted py-4">No short payments in this period.</td></tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

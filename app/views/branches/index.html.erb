@@ -1,0 +1,55 @@
+<% content_for :title, "Branches" %>
+<div class="qm-page">
+  <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
+    <div>
+      <h1 class="h4 mb-1">Branches</h1>
+      <p class="text-muted mb-0">Sales, purchases and cash book entries are isolated per branch.</p>
+    </div>
+    <% if can?("branches.create") %>
+      <%= permitted_link_to new_branch_path, class: "btn btn-primary" do %><i class="bi bi-plus-lg"></i> Add branch<% end %>
+      <%= permitted_link_to new_location_path, class: "btn btn-outline-secondary" do %><i class="bi bi-geo-alt"></i> Add location<% end %>
+    <% end %>
+  </div>
+
+  <div class="row g-3">
+    <% @branches.each do |row| %>
+      <% b = row[:branch] %>
+      <div class="col-md-6 col-xl-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start">
+              <div>
+                <h2 class="h6 mb-1"><%= permitted_link_to b.display_name, branch_path(b) %></h2>
+                <div class="small text-muted mb-1"><%= b.allowed_permissions.nil? ? "Role permissions" : "Custom branch permissions" %></div>
+                <div class="small text-muted"><%= b.city.presence || "No city" %> &middot; <%= b.branch_type.humanize %></div>
+              </div>
+              <%= status_badge(b.status) %>
+            </div>
+            <div class="row text-center g-2 mt-2">
+              <div class="col"><div class="fs-5 fw-semibold"><%= row[:sales] %></div><div class="small text-muted">Sales</div></div>
+              <div class="col"><div class="fs-5 fw-semibold"><%= row[:purchases] %></div><div class="small text-muted">Purchases</div></div>
+              <div class="col"><div class="fs-5 fw-semibold"><%= row[:staff] %></div><div class="small text-muted">Staff</div></div>
+            </div>
+          </div>
+          <% if can?("branches.edit") %>
+            <div class="card-footer bg-transparent d-flex gap-2">
+              <%= permitted_link_to edit_branch_path(b), class: "btn btn-sm btn-outline-secondary", title: "Edit" do %><i class="bi bi-pencil me-1"></i>Edit<% end %>
+              <% unless b.is_default? %>
+                <%= permitted_button_to branch_path(b), method: :delete, class: "btn btn-sm btn-outline-danger", title: "Delete",
+                      form: { data: { turbo_confirm: "Delete this branch?" } } do %><i class="bi bi-trash me-1"></i>Delete<% end %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <h2 class="h6 mb-0">Locations (recovery areas)</h2>
+      <%= permitted_link_to locations_path, class: "btn btn-sm btn-outline-secondary", title: "Manage locations" do %><i class="bi bi-geo-alt me-1"></i>Manage locations<% end %>
+    </div>
+    <p class="small text-muted">Recovery officers are assigned to locations, not to branches.</p>
+  </div>
+</div>

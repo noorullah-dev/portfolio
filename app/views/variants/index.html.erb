@@ -1,0 +1,40 @@
+<%= page_header "Variants", subtitle: "Model level pricing for each product", icon: "bi-sliders" do %>
+  <%= permitted_link_to new_variant_path, class: "btn btn-primary" do %><i class="bi bi-plus-lg me-1"></i>New Variant<% end %>
+<% end %>
+
+<div class="card">
+  <div class="card-header bg-white d-flex justify-content-between align-items-center flex-wrap gap-2">
+    <span class="fw-semibold small text-secondary"><%= @variants.size %> variant(s)</span>
+    <%= permitted_form_with url: variants_path, method: :get, local: true do %>
+      <%= select_tag :product_id, options_for_select([["All products", ""]] + @products.map { |p| [p.display_name, p.id] }, params[:product_id]), class: "form-select form-select-sm d-inline-block w-auto" %>
+      <%= submit_tag "Filter", class: "btn btn-sm btn-outline-secondary" %>
+    <% end %>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0">
+      <thead class="table-light"><tr><th class="text-end">#</th><th>Product</th><th>Attribute</th><th>Value</th><th class="text-end">Purchase Price</th><th class="text-end">Sale Price</th><th>Status</th><th class="text-end">Actions</th></tr></thead>
+      <tbody>
+        <% @variants.each do |variant| %>
+          <tr>
+            <td class="text-end text-secondary"><%= variant.id %></td>
+            <td><%= permitted_link_to variant.product.display_name, product_path(variant.product) %></td>
+            <td class="small text-secondary"><%= variant.attribute_name %></td>
+            <td class="fw-semibold"><%= variant.value %></td>
+            <td class="text-end"><%= money(variant.purchase_price) %></td>
+            <td class="text-end"><%= money(variant.sale_price) %></td>
+            <td><%= status_badge(variant.status) %></td>
+            <td class="text-end text-nowrap">
+              <%= permitted_link_to edit_variant_path(variant), class: "btn btn-sm btn-outline-secondary" do %><i class="bi bi-pencil"></i><% end %>
+              <%= permitted_button_to variant_path(variant), method: :delete, title: "Delete",
+                            class: "btn btn-sm btn-outline-danger d-inline-block",
+                            form: { class: "d-inline", data: { confirm: "Delete this variant?" } } do %><i class="bi bi-trash me-1"></i>Delete<% end %>
+            </td>
+          </tr>
+        <% end %>
+        <% if @variants.empty? %>
+          <tr><td colspan="8" class="text-center text-muted py-4">No variants yet.</td></tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,65 @@
+<% content_for :title, "More" %>
+
+<%= page_header "More", subtitle: "Every section of #{business&.name || 'QistManager'}", icon: "bi-grid-3x3-gap" %>
+
+<% if owner? %>
+  <div class="qm-menu-card">
+    <div class="qm-menu-card-title"><i class="bi bi-buildings"></i> Working in</div>
+    <div class="qm-menu-shop-actions">
+      <% Business.order(:name).each do |shop| %>
+        <%= button_to open_owner_business_path(shop), method: :post,
+                      class: "qm-menu-chip#{' active' if owner_shop&.id == shop.id}" do %>
+          <%= shop.name %>
+        <% end %>
+      <% end %>
+      <% if owner_shop %>
+        <%= button_to close_owner_business_path, method: :delete, class: "qm-menu-chip" do %>
+          <i class="bi bi-globe-americas me-1"></i>Platform view
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<% nav_sections.each do |section| %>
+  <% next if section[:items].blank? %>
+
+  <div class="qm-menu-group">
+    <% if section[:label].present? %>
+      <div class="qm-menu-group-title"><%= section[:label] %></div>
+    <% end %>
+
+    <ul class="qm-menu-list">
+      <% section[:items].each do |item| %>
+        <% entries = item[:children] || [item] %>
+        <% entries.each do |entry| %>
+          <li>
+            <%= permitted_link_to public_send(entry[:path]), class: "qm-menu-link" do %>
+              <span class="qm-menu-icon"><i class="bi <%= entry[:icon] %>"></i></span>
+              <span class="qm-menu-text"><%= entry[:text] %></span>
+              <i class="bi bi-chevron-right qm-menu-chevron"></i>
+            <% end %>
+          </li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<div class="qm-menu-group">
+  <ul class="qm-menu-list">
+    <li>
+      <%= permitted_link_to change_password_path, class: "qm-menu-link" do %>
+        <span class="qm-menu-icon"><i class="bi bi-key"></i></span>
+        <span class="qm-menu-text">Change password</span>
+        <i class="bi bi-chevron-right qm-menu-chevron"></i>
+      <% end %>
+    </li>
+    <li>
+      <%= permitted_link_to logout_path, class: "qm-menu-link qm-menu-danger", data: { turbo: false } do %>
+        <span class="qm-menu-icon"><i class="bi bi-box-arrow-right"></i></span>
+        <span class="qm-menu-text">Sign out</span>
+      <% end %>
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,201 @@
+<%= page_header @purchase.persisted? ? "Edit Purchase #{@purchase.purchase_no}" : "New Purchase",
+              subtitle: "Record stock bought from a supplier",
+              icon: "bi-cart-plus" do %>
+  <%= permitted_link_to "Back to purchases", purchases_path, class: "btn btn-light" %>
+<% end %>
+
+<%= permitted_form_with model: @purchase, url: @purchase.persisted? ? purchase_path(@purchase) : purchases_path,
+              method: @purchase.persisted? ? :patch : :post, local: true do |f| %>
+
+  <% if @purchase.errors.any? %>
+    <div class="alert alert-danger">
+      <strong><%= pluralize(@purchase.errors.count, "error") %> prevented this purchase being saved:</strong>
+      <ul class="mb-0">
+        <% @purchase.errors.full_messages.each do |message| %><li><%= message %></li><% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="card mb-3">
+    <div class="card-header bg-white fw-semibold">Supplier and payment</div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-4">
+          <label class="form-label">Supplier *</label>
+          <%= f.select :supplier_id, @suppliers.map { |s| [s.name, s.id] },
+                       { include_blank: "Select supplier" }, class: "form-select" %>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Purchase date *</label>
+          <%= f.date_field :purchase_date, class: "form-control" %>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Invoice no</label>
+          <%= f.text_field :invoice_no, class: "form-control" %>
+        </div>
+        <div class="col-md-2">
+          <label class="form-label">Payment type</label>
+          <%= f.select :payment_type, [%w[Credit credit], %w[Cash cash]], {}, class: "form-select" %>
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-label">Paid now</label>
+          <%= f.number_field :paid_amount, step: "0.01", min: 0, class: "form-control", id: "purchase_paid" %>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Payment mode</label>
+          <%= f.select :payment_mode_id, @payment_modes.map { |m| [m.name, m.id] },
+                       { include_blank: "—" }, class: "form-select" %>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Discount on total</label>
+          <%= f.number_field :discount, step: "0.01", min: 0, class: "form-control" %>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Notes</label>
+          <%= f.text_field :notes, class: "form-control" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header bg-white fw-semibold">Items — each row with a vehicle number creates a stock unit</div>
+    <div class="card-body">
+      <div id="purchase_lines">
+        <%= f.fields_for :items do |item| %>
+          <div class="row g-2 align-items-end mb-3 purchase-line">
+            <div class="col-md-4">
+              <label class="form-label small">Product</label>
+              <%= item.select :product_id,
+                              @products.map { |p| [p.name, p.id] },
+                              { include_blank: "— free text —" }, class: "form-select form-select-sm" %>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label small">Description</label>
+              <%= item.text_field :description, class: "form-control form-control-sm" %>
+            </div>
+            <div class="col-md-1">
+              <label class="form-label small">Qty</label>
+              <%= item.number_field :qty, step: "1", min: 1, class: "form-control form-control-sm line-qty", value: item.object.qty || 1 %>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label small">Unit price</label>
+              <%= item.number_field :unit_price, step: "0.01", min: 0, class: "form-control form-control-sm line-price" %>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label small">Engine no</label>
+              <%= item.text_field :engine_no, class: "form-control form-control-sm", placeholder: "first unit" %>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label small">Chassis no</label>
+              <%= item.text_field :chassis_no, class: "form-control form-control-sm", placeholder: "first unit" %>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label small">Line total</label>
+              <span class="line-total fw-semibold">—</span>
+            </div>
+            <div class="col-md-2 form-check mb-2">
+              <%= item.check_box :create_stock_unit, class: "form-check-input" %>
+              <%= item.label :create_stock_unit, "Stock unit", class: "form-check-label small" %>
+            </div>
+            <% if item.object.persisted? %>
+              <div class="col-md-2 form-check mb-2">
+                <%= item.check_box :_destroy, class: "form-check-input" %>
+                <%= item.label :_destroy, "Delete", class: "form-check-label small" %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+      <button type="button" class="btn btn-sm btn-outline-secondary" id="add_purchase_line">
+        <i class="bi bi-plus-lg me-1"></i>Add item
+      </button>
+    </div>
+
+    <div class="card-footer bg-white d-flex justify-content-between align-items-center">
+      <span class="small text-muted">
+        Calculated total: <span id="purchase_total_hint" class="fw-semibold">Rs 0</span>
+      </span>
+      <span>
+        <%= permitted_link_to "Cancel", purchases_path, class: "btn btn-light" %>
+        <button type="submit" class="btn btn-primary">
+          <i class="bi bi-check-lg me-1"></i><%= @purchase.persisted? ? "Save changes" : "Record purchase" %>
+        </button>
+      </span>
+    </div>
+  </div>
+<% end %>
+
+<script type="text/template" id="purchase_line_template">
+  <div class="row g-2 align-items-end mb-3 purchase-line">
+    <div class="col-md-4">
+      <label class="form-label small">Product</label>
+      <select class="form-select form-select-sm" name="purchase[items_attributes][__INDEX__][product_id]">
+        <option value="">— free text —</option>
+      </select>
+    </div>
+    <div class="col-md-4"><label class="form-label small">Description</label>
+      <input class="form-control form-control-sm" type="text" name="purchase[items_attributes][__INDEX__][description]"></div>
+    <div class="col-md-1"><label class="form-label small">Qty</label>
+      <input class="form-control form-control-sm line-qty" type="number" step="1" min="1" value="1" name="purchase[items_attributes][__INDEX__][qty]"></div>
+    <div class="col-md-2"><label class="form-label small">Unit price</label>
+      <input class="form-control form-control-sm line-price" type="number" step="0.01" min="0" name="purchase[items_attributes][__INDEX__][unit_price]"></div>
+    <div class="col-md-2"><label class="form-label small">Engine no</label>
+      <input class="form-control form-control-sm" type="text" name="purchase[items_attributes][__INDEX__][engine_no]"></div>
+    <div class="col-md-2"><label class="form-label small">Chassis no</label>
+      <input class="form-control form-control-sm" type="text" name="purchase[items_attributes][__INDEX__][chassis_no]"></div>
+    <div class="col-md-2"><label class="form-label small">Line total</label><span class="line-total fw-semibold">—</span></div>
+    <div class="col-md-2 form-check mb-2">
+      <input class="form-check-input" type="checkbox" name="purchase[items_attributes][__INDEX__][create_stock_unit]" id="stock_unit___INDEX__" checked>
+      <label class="form-check-label small" for="stock_unit___INDEX__">Stock unit</label>
+    </div>
+  </div>
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var container = document.getElementById("purchase_lines");
+    var template = document.getElementById("purchase_line_template").innerHTML;
+    var products = <%= raw @products.map { |p| { name: p.name, id: p.id } }.to_json %>;
+
+    function options(select) {
+      products.forEach(function (product) {
+        var option = document.createElement("option");
+        option.value = product.id;
+        option.textContent = product.name;
+        select.appendChild(option);
+      });
+    }
+
+    document.querySelectorAll("#purchase_lines select").forEach(options);
+
+    function recalc() {
+      var total = 0;
+      document.querySelectorAll("#purchase_lines .purchase-line").forEach(function (line) {
+        var qty = parseFloat(line.querySelector(".line-qty") && line.querySelector(".line-qty").value) || 0;
+        var price = parseFloat(line.querySelector(".line-price") && line.querySelector(".line-price").value) || 0;
+        var lineTotal = qty * price;
+        var out = line.querySelector(".line-total");
+        if (out) out.textContent = "Rs " + lineTotal.toLocaleString("en-PK", { maximumFractionDigits: 2 });
+        total += lineTotal;
+      });
+      var paid = parseFloat(document.getElementById("purchase_paid").value) || 0;
+      var hint = document.getElementById("purchase_total_hint");
+      if (hint) hint.textContent = "Rs " + total.toLocaleString("en-PK", { maximumFractionDigits: 2 });
+    }
+
+    document.getElementById("add_purchase_line").addEventListener("click", function () {
+      var index = Date.now();
+      var html = template.replace(/__INDEX__/g, index);
+      container.insertAdjacentHTML("beforeend", html);
+      var added = container.lastElementChild;
+      options(added.querySelector("select"));
+      recalc();
+    });
+
+    container.addEventListener("input", recalc);
+    document.getElementById("purchase_paid").addEventListener("input", recalc);
+    recalc();
+  });
+</script>

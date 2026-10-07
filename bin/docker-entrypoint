@@ -1,0 +1,12 @@
+#!/bin/sh
+set -eu
+
+# Only server startup migrates. Console, runner and test commands stay independent.
+if [ "${1:-}" = "./bin/rails" ] && [ "${2:-}" = "server" ]; then
+  rm -f /rails/tmp/pids/server.pid
+  # Creates the database when missing, then migrates. Never seeds, so no demo
+  # accounts are installed on a fresh database.
+  ./bin/rails db:create db:migrate
+fi
+
+exec "$@"

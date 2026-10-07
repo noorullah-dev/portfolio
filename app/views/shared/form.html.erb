@@ -1,0 +1,76 @@
+<%#
+  Generic create/edit form. Controllers declare `fields` as a list of hashes:
+    { name: "brand_id", label: "Brand", type: :select, collection: -> { Brand.active.pluck(:name, :id) },
+      include_blank: true, hint: "...", col: 6 }
+  Supported types: string, text, number, decimal, date, select, check_box, hidden, email, tel.
+%>
+<%
+  crud = controller.class
+%>
+<%= permitted_form_with model: @record, url: form_action_path, method: form_http_method, local: true do |f| %>
+
+  <% if @record.errors.any? %>
+    <div class="alert alert-danger">
+      <strong><%= pluralize(@record.errors.count, "error") %> prevented this from being saved:</strong>
+      <ul class="mb-0">
+        <% @record.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="row g-3">
+        <% crud.fields.each do |field| %>
+          <% col = field[:col] || 6 %>
+          <div class="col-md-<%= col %>">
+            <% if field[:type] == :check_box %>
+              <div class="form-check mt-4">
+                <%= f.check_box field[:name], class: "form-check-input" %>
+                <%= f.label field[:name], field[:label], class: "form-check-label" %>
+                <% if field[:hint].present? %>
+                  <div class="form-text"><%= field[:hint] %></div>
+                <% end %>
+              </div>
+            <% elsif field[:type] == :hidden %>
+              <%= f.hidden_field field[:name] %>
+            <% else %>
+              <label class="form-label" for="<%= field[:name] %>"><%= field[:label] %></label>
+
+              <% case field[:type] %>
+              <% when :select %>
+                <% options = field[:collection].respond_to?(:call) ? instance_exec(&field[:collection]) : field[:collection] %>
+                <%= f.select field[:name], options, include_blank: field.fetch(:include_blank, true),
+                             selected: @record.public_send(field[:name]),
+                             class: "form-select #{(field[:error] && @record.errors[field[:name]].any?) ? 'is-invalid' : ''}" %>
+              <% when :textarea %>
+                <%= f.text_area field[:name], rows: field[:rows] || 3, class: "form-control" %>
+              <% when :decimal, :number %>
+                <%= f.number_field field[:name], step: field[:step] || (field[:type] == :decimal ? "0.01" : "1"),
+                                   class: "form-control", min: field[:min] %>
+              <% when :date %>
+                <%= f.date_field field[:name], class: "form-control" %>
+              <% else %>
+                <%= f.text_field field[:name], type: field[:type] || :text, class: "form-control",
+                                 placeholder: field[:placeholder] %>
+              <% end %>
+
+              <% if field[:hint].present? %>
+                <div class="form-text"><%= field[:hint] %></div>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="card-footer bg-white d-flex gap-2 justify-content-end">
+      <%= permitted_link_to "Cancel", index_path, class: "btn btn-light" %>
+      <button type="submit" class="btn btn-primary">
+        <i class="bi bi-check-lg me-1"></i><%= @record.persisted? ? "Save changes" : "Create #{page_title}" %>
+      </button>
+    </div>
+  </div>
+<% end %>

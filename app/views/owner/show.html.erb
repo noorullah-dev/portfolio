@@ -1,0 +1,125 @@
+<% content_for :title, @business.name %>
+<div class="qm-page">
+  <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
+    <div>
+      <h1 class="h4 mb-1"><%= @business.name %> <%= status_badge(@business.status) %></h1>
+      <p class="text-muted mb-0">
+        <%= @business.city.presence %> &middot; <%= @business.currency %>
+        &middot; provisioned by <%= @business.provisioned_by&.username || "system" %>
+        on <%= @business.created_at.to_date %>
+      </p>
+    </div>
+    <div class="d-flex gap-2">
+      <% if can?("owner.manage") %>
+        <%= permitted_link_to edit_owner_business_path(@business), class: "btn btn-outline-secondary", title: "Edit shop" do %><i class="bi bi-pencil me-1"></i>Edit shop<% end %>
+        <%= permitted_button_to(toggle_status_owner_business_path(@business), method: :patch,
+              class: "btn #{@business.status == "suspended" ? "btn-success" : "btn-outline-danger"}",
+              title: @business.status == "suspended" ? "Reactivate shop" : "Suspend shop",
+              form: { data: { turbo_confirm: "This changes access for every login of this shop." } }) do %><i class="bi bi-<%= @business.status == "suspended" ? "play-circle" : "slash-circle" %> me-1"></i><%= @business.status == "suspended" ? "Reactivate shop" : "Suspend shop" %><% end %>
+      <% end %>
+      <%= permitted_link_to "Back to shops", owner_businesses_path, class: "btn btn-link" %>
+    </div>
+  </div>
+
+  <div class="row g-3 mb-4">
+    <% { "Customers" => @metrics[:customers], "Sales" => @metrics[:sales],
+         "Sales value" => number_to_currency(@metrics[:sales_value]),
+         "Receivables" => number_to_currency(@metrics[:receivables]) }.each do |label, value| %>
+      <div class="col-6 col-lg-3"><div class="card h-100"><div class="card-body">
+        <div class="text-muted small"><%= label %></div>
+        <div class="fs-4 fw-semibold"><%= value.is_a?(String) ? value : number_with_delimiter(value) %></div>
+      </div></div></div>
+    <% end %>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-lg-6">
+      <div class="card h-100">
+        <div class="card-header bg-transparent fw-semibold">Branches</div>
+        <ul class="list-group list-group-flush">
+          <% @branches.each do |b| %>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span><%= b.display_name %> <%= status_badge(b.status) %></span>
+              <span class="text-muted small"><%= b.staff_count %> staff &middot; <%= b.record_count %> records</span>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+      <div class="card mt-3">
+        <div class="card-header bg-transparent fw-semibold">Locations</div>
+        <ul class="list-group list-group-flush">
+          <% if @locations.any? %>
+            <% @locations.each do |l| %>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span><%= l.full_name %></span>
+                <span class="text-muted small"><%= l.customer_count %> customers</span>
+              </li>
+            <% end %>
+          <% else %>
+            <li class="list-group-item text-muted">No locations yet.</li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-header bg-transparent fw-semibold">Staff logins</div>
+        <ul class="list-group list-group-flush">
+          <% @staff.each do |u| %>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span><%= u.full_name %> <span class="text-muted small">(@<%= u.username %>)</span></span>
+              <span><%= u.display_role %> &middot; <%= status_badge(u.status) %></span>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+
+      <div class="card mt-3">
+        <div class="card-header bg-transparent fw-semibold">Recent activity</div>
+        <ul class="list-group list-group-flush">
+          <% if @recent_audit.any? %>
+            <% @recent_audit.each do |log| %>
+              <li class="list-group-item">
+                <div class="small fw-semibold"><%= log.action %></div>
+                <div class="small text-muted">
+                  <%= log.summary %>
+                  &middot; <%= log.user&.username || "system" %>
+                  <%= "(#{log.role})" if log.role %> &middot; <%= log.created_at.strftime("%d %b %H:%M") %>
+                </div>
+              </li>
+            <% end %>
+          <% else %>
+            <li class="list-group-item text-muted">Nothing logged yet.</li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <% if can?("owner.manage") %>
+    <div class="card mt-3">
+      <div class="card-header bg-transparent fw-semibold">Provision a shop administrator</div>
+      <div class="card-body">
+        <%= permitted_form_with url: create_admin_owner_business_path(@business), method: :post, local: true, class: "row g-3" do %>
+          <div class="col-md-4">
+            <label class="form-label" for="full_name">Full name</label>
+            <input class="form-control" type="text" name="full_name" id="full_name" placeholder="e.g. Bilal Ahmed">
+          </div>
+          <div class="col-md-4">
+            <label class="form-label" for="username">Username</label>
+            <input class="form-control" type="text" name="username" id="username" placeholder="leave blank to auto-generate">
+          </div>
+          <div class="col-md-4">
+            <label class="form-label" for="password">Temporary password</label>
+            <input class="form-control" type="text" name="password" id="password" placeholder="auto-generated if blank">
+            <div class="form-text">The admin must change it on first login.</div>
+          </div>
+          <div class="col-12">
+            <button class="btn btn-primary" type="submit">Create administrator</button>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

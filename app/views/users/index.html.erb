@@ -1,0 +1,43 @@
+<%= page_header "Users", subtitle: "Who can sign in to the system", icon: "bi-people" do %>
+  <%= permitted_link_to new_user_path, class: "btn btn-primary" do %><i class="bi bi-person-plus me-1"></i>New User<% end %>
+<% end %>
+
+<div class="card">
+  <div class="card-header bg-white d-flex justify-content-between align-items-center">
+    <span class="fw-semibold small text-secondary"><%= @users.size %> user(s)</span>
+    <%= permitted_form_with url: users_path, method: :get, local: true do %>
+      <%= select_tag :role, options_for_select([["All roles", ""]] + User::ROLES.map { |r| [r.titleize, r] }, params[:role]), class: "form-select form-select-sm d-inline-block w-auto" %>
+      <%= select_tag :branch_id, options_from_collection_for_select(business.branches.ordered, :id, :display_name, params[:branch_id]), include_blank: "All branches", class: "form-select form-select-sm d-inline-block w-auto" %>
+      <%= submit_tag "Filter", class: "btn btn-sm btn-outline-secondary" %>
+    <% end %>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0">
+      <thead class="table-light"><tr><th class="text-end">#</th><th>Full Name</th><th>Username</th><th>Role</th><th>Branch</th><th>Permissions</th><th>Phone</th><th>Status</th><th>Last Login</th><th class="text-end">Action</th></tr></thead>
+      <tbody>
+        <% @users.each do |user| %>
+          <tr>
+            <td class="text-end text-secondary"><%= user.id %></td>
+            <td class="fw-semibold"><%= user.full_name %><%= " (you)" if user == current_user %></td>
+            <td><%= user.username %></td>
+            <td><%= status_badge(user.role) %></td>
+            <td><%= user.branch&.name || "All branches / portal" %></td>
+            <td class="small"><%= user.custom_permissions.nil? ? "Role defaults" : "Custom" %><%= " · Branch limited" if user.branch&.allowed_permissions %></td>
+            <td class="small text-secondary"><%= user.phone.presence || "—" %></td>
+            <td><%= status_badge(user.status) %></td>
+            <td class="small"><%= user.last_login_at ? l(user.last_login_at, format: :short) : "Never" %></td>
+            <td class="text-end text-nowrap">
+              <%= permitted_link_to edit_user_path(user), class: "btn btn-sm btn-outline-secondary" do %><i class="bi bi-pencil"></i><% end %>
+              <% if user != current_user %>
+                <%= permitted_button_to user.status == "active" ? "Deactivate" : "Activate", user_path(user), method: :patch,
+                              params: { user: { status: user.status == "active" ? "inactive" : "active" } },
+                              class: "btn btn-sm btn-outline-#{user.status == 'active' ? 'danger' : 'success'} d-inline-block",
+                              form: { class: "d-inline" } %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

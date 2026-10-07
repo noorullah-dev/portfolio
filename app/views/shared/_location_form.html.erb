@@ -1,0 +1,19 @@
+<%= permitted_form_with model: location, url: location.persisted? ? location_path(location) : locations_path,
+      method: location.persisted? ? :patch : :post, local: true do |f| %>
+  <% if location.errors.any? %>
+    <div class="alert alert-danger"><ul class="mb-0"><% location.errors.full_messages.each do |m| %><li><%= m %></li><% end %></ul></div>
+  <% end %>
+  <div class="row g-3">
+    <div class="col-md-6"><%= f.label :name, class: "form-label" %><%= f.text_field :name, class: "form-control", required: true %></div>
+    <div class="col-md-3"><%= f.label :city, class: "form-label" %><%= f.text_field :city, class: "form-control" %></div>
+    <div class="col-md-3"><%= f.label :zone, class: "form-label" %><%= f.text_field :zone, class: "form-control" %></div>
+    <div class="col-md-4">
+      <%= f.label :status, class: "form-label" %>
+      <%= f.select :status, [%w[Active active], %w[Inactive inactive]], {}, class: "form-select" %>
+    </div>
+    <div class="col-12 d-flex gap-2">
+      <%= f.submit location.persisted? ? "Save location" : "Create location", class: "btn btn-primary" %>
+      <%= permitted_link_to "Cancel", locations_path, class: "btn btn-link" %>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,70 @@
+<%= page_header "Sales List", subtitle: "Every vehicle sale with its payment position", icon: "bi-receipt" do %>
+  <%= permitted_link_to new_sale_path, class: "btn btn-primary" do %><i class="bi bi-plus-lg me-1"></i>New Sale<% end %>
+<% end %>
+
+<div class="card">
+  <div class="card-body p-0">
+    <div class="d-flex align-items-center justify-content-between px-4 py-3 border-bottom flex-wrap gap-2">
+      <span class="fw-semibold text-secondary small"><%= @total_count %> sale(s)</span>
+      <div class="d-flex gap-2 flex-wrap qm-toolbar-group">
+        <%= permitted_form_with url: sales_path, method: :get, local: true, class: "d-flex gap-2 flex-wrap qm-toolbar" do %>
+          <%= hidden_field_tag :type, params[:type] %>
+          <%= text_field_tag :q, params[:q], class: "form-control form-control-sm qm-search", placeholder: "Search sale #, customer, reg no" %>
+          <%= date_field_tag :from, params[:from], class: "form-control form-control-sm" %>
+          <%= date_field_tag :to, params[:to], class: "form-control form-control-sm" %>
+          <%= select_tag :type, options_for_select([["All types", ""], %w[Credit credit], %w[Cash cash]], params[:type]),
+                         class: "form-select form-select-sm" %>
+          <%= submit_tag "Filter", class: "btn btn-sm btn-outline-secondary" %>
+          <%= permitted_link_to "Reset", sales_path, class: "btn btn-sm btn-light" %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>Sale No</th><th>Date</th><th>Customer</th><th>Product</th><th>Reg No</th>
+            <th>Type</th><th class="text-end">Amount</th><th>Status</th><th class="text-end">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% records = @sales.respond_to?(:records) ? @sales.records : @sales %>
+          <% records.each do |sale| %>
+            <tr>
+              <td><%= permitted_link_to sale.sale_no, sale_path(sale), class: "fw-semibold text-decoration-none" %></td>
+              <td><%= qm_date(sale.sale_date) %></td>
+              <td>
+                <%= permitted_link_to sale.customer.name, customer_path(sale.customer), class: "text-decoration-none" %>
+                <div class="small text-muted"><%= sale.customer.account_no %></div>
+              </td>
+              <td><%= sale.vehicle_label.presence || "—" %></td>
+              <td><%= sale.stock_unit&.reg_no.presence || "—" %></td>
+              <td><%= sale.sale_type.humanize %></td>
+              <td class="text-end"><%= money(sale.total_amount) %></td>
+              <td><%= status_badge(sale.status) %></td>
+              <td class="text-end text-nowrap">
+                <%= permitted_link_to sale_path(sale), class: "btn btn-sm btn-outline-secondary", title: "View" do %><i class="bi bi-eye"></i><% end %>
+                <%= permitted_link_to new_sale_payment_path(sale), class: "btn btn-sm btn-outline-primary", title: "Collect" do %><i class="bi bi-wallet2"></i><% end %>
+                <%= permitted_link_to edit_sale_path(sale), class: "btn btn-sm btn-outline-primary", title: "Edit" do %><i class="bi bi-pencil"></i><% end %>
+              </td>
+            </tr>
+          <% end %>
+          <% if records.empty? %>
+            <tr><td colspan="9" class="text-center text-muted py-4"><i class="bi bi-inbox me-2"></i>No sales found.</td></tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <% if @sales.respond_to?(:total_pages) && @sales.total_pages > 1 %>
+      <div class="px-4 py-3 border-top d-flex justify-content-between align-items-center">
+        <span class="small text-muted">Page <%= @sales.current_page %> of <%= @sales.total_pages %> (<%= @total_count %> sales)</span>
+        <span>
+          <%= permitted_link_to "Previous", url_for(page: (@sales.current_page - 1)), class: "btn btn-sm btn-outline-secondary #{'disabled' if @sales.current_page == 1}" %>
+          <%= permitted_link_to "Next", url_for(page: (@sales.current_page + 1)), class: "btn btn-sm btn-outline-secondary #{'disabled' if @sales.current_page == @sales.total_pages}" %>
+        </span>
+      </div>
+    <% end %>
+  </div>
+</div>
