@@ -1,0 +1,402 @@
+<!DOCTYPE html><html lang="en" style="scroll-behavior: smooth;"><head>
+	<!-- Meta -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+	<!-- Page Title -->
+	<!-- Favicon Icon -->
+	<link rel="shortcut icon" type="image/x-icon" href="../../assets/images/favicon_f4d887c70791.png">
+    <!-- Custom Fonts Css-->
+	<link href="../../assets/css/fonts_9205705fda25.css" rel="stylesheet" media="screen">
+	<!-- Bootstrap Css -->
+	<link href="../../assets/css/bootstrap.min_ee625f739ee7.css" rel="stylesheet" media="screen">
+	<!-- SlickNav Css -->
+	<link href="../../assets/css/slicknav.min_a3b0bf61ea4f.css" rel="stylesheet">
+	<!-- Swiper Css -->
+	<link rel="stylesheet" href="../../assets/css/swiper-bundle.min_62d207169d2b.css">
+	<!-- Font Awesome Icon Css-->
+	<link href="../../assets/css/all.min_270b5ba67201.css" rel="stylesheet" media="screen">
+	<!-- Animated Css -->
+	<link href="../../assets/css/animate_11e4677b32e3.css" rel="stylesheet">
+    <!-- Magnific Popup Core Css File -->
+	<link rel="stylesheet" href="../../assets/css/magnific-popup_7870b576e273.css">
+	<!-- Mouse Cursor Css File -->
+	<link rel="stylesheet" href="../../assets/css/mousecursor_0ed98ee00196.css">
+	<!-- Main Custom Css -->
+	<link href="../../assets/css/custom_6b2f4bee655f.css" rel="stylesheet" media="screen">
+<script type="text/javascript" async="" src="https://www.googletagmanager.com/gtag/js?id=G-7C5GXN64ZX&amp;cx=c&amp;gtm=4e69b1"></script><script id="gtm-script-dynamic" async="" src="https://www.googletagmanager.com/gtm.js?id=GTM-PRHSXCHZ"></script>
+	<!-- SEO -->
+	<title>How to Speed Up a Ruby on Rails App | Noor Ullah</title>
+	<meta name="description" content="A practical guide to Rails performance: finding N+1 queries, fixing them, using the query cache, adding indexes, and the caching layers worth the complexity.">
+	<meta name="keywords" content="speed up rails app, rails n+1 query, rails performance optimization, rails caching, slow rails application">
+	<meta name="author" content="Noor Ullah">
+	<link rel="canonical" href="https://noorkhan.vercel.app/blog/rails-performance-optimization/">
+	<meta property="og:type" content="article">
+	<meta property="og:site_name" content="Noor Ullah">
+	<meta property="og:locale" content="en_US">
+	<meta property="og:title" content="How to Speed Up a Ruby on Rails App | Noor Ullah">
+	<meta property="og:description" content="A practical guide to Rails performance: finding N+1 queries, fixing them, using the query cache, adding indexes, and the caching layers worth the complexity.">
+	<meta property="og:url" content="https://noorkhan.vercel.app/blog/rails-performance-optimization/">
+	<meta property="og:image" content="https://noorkhan.vercel.app/assets/images/blog/rails-performance-optimization.png">
+	<meta property="og:image:width" content="1200">
+	<meta property="og:image:height" content="630">
+	<meta property="og:image:alt" content="How to Speed Up a Ruby on Rails App | Noor Ullah">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="How to Speed Up a Ruby on Rails App | Noor Ullah">
+	<meta name="twitter:description" content="A practical guide to Rails performance: finding N+1 queries, fixing them, using the query cache, adding indexes, and the caching layers worth the complexity.">
+	<meta name="twitter:image" content="https://noorkhan.vercel.app/assets/images/blog/rails-performance-optimization.png">
+	<link rel="alternate" type="application/rss+xml" title="Noor Ullah — Blog" href="../../rss.xml">
+	<link rel="manifest" href="../../site.webmanifest">
+	<meta name="theme-color" content="#0d0d0f">
+	<link rel="stylesheet" href="../../assets/css/portfolio.css">
+	<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://noorkhan.vercel.app/blog/rails-performance-optimization/#article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://noorkhan.vercel.app/blog/rails-performance-optimization/"
+      },
+      "headline": "How to Speed Up a Ruby on Rails App",
+      "description": "A practical guide to Rails performance: finding N+1 queries, fixing them, using the query cache, adding indexes, and the caching layers worth the complexity.",
+      "image": [
+        "https://noorkhan.vercel.app/assets/images/blog/rails-performance-optimization.png"
+      ],
+      "datePublished": "2026-03-17T00:00:00.000Z",
+      "dateModified": "2026-03-17T00:00:00.000Z",
+      "author": {
+        "@id": "https://noorkhan.vercel.app/#person"
+      },
+      "publisher": {
+        "@id": "https://noorkhan.vercel.app/#person"
+      },
+      "articleSection": "Performance",
+      "keywords": "speed up rails app, rails n+1 query, rails performance optimization, rails caching, slow rails application",
+      "inLanguage": "en",
+      "isPartOf": {
+        "@id": "https://noorkhan.vercel.app/blog/#blog"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://noorkhan.vercel.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://noorkhan.vercel.app/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "How to Speed Up a Ruby on Rails App",
+          "item": "https://noorkhan.vercel.app/blog/rails-performance-optimization/"
+        }
+      ]
+    }
+  ]
+}
+	</script>
+</head>
+<body style="">
+
+    <!-- Preloader Start -->
+	<div class="preloader" style="display: none;">
+		<div class="loading-container">
+			<div class="loading"></div>
+			<div id="loading-icon"><img src="../../assets/images/loader_35f948d2d377.svg" alt="" width="50" height="50"></div>
+		</div>
+	</div>
+	<!-- Preloader End -->
+
+    <!-- Header Start -->
+	<header class="main-header">
+		<div class="header-sticky">
+			<nav class="navbar navbar-expand-lg">
+				<div class="container">
+					<!-- Logo Start -->
+					<a class="navbar-brand" href="../../index.html">
+						<img src="../../assets/images/logo_e895685751b8.svg" alt="Logo" width="237" height="60">
+					</a>
+					<!-- Logo End -->
+
+                    <!-- Main Menu Start -->
+                    <div class="collapse navbar-collapse main-menu">
+                        <div class="nav-menu-wrapper">
+                            <ul class="navbar-nav mr-auto" id="menu"><li class="nav-item"><a class="nav-link" href="../../index.html">Home</a></li><li class="nav-item"><a class="nav-link" href="../../about/">About Us</a></li><li class="nav-item"><a class="nav-link" href="../../services/">Services</a></li><li class="nav-item"><a class="nav-link" href="../../projects/">Projects</a></li><li class="nav-item"><a class="nav-link" href="../../blog/">Blog</a></li><li class="nav-item"><a class="nav-link" href="../../contact/">Contact Us</a></li>
+                        </div>
+                        
+                        <!-- Header Btn Start -->
+                        <div class="header-btn">
+                            <a href="../../contact/" class="btn-default">Contact Us</a>
+                        </div>
+                        <!-- Header Btn End -->
+                    </div>
+					<!-- Main Menu End -->
+					<div class="navbar-toggle"><a href="#" aria-haspopup="true" role="button" tabindex="0" class="slicknav_btn slicknav_collapsed"><span class="slicknav_menutxt"></span><span class="slicknav_icon slicknav_no-text"><span class="slicknav_icon-bar"></span><span class="slicknav_icon-bar"></span><span class="slicknav_icon-bar"></span></span></a></div>
+				</div>
+			</nav>
+			<div class="responsive-menu"><div class="slicknav_menu"><ul class="slicknav_nav slicknav_hidden" aria-hidden="true" role="menu" style="display: none;"><li class="nav-item"><a class="nav-link" href="../../index.html" role="menuitem" tabindex="-1">Home</a></li><li class="nav-item"><a class="nav-link" href="../../about/" role="menuitem" tabindex="-1">About Us</a></li><li class="nav-item"><a class="nav-link" href="../../services/" role="menuitem" tabindex="-1">Services</a></li><li class="nav-item"><a class="nav-link" href="../../projects/" role="menuitem" tabindex="-1">Projects</a></li><li class="nav-item"><a class="nav-link" href="../../blog/" role="menuitem" tabindex="-1">Blog</a></li><li class="nav-item"><a class="nav-link" href="../../contact/" role="menuitem" tabindex="-1">Contact Us</a></li></div></div>
+		</div>
+	</header>
+	<!-- Header End -->
+
+    <!-- Page Header Start -->
+    <div class="page-header parallaxie">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <!-- Page Header Box Start -->
+                    <div class="page-header-box">
+                        <h1 class="text-anime-style-3" data-cursor="-opaque" aria-label="How to Speed Up a Ruby on Rails App"><div class="split-line" aria-hidden="true" style="position: relative; display: block; text-align: start;"><div aria-hidden="true" style="position: relative; display: inline-block;"><div aria-hidden="true" style="position: relative; display: inline-block;">How</div></div> <div aria-hidden="true" style="position: relative; display: inline-block;"><div aria-hidden="true" style="position: relative; display: inline-block;">to</div></div> <div aria-hidden="true" style="position: relative; display: inline-block;"><div aria-hidden="true" style="position: relative; display: inline-block;">Speed</div></div> <div aria-hidden="true" style="position: relative; display: inline-block;"><div aria-hidden="true" style="position: relative; display: inline-block;">Up</div></div></div><div class="split-line" aria-hidden="true" style="position: relative; display: block; text-align: start;"><div aria-hidden="true" style="position: relative; display: inline-block;"><div aria-hidden="true" style="position: relative; display: inline-block;">a</div></div> <div aria-hidden="true" style="position: relative; display: inline-block;"><div aria-hidden="true" style="position: relative; display: inline-block;">Ruby</div></div> <div aria-hidden="true" style="position: relative; display: inline-block;"><div aria-hidden="true" style="position: relative; display: inline-block;">on</div></div> <div aria-hidden="true" style="position: relative; display: inline-block;"><div aria-hidden="true" style="position: relative; display: inline-block;">Rails</div></div></div><div class="split-line" aria-hidden="true" style="position: relative; display: block; text-align: start;"><div aria-hidden="true" style="position: relative; display: inline-block;"><div aria-hidden="true" style="position: relative; display: inline-block;">App</div></div></div></h1>
+                        <div class="post-single-meta wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
+							<ol class="breadcrumb">
+                                <li><i class="fa-regular fa-user"></i> Admin</li>
+								<li><i class="fa-regular fa-clock"></i> 18 May, 2026</li>
+                            </ol>
+						</div>
+                    </div>
+                    <!-- Page Header Box End -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Page Header End -->
+
+    <!-- Page Single Post Start -->
+    <div class="page-single-post">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <!-- Post Featured Image Start -->
+                    <div class="post-image">
+                        <figure class="image-anime reveal">
+                            <img src="../../assets/images/blog/rails-performance-optimization.png" alt="How to Speed Up a Ruby on Rails App" width="1200" height="630">
+                        </figure>
+                    </div>
+                    <!-- Post Featured Image Start -->
+
+                    <!-- Post Single Content Start -->
+                    <div class="post-content">
+                        <!-- Post Entry Start -->
+                        <div class="post-entry">
+                            <p class="wow fadeInUp" data-wow-delay="0.0s">A Rails application that is slow at scale is almost never slow because of Ruby. It is slow because of the database.</p><p class="wow fadeInUp" data-wow-delay="0.2s">Ruby executes in the region of a few million simple operations per second. Your application’s response time is spent waiting for PostgreSQL, and the number of round-trips you make dominates everything else you could optimise. Fix the queries and the page gets fast. Micro-optimise the Ruby and nothing visible happens.</p><p class="wow fadeInUp" data-wow-delay="0.4s">This is the order I work in, and it is the order I would recommend.</p><h2 class="wow fadeInUp" id="step-1-measure-before-you-change-anything" data-wow-delay="0.6s">Step 1: measure before you change anything</h2><p class="wow fadeInUp" data-wow-delay="0.8s">Do not guess. Two tools will tell you almost everything you need.</p><p class="wow fadeInUp" data-wow-delay="1.0s"><strong>Bullet</strong>, by Magician. It wraps N+1 detection, unused eager loading, missing eager loading, and duplicate queries, then prints a visual waterfall when it finds them:</p><pre class="astro-code github-dark wow fadeInUp" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="ruby" data-wow-delay="1.2s"><code><span class="line"><span style="color:#6A737D"># Gemfile, group :development</span></span>
+<span class="line"><span style="color:#E1E4E8">gem </span><span style="color:#9ECBFF">"bullet"</span></span></code></pre><pre class="astro-code github-dark wow fadeInUp" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="ruby" data-wow-delay="1.4s"><code><span class="line"><span style="color:#6A737D"># config/environments/development.rb</span></span>
+<span class="line"><span style="color:#79B8FF">Bullet</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">enable</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> true</span></span>
+<span class="line"><span style="color:#79B8FF">Bullet</span><span style="color:#E1E4E8">.</span><span style="color:#F97583">raise</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> true</span><span style="color:#6A737D"> # fails the request so you cannot ship the N+1</span></span></code></pre><p class="wow fadeInUp" data-wow-delay="1.4s">Set <code>Bullet.raise = true</code> in development. It converts a silent N+1 into a failed request, which means it gets fixed rather than forgotten.</p><p class="wow fadeInUp" data-wow-delay="1.4s"><strong>Scout</strong> or <strong>AppSignal</strong>, for production. Bullet does not run in production. A slow query that only appears under real data volume needs a real APM to find.</p><h2 class="wow fadeInUp" id="step-2-the-n1-query" data-wow-delay="1.4s">Step 2: the N+1 query</h2><p class="wow fadeInUp" data-wow-delay="1.4s">This is the single most common performance defect in Rails, and it is trivially fixable once you recognise it.</p><p class="wow fadeInUp" data-wow-delay="1.4s">You have a list of posts, each belonging to a user:</p><pre class="astro-code github-dark wow fadeInUp" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="ruby" data-wow-delay="1.4s"><code><span class="line"><span style="color:#E1E4E8">@posts </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> Post</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">all</span></span></code></pre><p class="wow fadeInUp" data-wow-delay="1.4s">In your view:</p><pre class="astro-code github-dark wow fadeInUp" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="erb" data-wow-delay="1.4s"><code><span class="line"><span style="color:#E1E4E8">&#x3C;% @posts.</span><span style="color:#B392F0">each</span><span style="color:#F97583"> do</span><span style="color:#E1E4E8"> |post| %></span></span>
+<span class="line"><span style="color:#E1E4E8">  &#x3C;</span><span style="color:#85E89D">p</span><span style="color:#E1E4E8">>&#x3C;%= post.</span><span style="color:#B392F0">user</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">name</span><span style="color:#E1E4E8"> %>&#x3C;/</span><span style="color:#85E89D">p</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">&#x3C;% </span><span style="color:#F97583">end</span><span style="color:#E1E4E8"> %></span></span></code></pre><p class="wow fadeInUp" data-wow-delay="1.4s">That looks like one query. It is not. Rails runs one query to fetch the posts, then one more for each post’s user. Ten posts means eleven queries. A thousand posts means one thousand and one — and it gets worse with every user you add.</p><p class="wow fadeInUp" data-wow-delay="1.4s">Fix it by telling Active Record what you need:</p><pre class="astro-code github-dark wow fadeInUp" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="ruby" data-wow-delay="1.4s"><code><span class="line"><span style="color:#E1E4E8">@posts </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> Post</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">includes</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">:user</span><span style="color:#E1E4E8">)</span></span></code></pre><p class="wow fadeInUp" data-wow-delay="1.4s">Now it is two queries, always, regardless of list size.</p><p class="wow fadeInUp" data-wow-delay="1.4s">You can also let Bullet find them for you, or look for the tell-tale sign in logs: a query with <code>WHERE "users"."id" = $1</code> repeated dozens of times.</p><p class="wow fadeInUp" data-wow-delay="1.4s"><strong>The subtler version</strong> happens through a method call rather than a view. If <code>post.user</code> is called inside a <code>before_action</code>, <code>scope</code>, <code>presenter</code> or serializer, the fix looks the same but the location is harder to find. <code>includes</code> still works.</p><h2 class="wow fadeInUp" id="step-3-indexes" data-wow-delay="1.4s">Step 3: indexes</h2><p class="wow fadeInUp" data-wow-delay="1.4s">An unindexed foreign key is a table scan. On a table with 100,000 rows, that is the difference between 2ms and 400ms.</p><p class="wow fadeInUp" data-wow-delay="1.4s">Foreign keys are indexed by default in Rails through <code>references</code>. If you used <code>belongs_to</code> correctly, your foreign keys are already indexed. The ones that are usually missing:</p><pre class="astro-code github-dark wow fadeInUp" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="ruby" data-wow-delay="1.4s"><code><span class="line"><span style="color:#6A737D"># The slow version: filtered on status, ordered by created_at</span></span>
+<span class="line"><span style="color:#79B8FF">Post</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">where</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">status:</span><span style="color:#9ECBFF"> "published"</span><span style="color:#E1E4E8">).</span><span style="color:#B392F0">order</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">created_at:</span><span style="color:#79B8FF"> :desc</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Add a composite index in the right order — equality columns first</span></span>
+<span class="line"><span style="color:#E1E4E8">add_index </span><span style="color:#79B8FF">:posts</span><span style="color:#E1E4E8">, [</span><span style="color:#79B8FF">:status</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">:created_at</span><span style="color:#E1E4E8">]</span></span></code></pre><p class="wow fadeInUp" data-wow-delay="1.4s">Column order in a composite index matters enormously. Postgres can use an index for equality conditions on a prefix of the columns, then filter the rest. So <code>[:status, :created_at]</code> serves both “all published posts” and “published posts newest first”. <code>[:created_at, :status]</code> only serves the second.</p><p class="wow fadeInUp" data-wow-delay="1.4s">Check what is actually happening:</p><pre class="astro-code github-dark wow fadeInUp" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sql" data-wow-delay="1.4s"><code><span class="line"><span style="color:#E1E4E8">EXPLAIN ANALYZE </span><span style="color:#F97583">SELECT</span><span style="color:#F97583"> *</span><span style="color:#F97583"> FROM</span><span style="color:#E1E4E8"> posts </span><span style="color:#F97583">WHERE</span><span style="color:#F97583"> status</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> 'published'</span><span style="color:#F97583"> ORDER BY</span><span style="color:#E1E4E8"> created_at </span><span style="color:#F97583">DESC</span><span style="color:#E1E4E8">;</span></span></code></pre><p class="wow fadeInUp" data-wow-delay="1.4s">If you see <code>Seq Scan</code> on a large table, that is your missing index.</p><h2 class="wow fadeInUp" id="step-4-the-query-cache" data-wow-delay="1.4s">Step 4: the query cache</h2><p class="wow fadeInUp" data-wow-delay="1.4s">Rails ships a query cache that de-duplicates identical read queries within a single request. It is on by default.</p><p class="wow fadeInUp" data-wow-delay="1.4s">It does not survive across requests, because your data changes between them. For anything read-heavy, cache deliberately.</p><pre class="astro-code github-dark wow fadeInUp" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="ruby" data-wow-delay="1.4s"><code><span class="line"><span style="color:#79B8FF">Rails</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">cache</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">fetch</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"featured_posts"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">expires_in:</span><span style="color:#79B8FF"> 10</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">minutes</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">do</span></span>
+<span class="line"><span style="color:#79B8FF">  Post</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">published</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">includes</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">:user</span><span style="color:#E1E4E8">).</span><span style="color:#B392F0">limit</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">end</span></span></code></pre><p class="wow fadeInUp" data-wow-delay="1.4s">For read-mostly reference data that changes daily, cache it much longer:</p><pre class="astro-code github-dark wow fadeInUp" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="ruby" data-wow-delay="1.4s"><code><span class="line"><span style="color:#6A737D"># config/initializers/cache_store.rb — for apps on one server</span></span>
+<span class="line"><span style="color:#79B8FF">Rails</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">cache</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">configure</span><span style="color:#F97583"> do</span><span style="color:#E1E4E8"> |config|</span></span>
+<span class="line"><span style="color:#E1E4E8">  config.</span><span style="color:#B392F0">default_cache</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> :memory_store</span><span style="color:#6A737D">  # NOT for multi-server: each server gets its own copy</span></span>
+<span class="line"><span style="color:#F97583">end</span></span></code></pre><p class="wow fadeInUp" data-wow-delay="1.4s">If you run more than one application server, use a shared store. Redis or Memcached. An in-memory store on a two-server deployment gives you two different caches, which is a class of bug that only appears in production.</p><h2 class="wow fadeInUp" id="step-5-stop-loading-columns-you-do-not-use" data-wow-delay="1.4s">Step 5: stop loading columns you do not use</h2><p class="wow fadeInUp" data-wow-delay="1.4s">A model with 80 columns, of which the page needs 6, is transferring 74 columns you are throwing away.</p><pre class="astro-code github-dark wow fadeInUp" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="ruby" data-wow-delay="1.4s"><code><span class="line"><span style="color:#6A737D"># Only select what the view uses</span></span>
+<span class="line"><span style="color:#79B8FF">Post</span><span style="color:#E1E4E8">.</span><span style="color:#79B8FF">select</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">:id</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">:title</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">:published_at</span><span style="color:#E1E4E8">).</span><span style="color:#B392F0">includes</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">:user</span><span style="color:#E1E4E8">)</span></span></code></pre><p class="wow fadeInUp" data-wow-delay="1.4s">For large text columns this matters a great deal. For most tables, honestly, it does not. Measure before you complicate your code.</p><h2 class="wow fadeInUp" id="step-6-count-efficiently" data-wow-delay="1.4s">Step 6: count efficiently</h2><p class="wow fadeInUp" data-wow-delay="1.4s"><code>Model.count</code> on a large table is a full scan unless Postgres can satisfy it from statistics.</p><pre class="astro-code github-dark wow fadeInUp" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="ruby" data-wow-delay="1.4s"><code><span class="line"><span style="color:#6A737D"># Slow on huge tables</span></span>
+<span class="line"><span style="color:#79B8FF">Post</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">count</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Fast — uses a maintained statistics table</span></span>
+<span class="line"><span style="color:#79B8FF">Post</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">approximate_count</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">column:</span><span style="color:#79B8FF"> :id</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Or keep an exact cached counter</span></span>
+<span class="line"><span style="color:#79B8FF">Post</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">count_cached</span></span></code></pre><p class="wow fadeInUp" data-wow-delay="1.4s"><code>approximate_count</code> uses <code>reltuples</code> and can be slightly stale. For a “1,234 posts” label on a page, that is entirely fine.</p><h2 class="wow fadeInUp" id="step-7-paginate-properly" data-wow-delay="1.4s">Step 7: paginate properly</h2><p class="wow fadeInUp" data-wow-delay="1.4s"><code>Model.all</code> with 10,000 rows loads 10,000 rows to render 20.</p><pre class="astro-code github-dark wow fadeInUp" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="ruby" data-wow-delay="1.4s"><code><span class="line"><span style="color:#79B8FF">Post</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">includes</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">:user</span><span style="color:#E1E4E8">).</span><span style="color:#B392F0">page</span><span style="color:#E1E4E8">(params[</span><span style="color:#79B8FF">:page</span><span style="color:#E1E4E8">]).</span><span style="color:#B392F0">per</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">25</span><span style="color:#E1E4E8">)</span></span></code></pre><p class="wow fadeInUp" data-wow-delay="1.4s">The trap is eager loading across a large association. If you eager load posts and their users, then paginate, Postgres still has to join the whole set before limiting. For large datasets, paginate the ids first, then eager load the page:</p><pre class="astro-code github-dark wow fadeInUp" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="ruby" data-wow-delay="1.4s"><code><span class="line"><span style="color:#FFAB70">ids</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> Post</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">published</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">order</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">created_at:</span><span style="color:#79B8FF"> :desc</span><span style="color:#E1E4E8">).</span><span style="color:#B392F0">limit</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">25</span><span style="color:#E1E4E8">).</span><span style="color:#B392F0">offset</span><span style="color:#E1E4E8">(params[</span><span style="color:#79B8FF">:offset</span><span style="color:#E1E4E8">]).</span><span style="color:#B392F0">pluck</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">:id</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">@posts </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> Post</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">includes</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">:user</span><span style="color:#E1E4E8">).</span><span style="color:#B392F0">where</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">id:</span><span style="color:#E1E4E8"> ids)</span></span></code></pre><h2 class="wow fadeInUp" id="step-8-fragment-and-http-caching" data-wow-delay="1.4s">Step 8: fragment and HTTP caching</h2><p class="wow fadeInUp" data-wow-delay="1.4s">For markup that is identical for every user, cache the rendered fragment:</p><pre class="astro-code github-dark wow fadeInUp" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="erb" data-wow-delay="1.4s"><code><span class="line"><span style="color:#E1E4E8">&#x3C;% cache [</span><span style="color:#9ECBFF">"sidebar"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">Sidebar</span><span style="color:#E1E4E8">::</span><span style="color:#79B8FF">VERSION</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">do</span><span style="color:#E1E4E8"> %></span></span>
+<span class="line"><span style="color:#E1E4E8">  &#x3C;%= render </span><span style="color:#9ECBFF">"shared/sidebar"</span><span style="color:#E1E4E8"> %></span></span>
+<span class="line"><span style="color:#E1E4E8">&#x3C;% </span><span style="color:#F97583">end</span><span style="color:#E1E4E8"> %></span></span></code></pre><p class="wow fadeInUp" data-wow-delay="1.4s"><code>Sidebar::VERSION</code> is a constant you bump when the partial changes. This is the part people get wrong — cached fragments with no version key serve stale content until someone notices and nobody can explain why.</p><p class="wow fadeInUp" data-wow-delay="1.4s">And set real HTTP caching headers. A static asset or a page that is the same for everyone should have a <code>max-age</code> in the tens of minutes or hours, not zero.</p><h2 class="wow fadeInUp" id="what-is-usually-not-worth-optimising" data-wow-delay="1.4s">What is usually not worth optimising</h2><ul class="wow fadeInUp" data-wow-delay="1.4s">
+<li><strong>Ruby-level micro-optimisation.</strong> Rewriting a loop in a more “efficient” style on a page that spends 400ms waiting on the database changes nothing.</li>
+<li><strong>Memoising instance variables in views.</strong> Saves microseconds, adds coupling, and the readability cost is real.</li>
+<li><strong>Switching frameworks.</strong> If the answer is “it is slow in Rails”, the answer is almost never “it would be faster elsewhere”. It would be equally slow there.</li>
+</ul><h2 class="wow fadeInUp" id="a-realistic-order-of-operations" data-wow-delay="1.4s">A realistic order of operations</h2><p class="wow fadeInUp" data-wow-delay="1.4s">If you inherit a slow Rails application, this is what I do:</p><ol class="wow fadeInUp" data-wow-delay="1.4s">
+<li>Turn on Bullet in development, fix every N+1 it finds</li>
+<li>Check <code>EXPLAIN</code> on the five slowest queries from your APM</li>
+<li>Add the missing composite indexes</li>
+<li>Add caching to the three slowest pages</li>
+<li>Check for <code>SELECT *</code> on wide tables</li>
+<li>Only then look at anything else</li>
+</ol><p class="wow fadeInUp" data-wow-delay="1.4s">In my experience the first two steps fix 80% of the problem. A Rails application with disciplined queries and correct indexes is fast enough for the overwhelming majority of products.</p><p class="wow fadeInUp" data-wow-delay="1.4s">If your application is slow and you want someone to look at it properly, <a href="../../contact/">get in touch</a>. I offer a fixed-fee Rails performance audit where you get a written list of what is slow, what it will take to fix, and what it will cost — whether or not you hire me to do the work.</p><h2 class="wow fadeInUp" data-wow-delay="1.4s">Need Rails help?</h2><p class="wow fadeInUp" data-wow-delay="1.4s">
+I build and maintain Ruby on Rails applications full-time — web apps,
+              Hotwire Native mobile apps and REST APIs.
+</p><a href="../../contact/" class="btn-default">Get in touch</a><a href="../../assets/media/resume/Noor_Ullah_Resume.pdf" class="btn-default" download>Download résumé</a>
+                        </div>
+                        <!-- Post Entry End -->
+
+                        <!-- Post Tag Links Start -->
+                        <div class="post-tag-links">
+                            <div class="row align-items-center">
+                                <div class="col-lg-8">
+                                    <!-- Post Tags Start -->
+                                    <div class="post-tags wow fadeInUp" data-wow-delay="0.5s" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInUp;">
+                                        <span class="tag-links">
+                                            Tags:
+                                            
+                                            <a href="../../blog/index.html">speed up rails app</a>
+                                            <a href="../../blog/index.html">rails n+1 query</a>
+                                            <a href="../../blog/index.html">rails performance optimization</a>
+                                            <a href="../../blog/index.html">rails caching</a>
+                                            <a href="../../blog/index.html">slow rails application</a>
+                                        </span>
+                                    </div>
+                                    <!-- Post Tags End -->
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <!-- Post Social Links Start -->
+                                    <div class="post-social-sharing wow fadeInUp" data-wow-delay="0.5s" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInUp;">
+                                        <ul>
+                                            <li><a href="#"><i class="fa-brands fa-facebook-f"></i></a></li>
+                                            <li><a href="#"><i class="fa-brands fa-linkedin-in"></i></a></li>
+                                            <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
+                                            <li><a href="#"><i class="fa-brands fa-x-twitter"></i></a></li>
+                                        </ul>
+                                    </div>
+                                    <!-- Post Social Links End -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Post Tag Links End -->
+                    </div>
+                    <!-- Post Single Content End -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Page Single Post End -->
+
+    <!-- Main Footer Start -->
+    <footer class="main-footer bg-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <!-- Footer Header Start -->
+		            <div class="footer-header">
+                        <!-- Section Title Start -->
+                        <div class="section-title">
+                            <h2 class="text-anime-style-3" data-cursor="-opaque" aria-label="Get the latest updates on my projects and digital tips" style="perspective: 400px;"><div class="split-line" aria-hidden="true" style="position: relative; display: block; text-align: start;"><div aria-hidden="true" style="position: relative; display: inline-block;"><div aria-hidden="true" style="position: relative; display: inline-block; translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">G</div><div aria-hidden="true" style="position: relative; display: inline-block; translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">e</div><div aria-hidden="true" style="position: relative; display: inline-block; translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">t</div></div> <div aria-hidden="true" style="position: relative; display: inline-block;"><div aria-hidden="true" style="position: relative; display: inline-block; translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">t</div><div aria-hidden="true" style="position: relative; display: inline-block; translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">h</div><div aria-hidden="true" style="position: relative; display: inline-block; translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">e</div></div> <div aria-hidden="true" style="position: relative; display: inline-block;"><div aria-hidden="true" style="position: relative; display: inline-block; translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">l</div><div aria-hidden="true" style="position: relative; display: inline-block; translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">a</div><div aria-hidden="true" style="position: relative; display: inline-block; translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">t</div><div aria-hidden="true" style="position: relative; display: inline-block; translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">e</div><div aria-hidden="true" style="position: relative; display: inline-block; translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">s</div><div aria-hidden="true" style="position: relative; display: inline-block; translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">t</div></div> <div aria-hidden="true" style="position: relative; display: inline-block;"><div aria-hidden="true" style="position: relative; display: inline-block; translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">u</div><div aria-hidden="true" style="position: relative; display: inline-block; translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">p</div><div aria-hidden="true" style="position: relative; display: inline-block; translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">d</div><div aria-hidden="true" style="position: relative; display: inline-block; translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">a</div><div aria-hidden="true" style="position: relative; display: inline-block; translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">t</div><div aria-hidden="true" style="position: relative; display: inline-block; translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">e</div><div aria-hidden="true" style="position: relative; display: inline-block; translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">s</div></div> <div aria-hidden="true" style="position: relative; display: inline-block;"><div aria-hidden="true" style="position: relative; display: inline-block; translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">o</div><div aria-hidden="true" style="position: relative; display: inline-block; translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">n</div></div> <div aria-hidden="true" style="position: relative; display: inline-block;"><div aria-hidden="true" style="position: relative; display: inline-block; translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">m</div><div aria-hidden="true" style="position: relative; display: inline-block; translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">y</div></div> </div><div class="split-line" aria-hidden="true" style="position: relative; display: block; text-align: start;"><div aria-hidden="true" style="position: relative; display: inline-block;"><div aria-hidden="true" style="position: relative; display: inline-block; translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">p</div><div aria-hidden="true" style="position: relative; display: inline-block; translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">r</div><div aria-hidden="true" style="position: relative; display: inline-block; translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">o</div><div aria-hidden="true" style="position: relative; display: inline-block; translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">j</div><div aria-hidden="true" style="position: relative; display: inline-block; translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">e</div><div aria-hidden="true" style="position: relative; display: inline-block; translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">c</div><div aria-hidden="true" style="position: relative; display: inline-block; translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">t</div><div aria-hidden="true" style="position: relative; display: inline-block; translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">s</div></div> <div aria-hidden="true" style="position: relative; display: inline-block;"><div aria-hidden="true" style="position: relative; display: inline-block; translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">a</div><div aria-hidden="true" style="position: relative; display: inline-block; translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">n</div><div aria-hidden="true" style="position: relative; display: inline-block; translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">d</div></div> <div aria-hidden="true" style="position: relative; display: inline-block;"><div aria-hidden="true" style="position: relative; display: inline-block; translate: none; rotate: none; scale: none; transform: translate3d(-0.0163px, 0px, 0px); opacity: 1.0003;">d</div><div aria-hidden="true" style="position: relative; display: inline-block; translate: none; rotate: none; scale: none; transform: translate3d(-0.093px, 0px, 0px); opacity: 1.0019;">i</div><div aria-hidden="true" style="position: relative; display: inline-block; translate: none; rotate: none; scale: none; transform: translate3d(-0.2268px, 0px, 0px); opacity: 1.0045;">g</div><div aria-hidden="true" style="position: relative; display: inline-block; translate: none; rotate: none; scale: none; transform: translate3d(-0.4112px, 0px, 0px); opacity: 1.0082;">i</div><div aria-hidden="true" style="position: relative; display: inline-block; translate: none; rotate: none; scale: none; transform: translate3d(-0.6396px, 0px, 0px); opacity: 1.0128;">t</div><div aria-hidden="true" style="position: relative; display: inline-block; translate: none; rotate: none; scale: none; transform: translate3d(-0.9056px, 0px, 0px); opacity: 1.0181;">a</div><div aria-hidden="true" style="position: relative; display: inline-block; translate: none; rotate: none; scale: none; transform: translate3d(-1.2027px, 0px, 0px); opacity: 1.0241;">l</div></div> <div aria-hidden="true" style="position: relative; display: inline-block;"><div aria-hidden="true" style="position: relative; display: inline-block; translate: none; rotate: none; scale: none; transform: translate3d(-1.5244px, 0px, 0px); opacity: 1.0305;">t</div><div aria-hidden="true" style="position: relative; display: inline-block; translate: none; rotate: none; scale: none; transform: translate3d(-1.8643px, 0px, 0px); opacity: 1.0373;">i</div><div aria-hidden="true" style="position: relative; display: inline-block; translate: none; rotate: none; scale: none; transform: translate3d(-2.2158px, 0px, 0px); opacity: 1.0443;">p</div><div aria-hidden="true" style="position: relative; display: inline-block; translate: none; rotate: none; scale: none; transform: translate3d(-2.5725px, 0px, 0px); opacity: 1.0514;">s</div></div></div></h2>
+                        </div>
+                        <!-- Section Title End -->
+
+                        <!-- Footer Newsletter Form Start -->
+                        <div class="footer-newsletter-form">
+                            <form id="newslettersForm" action="#" method="POST">
+                                <div class="form-group">
+                                    <input type="email" name="mail" class="form-control" id="mail" placeholder="Enter Email Address *" required="">
+                                    <button type="submit" class="newsletter-btn"><i class="fa-regular fa-paper-plane"></i></button>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- Footer Newsletter Form End -->                        
+                    </div>
+                    <!-- Footer Header End -->
+                </div>
+
+                <div class="col-lg-12">
+                    <!-- About Footer Box Start -->
+                    <div class="about-footer-box">
+                        <!-- About Footer Start -->
+                        <div class="about-footer">
+                            <!-- Footer Logo Start -->
+                            <div class="footer-logo">
+                                <img src="../../assets/images/logo_e895685751b8.svg" alt="" width="237" height="60">
+                            </div>
+                            <!-- Footer Logo End -->
+
+                            <!-- About Footer Content Start -->
+                            <div class="about-footer-content">
+                                <p>Get Started With A Projects?</p>
+                                <h2><a href="../../contact/">Let's Work</a></h2>
+                            </div>
+                            <!-- About Footer Content End -->
+                        </div>
+                        <!-- About Footer End -->
+
+                        <!-- Years Experience Circle Start -->
+                        <div class="years-experience-circle">
+                            <figure>
+                                <img src="../../assets/images/years-experience-circle-accent_2707562502fd.svg" alt="" width="160" height="160">
+                            </figure>
+                        </div>
+                        <!-- Years Experience Circle End -->
+                    </div>
+                    <!-- About Footer Box End -->
+                </div>
+
+                <div class="col-lg-12">
+                    <!-- Footer Links Box Start -->
+                    <div class="footer-links-box">
+                        <!-- Footer Menu Start -->
+                        <div class="footer-menu">
+                            <h2>Quick Links</h2>
+                            <ul><li><a href="../../index.html">Home</a></li><li><a href="../../about/">About Us</a></li><li><a href="../../services/">Services</a></li><li><a href="../../projects/">Projects</a></li><li><a href="../../blog/">Blog</a></li><li><a href="../../contact/">Contact Us</a></li>
+                        </div>
+                        <!-- Footer Menu End -->
+
+                        <!-- Footer Contact Box Start -->
+                        <div class="footer-contact-box">
+                            <!-- Footer Contact Item Start -->
+                            <div class="footer-contact-item">
+                                <h2>Contact Information</h2>
+                                <p><span>Call Us At:</span> <a href="tel:123456789">+(123) 456-789</a></p>
+                            </div>
+                            <!-- Footer Contact Item End -->
+
+                            <!-- Footer Contact Item Start -->
+                            <div class="footer-contact-item">
+                                <h2>Our Location</h2>
+                                <p>2464 Royal Ln. Mesa, New Jersey 45463</p>
+                            </div>
+                            <!-- Footer Contact Item End -->
+                        </div>
+                        <!-- Footer Contact Box End -->
+                    </div>
+                    <!-- Footer Links Box End -->
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Main Footer End -->
+
+    <!-- Jquery Library File -->
+    <script src="../../assets/js/jquery-3.7.1.min_244c6f8ba711.js"></script>
+    <!-- Bootstrap js file -->
+    <script src="../../assets/js/bootstrap.min_47133473eaa0.js"></script>
+    <!-- Validator js file -->
+    <script src="../../assets/js/validator.min_2382a32cfd3c.js"></script>
+    <!-- SlickNav js file -->
+    <script src="../../assets/js/jquery.slicknav_93b8016a1df3.js"></script>
+    <!-- Swiper js file -->
+    <script src="../../assets/js/swiper-bundle.min_5e4b84c0edf1.js"></script>
+    <!-- Counter js file -->
+    <script src="../../assets/js/jquery.waypoints.min_04f7209c837a.js"></script>
+    <script src="../../assets/js/jquery.counterup.min_67d6a9cb336d.js"></script>
+    <!-- Magnific js file -->
+    <script src="../../assets/js/jquery.magnific-popup.min_a14a4a5e61e1.js"></script>
+    <!-- SmoothScroll -->
+    <script src="../../assets/js/SmoothScroll_8962ef847001.js"></script>
+    <!-- Parallax js -->
+    <script src="../../assets/js/parallaxie_e9e495fb2aeb.js"></script>
+    <!-- MagicCursor js file -->
+    <script src="../../assets/js/gsap.min_96c9bd4463cd.js"></script>
+    <script src="../../assets/js/magiccursor_0e71ef64ced6.js"></script><div class="cb-cursor" style="translate: none; rotate: none; scale: none; transform: translate3d(-1440px, -1000px, 0px);"><div class="cb-cursor-text"></div></div>
+    <!-- Text Effect js file -->
+    <script src="../../assets/js/SplitText.min_562494cd4582.js"></script>
+    <script src="../../assets/js/ScrollTrigger.min_1891cf10d6f6.js"></script>
+    <!-- YTPlayer js File -->
+    <script src="../../assets/js/jquery.mb.YTPlayer.min_b0ff4d640c42.js"></script>
+    <!-- Wow js file -->
+    <script src="../../assets/js/wow.min_3cc40a2744c8.js"></script>
+    <!-- Main Custom js file -->
+    <script src="../../assets/js/function_c59ab91a3c50.js"></script>
+
+</body></html>

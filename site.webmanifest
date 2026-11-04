@@ -1,0 +1,32 @@
+{
+  "name": "Noor Ullah — Ruby on Rails Developer",
+  "short_name": "Noor Ullah",
+  "description": "Freelance Ruby on Rails full-stack developer building production web apps, Hotwire Native mobile apps and REST APIs.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "lang": "en",
+  "categories": ["portfolio", "business", "productivity"],
+  "icons": [
+    {
+      "src": "/assets/images/favicon_f4d887c70791.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/images/favicon_f4d887c70791.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/images/favicon_f4d887c70791.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

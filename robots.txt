@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Build artefacts and source maps carry no crawlable value.
+Disallow: /_astro/
+Disallow: /*.map
+
+Sitemap: https://noorkhan.vercel.app/sitemap-index.xml

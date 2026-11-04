@@ -1,0 +1,61 @@
+/* ==========================================================================
+   The only stylesheet layered on top of the Weblance (Awaiken) theme.
+
+   Loaded last, after custom_6b2f4bee655f.css. It deliberately does NOT restyle
+   anything the theme already styles — no colours, sizes, spacing or component
+   rules. Anything visual here would fight the template, so the only rules are
+   the ones below, which fix real problems the template has on its own.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Animated headings
+
+   The theme wraps each heading in per-character spans (class="split-line")
+   that GSAP re-splits on load. Between the first paint and GSAP running, the
+   heading occupies a different amount of space, so the page visibly jumps.
+   Reserving a line of height stops that shift.
+
+   WOW.js animates these headings with autoAlpha, which sets visibility:hidden
+   on the inner spans while they wait for their turn. If the animation is
+   interrupted — or the visitor has reduced motion on — the heading can stay
+   invisible. The h2 itself is never hidden, but guard the spans too.
+   -------------------------------------------------------------------------- */
+
+.text-anime-style-3 {
+  min-height: 1em;
+}
+
+.text-anime-style-3 [aria-hidden='true'] {
+  visibility: visible;
+}
+
+/* --------------------------------------------------------------------------
+   Respect the OS "reduce motion" setting
+
+   The theme runs GSAP timelines and WOW.js reveals on every page. With reduced
+   motion requested, skip them so nothing stays stuck at visibility:hidden.
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .wow,
+  .wow [aria-hidden='true'] {
+    visibility: visible !important;
+    animation-name: none !important;
+  }
+
+  .text-anime-style-3 [aria-hidden='true'] {
+    visibility: visible !important;
+  }
+}
